@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marco Montesines</title>
+  <meta name="description" content="Marco Montesines — software engineer. Projects and open source work.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f8fa;
+      --surface: #ffffff;
+      --ink: #16212e;
+      --muted: #5b6b7d;
+      --accent: #e8a33d;
+      --border: #e3e7ec;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #10161e;
+        --surface: #16212e;
+        --ink: #e8ecf1;
+        --muted: #93a3b5;
+        --border: #24313f;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    main {
+      width: 100%;
+      max-width: 40rem;
+      margin: 0 auto;
+      padding: 5rem 1.5rem 3rem;
+      flex: 1;
+    }
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin: 0 0 0.25rem;
+    }
+    .tagline {
+      color: var(--muted);
+      margin: 0 0 2.5rem;
+    }
+    h2 {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin: 2.5rem 0 1rem;
+    }
+    .project {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+    .project:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .project { transition: none; }
+      .project:hover { transform: none; }
+    }
+    .project strong {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+    }
+    .project span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 0.15rem;
+    }
+    .links a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      margin-right: 1.5rem;
+    }
+    .links a:hover { color: var(--accent); }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      padding: 2rem 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Marco Montesines</h1>
+    <p class="tagline">Software engineer &mdash; Go, APIs, and infrastructure.</p>
+
+    <h2>Projects</h2>
+    <a class="project" href="https://marco-montesines.github.io/haveibeenpwned/">
+      <strong>haveibeenpwned</strong>
+      <span>Unofficial Go client for the Have I Been Pwned API v3 &mdash; library, CLI, HTTP API, and FrankenPHP extension.</span>
+    </a>
+
+    <h2>Elsewhere</h2>
+    <p class="links">
+      <a href="https://github.com/marco-montesines">GitHub</a>
+      <a href="https://pkg.go.dev/github.com/marco-montesines/haveibeenpwned">pkg.go.dev</a>
+    </p>
+  </main>
+  <footer>&copy; 2026 Marco Montesines</footer>
+</body>
+</html>
