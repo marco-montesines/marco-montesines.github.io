@@ -4,7 +4,7 @@ import contentSource from "../content.ts?raw";
 import windowingSource from "../os/windowing.ts?raw";
 
 const REPO_EDITOR_URL =
-  "https://github1s.com/marco-montesines/marco-montesines.github.io";
+  "https://github1s.com/marco-montesines/marco-montesines.github.io/blob/main/src/content.ts";
 
 const FILES = [
   { name: "content.ts", note: "the resume as data", source: contentSource },
