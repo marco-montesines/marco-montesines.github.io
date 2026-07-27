@@ -1178,10 +1178,18 @@ button.mb-item:hover,
   overflow: hidden;
 }
 
+/* Marco/About tiles match the Harapan lens language: circular subject at
+   74% on a slate tile, ringed in olive */
+.tile-mango,
+.tile-about {
+  background: linear-gradient(165deg, #2a3342, #141b26);
+}
+
 .tile .logo-avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 0;
+  width: 74%;
+  height: 74%;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(167, 204, 78, 0.55);
 }
 
 .tile-markdown {
