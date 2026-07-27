@@ -167,6 +167,35 @@ export default function App() {
     return () => clearTimeout(t);
   }, [booted, locked, call]);
 
+  // Synthesized ringtone while the call banner is up (login already gave
+  // the user gesture browsers require before audio may play).
+  useEffect(() => {
+    if (call !== "ringing" || power !== "on") return;
+    const ctx = new AudioContext();
+    void ctx.resume();
+    const chime = () => {
+      [659.25, 830.61, 987.77].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        const t = ctx.currentTime + i * 0.18;
+        gain.gain.setValueAtTime(0, t);
+        gain.gain.linearRampToValueAtTime(0.16 * (volume / 100), t + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+        osc.connect(gain).connect(ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.55);
+      });
+    };
+    chime();
+    const iv = setInterval(chime, 2100);
+    return () => {
+      clearInterval(iv);
+      void ctx.close();
+    };
+  }, [call, power, volume]);
+
   const appBody = (id: AppId): ReactNode => {
     switch (id) {
       case "about":
