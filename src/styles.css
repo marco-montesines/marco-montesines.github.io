@@ -1005,6 +1005,45 @@ button.mb-item:hover,
   overflow: auto;
 }
 
+/* locked notes (references / certificates / diplomas) */
+.locked-note {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  color: var(--muted);
+  padding: 1.5rem;
+}
+
+.locked-note h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.locked-note p {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.locked-note a {
+  margin-top: 0.4rem;
+  background: var(--mango);
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.locked-note a:hover {
+  background: var(--mango-deep);
+}
+
 /* ---------- incoming call banner ---------- */
 
 .call-banner {

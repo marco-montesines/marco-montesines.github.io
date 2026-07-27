@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react";
+import { bio } from "../content";
 import { AppIcon } from "../icons";
 import type { AppId } from "../os/apps";
 import { About } from "./About";
@@ -6,9 +7,44 @@ import { Experience } from "./Experience";
 import { Projects } from "./Projects";
 import { Skills } from "./Skills";
 
+function LockIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+      <rect
+        x="5"
+        y="10.5"
+        width="14"
+        height="9.5"
+        rx="2.4"
+        fill="currentColor"
+      />
+      <path
+        d="M8 10.5 V7.5 A4 4 0 0 1 16 7.5 V10.5"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+      />
+    </svg>
+  );
+}
+
+function LockedNote({ what }: { what: string }) {
+  const linkedIn = bio.links.find((l) => l.label === "LinkedIn")?.href;
+  return (
+    <div className="locked-note">
+      <LockIcon size={38} />
+      <h2>{what}</h2>
+      <p>Shared privately on request — not published here.</p>
+      <a href={linkedIn} target="_blank" rel="noreferrer">
+        DM me on LinkedIn
+      </a>
+    </div>
+  );
+}
+
 interface Note {
   id: string;
-  icon: AppId;
+  icon: AppId | "lock";
   title: string;
   body: () => ReactNode;
 }
@@ -27,6 +63,24 @@ const NOTES: Note[] = [
     icon: "projects",
     title: "Projects",
     body: () => <Projects />,
+  },
+  {
+    id: "references",
+    icon: "lock",
+    title: "References",
+    body: () => <LockedNote what="References" />,
+  },
+  {
+    id: "certificates",
+    icon: "lock",
+    title: "Certificates",
+    body: () => <LockedNote what="Certificates" />,
+  },
+  {
+    id: "diplomas",
+    icon: "lock",
+    title: "Diplomas",
+    body: () => <LockedNote what="Diplomas" />,
   },
 ];
 
@@ -80,7 +134,11 @@ export function MangoNotes() {
                 className={`notes-item ${n.id === selected ? "notes-item-sel" : ""}`}
                 onClick={() => setSelected(n.id)}
               >
-                <AppIcon id={n.icon} size={16} />
+                {n.icon === "lock" ? (
+                  <LockIcon />
+                ) : (
+                  <AppIcon id={n.icon} size={16} />
+                )}
                 {n.title}
               </button>
             </li>

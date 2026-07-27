@@ -28,6 +28,27 @@ const HELP = [
   "  exit          close the terminal",
 ];
 
+const COMMANDS = [
+  "about",
+  "achievements",
+  "certificates",
+  "clear",
+  "diplomas",
+  "education",
+  "exit",
+  "experience",
+  "help",
+  "languages",
+  "links",
+  "open",
+  "projects",
+  "references",
+  "skills",
+  "whoami",
+];
+
+const OPEN_TARGETS = ["about", "experience", "skills", "projects"];
+
 const LINKEDIN =
   bio.links.find((l) => l.label === "LinkedIn")?.href ?? "LinkedIn";
 
@@ -115,6 +136,35 @@ export function Terminal({
   }, [lines]);
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      const completingArg = /^open\s+\S*$/.test(input);
+      const prefix = completingArg
+        ? input.replace(/^open\s+/, "")
+        : input.trimStart();
+      const pool = completingArg ? OPEN_TARGETS : COMMANDS;
+      const matches = pool.filter((c) => c.startsWith(prefix));
+      if (!matches.length) return;
+      const common = matches.reduce((a, b) => {
+        let i = 0;
+        while (i < a.length && a[i] === b[i]) i += 1;
+        return a.slice(0, i);
+      });
+      const word =
+        matches.length === 1
+          ? matches[0] + (matches[0] === "open" ? " " : "")
+          : common;
+      const next = completingArg ? `open ${word}` : word;
+      if (next !== input) setInput(next);
+      else if (matches.length > 1) {
+        setLines((ls) => [
+          ...ls,
+          `guest@marco:~$ ${input}`,
+          matches.join("  "),
+        ]);
+      }
+      return;
+    }
     if (e.key === "ArrowUp") {
       e.preventDefault();
       const h = history.current;
