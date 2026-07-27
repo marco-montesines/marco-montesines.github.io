@@ -115,32 +115,41 @@ function ChromiumIcon() {
   );
 }
 
+/** Investment mark: rising bars, trend arrow, euro coin — own drawing. */
 function FinanceIcon() {
   return (
     <>
-      <rect
-        x="4"
-        y="2.8"
-        width="16"
-        height="18.4"
-        rx="2.6"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.9"
-      />
+      <rect x="3.2" y="15.2" width="4" height="6" rx="1" fill="#4f80d4" />
+      <rect x="9.4" y="12" width="4" height="9.2" rx="1" fill="#a7cc4e" />
+      <rect x="15.6" y="8" width="4" height="13.2" rx="1" fill="#7ba00f" />
       <path
-        d="M7.2 6.4 H16.8"
-        stroke="currentColor"
-        strokeWidth="1.9"
+        d="M3.8 11.5 L10 8.6 L14.6 9.8 L19.6 4.4"
+        fill="none"
+        stroke="#e8edf4"
+        strokeWidth="1.7"
         strokeLinecap="round"
+        strokeLinejoin="round"
       />
-      <g fill="currentColor">
-        {[10.6, 14, 17.4].flatMap((y) =>
-          [7.6, 12, 16.4].map((x) => (
-            <circle key={`${x}-${y}`} cx={x} cy={y} r="1.25" />
-          )),
-        )}
-      </g>
+      <path d="M16.6 3.4 L20.8 3.1 L20.5 7.3 Z" fill="#e8edf4" />
+      <circle cx="7.3" cy="5.6" r="3.7" fill="#f4c542" />
+      <circle
+        cx="7.3"
+        cy="5.6"
+        r="3.7"
+        fill="none"
+        stroke="#c79a1f"
+        strokeWidth="0.9"
+      />
+      <text
+        x="7.3"
+        y="7.5"
+        textAnchor="middle"
+        fontSize="5.4"
+        fontWeight="700"
+        fill="#6b4e0a"
+      >
+        €
+      </text>
     </>
   );
 }

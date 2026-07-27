@@ -1270,48 +1270,76 @@ button.mb-item:hover,
   gap: 0.6rem;
 }
 
+.fin-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.85rem 0.95rem;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
 .fin-field {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.8rem;
-  font-size: 0.86rem;
+  font-size: 0.85rem;
 }
 
+/* one boxed control: number + unit live together, right-aligned column */
 .fin-input {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  flex: none;
+  width: 136px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--paper);
+  padding: 0 0.6rem;
+  transition: border-color 0.12s ease;
+}
+
+.fin-input:focus-within {
+  border-color: var(--mango);
 }
 
 .fin-input input {
-  width: 108px;
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  background: var(--paper);
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
   color: var(--ink);
   font: inherit;
   font-size: 0.86rem;
-  padding: 0.3rem 0.55rem;
+  padding: 0.34rem 0.3rem 0.34rem 0;
   text-align: right;
   font-variant-numeric: tabular-nums;
   outline: none;
 }
 
-.fin-input input:focus {
-  border-color: var(--mango);
+.fin-input input::-webkit-outer-spin-button,
+.fin-input input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .fin-input em {
   font-style: normal;
   color: var(--muted);
-  width: 1.1em;
+  font-size: 0.8rem;
+  flex: none;
 }
 
 .fin-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.45rem 1.4rem;
+  gap: 0.55rem 1.4rem;
+}
+
+.fin-grid .fin-input {
+  width: 122px;
 }
 
 .fin-info {
@@ -1323,15 +1351,17 @@ button.mb-item:hover,
 }
 
 .fin-select {
-  max-width: 62%;
+  flex: none;
+  width: min(62%, 300px);
   border: 1px solid var(--border);
-  border-radius: 7px;
+  border-radius: 8px;
   background: var(--paper);
   color: var(--ink);
   font: inherit;
   font-size: 0.82rem;
-  padding: 0.3rem 0.4rem;
+  padding: 0.34rem 0.5rem;
   outline: none;
+  transition: border-color 0.12s ease;
 }
 
 .fin-select:focus {

@@ -379,6 +379,7 @@ function Savings({ ui }: { ui: UIStrings }) {
 
   return (
     <>
+      <div className="fin-card">
       <SelectField
         label={ui.calcTypeLabel}
         value={mode}
@@ -414,6 +415,7 @@ function Savings({ ui }: { ui: UIStrings }) {
       {taxRate > 0 && (
         <Field label={ui.allowanceLabel} value={allowance} onChange={setAllowance} step={100} suffix="€" info={ui.infoAllowance} />
       )}
+      </div>
       <Chart
         stacked
         series={[
@@ -454,10 +456,12 @@ function Loan({ ui }: { ui: UIStrings }) {
 
   return (
     <>
-      <div className="fin-grid">
-        <Field label={ui.loanAmount} value={principal} onChange={setPrincipal} step={5000} suffix="€" />
-        <Field label={ui.annualInterest} value={rate} onChange={setRate} step={0.1} suffix="%" />
-        <Field label={ui.years} value={years} onChange={setYears} />
+      <div className="fin-card">
+        <div className="fin-grid">
+          <Field label={ui.loanAmount} value={principal} onChange={setPrincipal} step={5000} suffix="€" />
+          <Field label={ui.annualInterest} value={rate} onChange={setRate} step={0.1} suffix="%" />
+          <Field label={ui.years} value={years} onChange={setYears} info={ui.infoYears} />
+        </div>
       </div>
       <Chart
         series={[
@@ -503,12 +507,14 @@ function Freedom({ ui }: { ui: UIStrings }) {
 
   return (
     <>
-      <div className="fin-grid">
-        <Field label={ui.monthlyExpenses} value={expenses} onChange={setExpenses} step={100} suffix="€" />
-        <Field label={ui.withdrawalRate} value={withdrawal} onChange={setWithdrawal} step={0.5} suffix="%" info={ui.infoWithdrawal} />
-        <Field label={ui.startingAmount} value={initial} onChange={setInitial} step={1000} suffix="€" />
-        <Field label={ui.monthlyContribution} value={monthly} onChange={setMonthly} step={50} suffix="€" />
-        <Field label={ui.annualReturn} value={rate} onChange={setRate} step={0.5} suffix="%" />
+      <div className="fin-card">
+        <div className="fin-grid">
+          <Field label={ui.monthlyExpenses} value={expenses} onChange={setExpenses} step={100} suffix="€" />
+          <Field label={ui.withdrawalRate} value={withdrawal} onChange={setWithdrawal} step={0.5} suffix="%" info={ui.infoWithdrawal} />
+          <Field label={ui.startingAmount} value={initial} onChange={setInitial} step={1000} suffix="€" info={ui.infoStarting} />
+          <Field label={ui.monthlyContribution} value={monthly} onChange={setMonthly} step={50} suffix="€" info={ui.infoMonthly} />
+          <Field label={ui.annualReturn} value={rate} onChange={setRate} step={0.5} suffix="%" info={ui.infoReturn} />
+        </div>
       </div>
       <Chart
         series={[
