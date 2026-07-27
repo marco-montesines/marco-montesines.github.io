@@ -1230,9 +1230,9 @@ button.mb-item:hover,
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* flat Spotify brand black — no gradient/effects behind the official icon */
 .tile-spotify {
-  background: linear-gradient(165deg, #21331f, #0b130a);
-  color: #a7cc4e;
+  background: #191414;
 }
 
 .tile-launchpad {
