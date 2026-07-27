@@ -58,7 +58,7 @@ body,
 
 body {
   margin: 0;
-  font-family: system-ui, "Segoe UI", sans-serif;
+  font-family: system-ui, sans-serif;
   color: var(--ink);
   line-height: 1.5;
   overflow: hidden;
@@ -937,14 +937,19 @@ button.mb-item:hover,
 
 .window-controls {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
 }
 
+/* flat glyph buttons: minimize and maximize are bare strokes with a soft
+   pill on hover; close is a filled circle carrying its ✕ at all times */
 .wc {
-  width: 13px;
-  height: 13px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  border: 0.5px solid rgba(0, 0, 0, 0.15);
+  border: 0;
+  background: transparent;
   padding: 0;
   cursor: default;
   display: flex;
@@ -953,53 +958,40 @@ button.mb-item:hover,
 }
 
 .wc svg {
-  width: 9px;
-  height: 9px;
-  stroke: rgba(0, 0, 0, 0.6);
-  stroke-width: 1.4;
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 1.2;
   stroke-linecap: round;
-  color: rgba(0, 0, 0, 0.6);
-  opacity: 0;
+  stroke-linejoin: round;
 }
 
-/* glyphs appear when hovering the button cluster */
-.window-controls:hover .wc svg {
-  opacity: 1;
+.wc-min:hover,
+.wc-max:hover {
+  background: color-mix(in srgb, var(--muted) 20%, transparent);
 }
 
-/* original olive trio, dark → light = close → max; glyphs carry meaning */
 .wc-close {
-  background: #4d6a0a;
+  background: #d96a3f;
 }
 
-.wc-min {
-  background: #7ba00f;
+.wc-close svg {
+  stroke: rgba(255, 255, 255, 0.95);
+  stroke-width: 1.4;
 }
 
-.wc-max {
-  background: #a7cc4e;
+.wc-close:hover {
+  background: #c25630;
 }
 
-.wc svg {
-  stroke: rgba(255, 255, 255, 0.9);
-  color: rgba(255, 255, 255, 0.9);
-}
-
-/* inactive windows get gray buttons, colors return on titlebar hover */
+/* inactive windows dim the controls; they return on titlebar hover */
 .window:not(.window-active) .wc {
-  background: color-mix(in srgb, var(--muted) 40%, var(--cream));
+  opacity: 0.45;
 }
 
-.window:not(.window-active) .window-title:hover .wc-close {
-  background: #4d6a0a;
-}
-
-.window:not(.window-active) .window-title:hover .wc-min {
-  background: #7ba00f;
-}
-
-.window:not(.window-active) .window-title:hover .wc-max {
-  background: #a7cc4e;
+.window:not(.window-active) .window-title:hover .wc {
+  opacity: 1;
 }
 
 .window-name {

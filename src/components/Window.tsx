@@ -64,9 +64,9 @@ export function Window({
 
   const onTitlePointerMove = (e: PointerEvent<HTMLDivElement>) => {
     if (!drag.current) return;
-    // Windows may hang off the sides and bottom (they
-    // slide behind the dock), but the title bar can never leave reach —
-    // not above the menu bar, not fully off any edge.
+    // Windows may hang off the sides and bottom (they slide behind the
+    // dock), but the title bar can never leave reach — not above the menu
+    // bar, not fully off any edge.
     const x = Math.min(
       Math.max(-win.w + 90, e.clientX - drag.current.dx),
       window.innerWidth - 90,
@@ -108,17 +108,8 @@ export function Window({
         onPointerUp={onTitlePointerUp}
         onDoubleClick={onToggleMaximize}
       >
+        <span className="window-name">{meta.title}</span>
         <span className="window-controls">
-          <button
-            className="wc wc-close"
-            title="Close"
-            aria-label={`Close ${meta.title}`}
-            onClick={onClose}
-          >
-            <svg viewBox="0 0 12 12" aria-hidden="true">
-              <path d="M3.6 3.6 L8.4 8.4 M8.4 3.6 L3.6 8.4" />
-            </svg>
-          </button>
           <button
             className="wc wc-min"
             title="Minimize"
@@ -126,7 +117,7 @@ export function Window({
             onClick={onMinimize}
           >
             <svg viewBox="0 0 12 12" aria-hidden="true">
-              <path d="M3 6 L9 6" />
+              <path d="M2.5 6 L9.5 6" />
             </svg>
           </button>
           <button
@@ -135,13 +126,28 @@ export function Window({
             aria-label={`${win.maximized ? "Restore" : "Maximize"} ${meta.title}`}
             onClick={onToggleMaximize}
           >
+            {win.maximized ? (
+              <svg viewBox="0 0 12 12" aria-hidden="true">
+                <path d="M4.5 3.5 L4.5 2.5 L9.5 2.5 L9.5 7.5 L8.5 7.5" />
+                <rect x="2.5" y="4.5" width="5" height="5" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 12 12" aria-hidden="true">
+                <rect x="2.5" y="2.5" width="7" height="7" />
+              </svg>
+            )}
+          </button>
+          <button
+            className="wc wc-close"
+            title="Close"
+            aria-label={`Close ${meta.title}`}
+            onClick={onClose}
+          >
             <svg viewBox="0 0 12 12" aria-hidden="true">
-              <path d="M3.2 6.8 L3.2 3.2 L6.8 3.2 Z" fill="currentColor" stroke="none" />
-              <path d="M8.8 5.2 L8.8 8.8 L5.2 8.8 Z" fill="currentColor" stroke="none" />
+              <path d="M3.8 3.8 L8.2 8.2 M8.2 3.8 L3.8 8.2" />
             </svg>
           </button>
         </span>
-        <span className="window-name">{meta.title}</span>
       </div>
       <div className="window-body">{children}</div>
       {!win.maximized && (
