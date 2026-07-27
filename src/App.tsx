@@ -172,6 +172,14 @@ export default function App() {
     return () => clearTimeout(t);
   }, []);
 
+  // Apps hand URLs to the Chromium window via the browser bus.
+  const openBrowser = wm.open;
+  useEffect(() => {
+    const onOpenUrl = () => openBrowser("chromium");
+    window.addEventListener("os-open-url", onOpenUrl);
+    return () => window.removeEventListener("os-open-url", onOpenUrl);
+  }, [openBrowser]);
+
   // Restart: fade to black, then boot again via a full reload.
   useEffect(() => {
     if (power !== "restart") return;

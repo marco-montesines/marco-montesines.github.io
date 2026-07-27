@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { bio } from "../content";
+import { consumePendingUrl, onBrowserNavigate } from "../os/browserBus";
 
 interface Bookmark {
   label: string;
@@ -28,6 +29,18 @@ export function Chromium() {
     setHistory((h) => [...h, target]);
     setTyped(target);
   };
+
+  // URLs handed over from other apps (e.g. a project card).
+  const visitRef = useRef(visit);
+  visitRef.current = visit;
+  useEffect(() => {
+    const check = () => {
+      const p = consumePendingUrl();
+      if (p) visitRef.current(p);
+    };
+    check();
+    return onBrowserNavigate(check);
+  }, []);
 
   const back = () => {
     setHistory((h) => h.slice(0, -1));
