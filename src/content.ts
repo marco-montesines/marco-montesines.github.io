@@ -10,7 +10,7 @@ export const bio = {
   role: "Head of Software Development",
   tagline: "Senior Software Developer — Go · Python · PHP · Cloud-Native",
   about:
-    "Innovative software development leader with 23+ years designing, building and operating scalable, high-performance systems across finance, search, travel, education and the non-profit sector. Versatile developer and hands-on architect — skilled in backend services, data platforms, distributed real-time systems and leading teams from concept to production. Known for bridging technology and business, mentoring developers, and delivering measurable results in every role since 2002.",
+    "Innovative software development leader with 23+ years designing, building and operating scalable, high-performance systems across finance, search, travel, education, healthcare and the non-profit sector. Versatile developer and hands-on architect — skilled in backend services, data platforms, distributed real-time systems and leading teams from concept to production. Known for bridging technology and business, mentoring developers, and delivering measurable results in every role since 2002.",
   languages: "English (Native) · Tagalog (Native) · German (B1 certificate)",
   links: [
     { label: "GitHub", href: "https://github.com/marco-montesines" },
@@ -242,5 +242,10 @@ export const projects = [
     name: "haveibeenpwned",
     href: "https://marco-montesines.github.io/haveibeenpwned/",
     note: "Unofficial Go client for the Have I Been Pwned API v3 — library, CLI, HTTP API, and FrankenPHP extension.",
+  },
+  {
+    name: "maagaparuga",
+    href: "https://marco-montesines.github.io/maagaparuga/",
+    note: "Open-source research and educational care-platform framework — telemedicine records, biotelemetry ingest, and assessment scoring for care teams.",
   },
 ];

@@ -12,7 +12,7 @@ export const de: Content = {
     role: "Head of Software Development",
     tagline: "Senior Softwareentwickler — Go · Python · PHP · Cloud-Native",
     about:
-      "Innovative Führungskraft in der Softwareentwicklung mit über 23 Jahren in der Konzeption, Entwicklung und im Betrieb skalierbarer, hochperformanter Systeme in den Bereichen Finanzen, Suche, Touristik, Bildung und Non-Profit. Vielseitiger Entwickler und praxisnaher Architekt — versiert in Backend-Services, Datenplattformen, verteilten Echtzeitsystemen und der Führung von Teams von der Konzeption bis in die Produktion. Bekannt dafür, Technologie und Business zu verbinden, Entwickler zu fördern und messbare Ergebnisse zu liefern — in jeder Rolle seit 2002.",
+      "Innovative Führungskraft in der Softwareentwicklung mit über 23 Jahren in der Konzeption, Entwicklung und im Betrieb skalierbarer, hochperformanter Systeme in den Bereichen Finanzen, Suche, Touristik, Bildung, Gesundheit und Non-Profit. Vielseitiger Entwickler und praxisnaher Architekt — versiert in Backend-Services, Datenplattformen, verteilten Echtzeitsystemen und der Führung von Teams von der Konzeption bis in die Produktion. Bekannt dafür, Technologie und Business zu verbinden, Entwickler zu fördern und messbare Ergebnisse zu liefern — in jeder Rolle seit 2002.",
     languages:
       "Englisch (Muttersprache) · Tagalog (Muttersprache) · Deutsch (Zertifikat B1)",
     links: [
@@ -225,6 +225,11 @@ export const de: Content = {
       name: "haveibeenpwned",
       href: "https://marco-montesines.github.io/haveibeenpwned/",
       note: "Inoffizieller Go-Client für die Have I Been Pwned API v3 — Bibliothek, CLI, HTTP-API und FrankenPHP-Extension.",
+    },
+    {
+      name: "maagaparuga",
+      href: "https://marco-montesines.github.io/maagaparuga/",
+      note: "Open-Source-Framework für Forschung und Lehre rund um Pflegeplattformen — Telemedizin-Akten, Biotelemetrie-Ingest und Assessment-Scoring für Behandlungsteams.",
     },
   ],
 };
