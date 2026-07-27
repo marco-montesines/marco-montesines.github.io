@@ -711,7 +711,7 @@ button.mb-item:hover,
 
 /* ---------- about dialog ---------- */
 
-.about-mac-backdrop {
+.about-dlg-backdrop {
   position: absolute;
   inset: 0;
   z-index: 700;
@@ -720,7 +720,7 @@ button.mb-item:hover,
   justify-content: center;
 }
 
-.about-mac {
+.about-dlg {
   position: relative;
   width: 300px;
   max-width: calc(100vw - 2rem);
@@ -735,7 +735,7 @@ button.mb-item:hover,
   animation: panel-in 0.16s ease-out;
 }
 
-.about-mac-close {
+.about-dlg-close {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -748,53 +748,53 @@ button.mb-item:hover,
   cursor: default;
 }
 
-.about-mac-avatar {
+.about-dlg-avatar {
   display: flex;
   justify-content: center;
   margin-bottom: 0.9rem;
 }
 
-.about-mac-avatar .logo-avatar {
+.about-dlg-avatar .logo-avatar {
   box-shadow: 0 0 0 3px rgba(167, 204, 78, 0.45);
 }
 
-.about-mac h1 {
+.about-dlg h1 {
   font-size: 1.25rem;
   margin: 0;
 }
 
-.about-mac-sub {
+.about-dlg-sub {
   margin: 0.15rem 0 1.1rem;
   color: var(--muted);
   font-size: 0.8rem;
 }
 
-.about-mac-specs {
+.about-dlg-specs {
   margin: 0 0 1.1rem;
   font-size: 0.82rem;
 }
 
-.about-mac-specs div {
+.about-dlg-specs div {
   display: flex;
   gap: 0.6rem;
   justify-content: center;
   padding: 0.12rem 0;
 }
 
-.about-mac-specs dt {
+.about-dlg-specs dt {
   flex: 0 0 5.4rem;
   text-align: right;
   font-weight: 600;
 }
 
-.about-mac-specs dd {
+.about-dlg-specs dd {
   margin: 0;
   flex: 1;
   text-align: left;
   color: var(--muted);
 }
 
-.about-mac-more {
+.about-dlg-more {
   border: 1px solid var(--border);
   border-radius: 7px;
   background: var(--cream);
@@ -805,12 +805,12 @@ button.mb-item:hover,
   cursor: default;
 }
 
-.about-mac-more:hover {
+.about-dlg-more:hover {
   background: var(--mango);
   color: #fff;
 }
 
-.about-mac-fine {
+.about-dlg-fine {
   margin: 1.1rem 0 0;
   font-size: 0.68rem;
   color: var(--muted);
@@ -1005,6 +1005,76 @@ button.mb-item:hover,
   overflow: auto;
 }
 
+/* ---------- embedded apps (browser, spotify) ---------- */
+
+.app-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  border: 0;
+  background: var(--paper);
+}
+
+.browser {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 8px;
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+  flex: none;
+}
+
+.browser-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.browser-btn:hover {
+  background: color-mix(in srgb, var(--muted) 20%, transparent);
+}
+
+.browser-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--muted);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.browser-url {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.browser-url:focus {
+  border-color: var(--mango);
+}
+
 .window-resize {
   position: absolute;
   right: 0;
@@ -1136,6 +1206,16 @@ button.mb-item:hover,
   background: linear-gradient(165deg, #1c2430, #0b1220);
   color: #7ba00f;
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tile-browser {
+  background: linear-gradient(165deg, #fdfdfd, #cbd5e1);
+  color: #1f6fb2;
+}
+
+.tile-spotify {
+  background: linear-gradient(165deg, #21331f, #0b130a);
+  color: #a7cc4e;
 }
 
 .tile-launchpad {

@@ -77,7 +77,7 @@ export function Spotlight({ onLaunch, onClose }: SpotlightProps) {
           <input
             ref={inputRef}
             value={query}
-            placeholder="Search MarcoMontesines"
+            placeholder="Search Marco"
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "ArrowDown") {

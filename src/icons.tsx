@@ -176,6 +176,32 @@ function HarapanIcon() {
   );
 }
 
+function BrowserIcon() {
+  return (
+    <g stroke="currentColor" strokeWidth="1.8" fill="none">
+      <circle cx="12" cy="12" r="8.2" />
+      <ellipse cx="12" cy="12" rx="3.7" ry="8.2" />
+      <path d="M4.4 9.3 H19.6 M4.4 14.7 H19.6" />
+    </g>
+  );
+}
+
+function SpotifyIcon() {
+  return (
+    <>
+      <path
+        d="M10.6 17.5 V6.4 L19.4 4.4 V15.5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      <circle cx="8" cy="17.5" r="2.7" fill="currentColor" />
+      <circle cx="16.8" cy="15.5" r="2.7" fill="currentColor" />
+    </>
+  );
+}
+
 export function GitBranchIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
@@ -197,6 +223,8 @@ const APP_ICONS: Record<AppId, () => ReturnType<typeof AboutIcon>> = {
   hanap: HanapIcon,
   likha: LikhaIcon,
   harapan: HarapanIcon,
+  browser: BrowserIcon,
+  spotify: SpotifyIcon,
   experience: ExperienceIcon,
   skills: SkillsIcon,
   projects: ProjectsIcon,

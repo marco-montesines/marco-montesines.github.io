@@ -1,10 +1,12 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { About } from "./apps/About";
+import { Browser } from "./apps/Browser";
 import { Experience } from "./apps/Experience";
 import { Hanap } from "./apps/Hanap";
 import { Harapan } from "./apps/Harapan";
 import { Likha } from "./apps/Likha";
 import { MangoNotes } from "./apps/MangoNotes";
+import { Spotify } from "./apps/Spotify";
 import { Sulat } from "./apps/Sulat";
 import { Projects } from "./apps/Projects";
 import { Skills } from "./apps/Skills";
@@ -158,6 +160,10 @@ export default function App() {
         return <Likha />;
       case "harapan":
         return <Harapan />;
+      case "browser":
+        return <Browser />;
+      case "spotify":
+        return <Spotify />;
       case "experience":
         return <Experience />;
       case "skills":

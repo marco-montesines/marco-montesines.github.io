@@ -259,7 +259,7 @@ export function MenuBar(props: MenuBarProps) {
       id: "logo",
       label: <AvatarLogo size={18} />,
       rows: [
-        { label: "About MarcoMontesines", action: onAboutInfo },
+        { label: "About This Marco", action: onAboutInfo },
         "sep",
         { label: "Sleep", action: onSleep },
         { label: "Restart…", action: onRestart },
@@ -268,7 +268,7 @@ export function MenuBar(props: MenuBarProps) {
     },
     {
       id: "appname",
-      label: activeApp ? appMeta(activeApp).title : "MarcoMontesines",
+      label: activeApp ? appMeta(activeApp).title : "Marco",
       bold: true,
       rows: activeApp
         ? [
@@ -277,7 +277,7 @@ export function MenuBar(props: MenuBarProps) {
               action: () => closeApp(activeApp),
             },
           ]
-        : [{ label: "Open About", action: () => openApp("about") }],
+        : [{ label: "Open About", action: () => openApp("mango") }],
     },
     {
       id: "file",
@@ -343,7 +343,7 @@ export function MenuBar(props: MenuBarProps) {
     {
       id: "help",
       label: "Help",
-      rows: [{ label: "Search MarcoMontesines", action: onSpotlight }],
+      rows: [{ label: "Search Marco", action: onSpotlight }],
     },
   ];
 

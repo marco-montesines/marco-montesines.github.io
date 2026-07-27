@@ -6,7 +6,7 @@ const SPECS: [string, string][] = [
   ["Memory", "~2.5 PB associative (lossy, coffee-dependent)"],
   ["Power draw", "~20 W — outperforms any silicon per watt"],
   ["Uptime", "23+ years in production · 99.9%"],
-  ["OS", "MarcoMontesines 26.5 “Bayside”"],
+  ["OS", "Marco 26.5 “Bayside”"],
   ["Languages", "English · Tagalog · German (B1)"],
 ];
 
@@ -25,24 +25,24 @@ export function AboutDialog({ onClose, onMoreInfo }: AboutDialogProps) {
   }, [onClose]);
 
   return (
-    <div className="about-mac-backdrop" onClick={onClose}>
+    <div className="about-dlg-backdrop" onClick={onClose}>
       <div
-        className="about-mac"
+        className="about-dlg"
         role="dialog"
-        aria-label="About MarcoMontesines"
+        aria-label="About This Marco"
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className="about-mac-close"
+          className="about-dlg-close"
           aria-label="Close"
           onClick={onClose}
         />
-        <div className="about-mac-avatar">
+        <div className="about-dlg-avatar">
           <AvatarLogo size={96} />
         </div>
         <h1>Marco Montesines</h1>
-        <p className="about-mac-sub">Head of Software Development, est. 2002</p>
-        <dl className="about-mac-specs">
+        <p className="about-dlg-sub">Head of Software Development, est. 2002</p>
+        <dl className="about-dlg-specs">
           {SPECS.map(([k, v]) => (
             <div key={k}>
               <dt>{k}</dt>
@@ -51,7 +51,7 @@ export function AboutDialog({ onClose, onMoreInfo }: AboutDialogProps) {
           ))}
         </dl>
         <button
-          className="about-mac-more"
+          className="about-dlg-more"
           onClick={() => {
             onClose();
             onMoreInfo();
@@ -59,7 +59,7 @@ export function AboutDialog({ onClose, onMoreInfo }: AboutDialogProps) {
         >
           More Info…
         </button>
-        <p className="about-mac-fine">
+        <p className="about-dlg-fine">
           Human capacity: creativity, judgment & humor — unbenchmarkable.
           <br />™ and © 2002–2026 Marco Montesines. All Rights Reserved.
         </p>
