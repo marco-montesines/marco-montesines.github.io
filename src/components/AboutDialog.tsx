@@ -62,6 +62,10 @@ export function AboutDialog({ onClose, onMoreInfo }: AboutDialogProps) {
         <p className="about-dlg-fine">
           Human capacity: creativity, judgment & humor — unbenchmarkable.
           <br />™ and © 2002–2026 Marco Montesines. All Rights Reserved.
+          <br />An independent personal portfolio in the shape of a desktop
+          OS. Product names (Spotify, Chromium, VS Code, GitHub, Markdown)
+          belong to their respective owners — no affiliation or endorsement
+          implied.
         </p>
       </div>
     </div>
