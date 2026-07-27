@@ -1314,16 +1314,20 @@ button.mb-item:hover,
   gap: 0.45rem 1.4rem;
 }
 
-.fin-check {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.84rem;
+.fin-select {
+  max-width: 62%;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--paper);
   color: var(--ink);
+  font: inherit;
+  font-size: 0.82rem;
+  padding: 0.3rem 0.4rem;
+  outline: none;
 }
 
-.fin-check input {
-  accent-color: var(--mango);
+.fin-select:focus {
+  border-color: var(--mango);
 }
 
 /* ---------- charts ---------- */

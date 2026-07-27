@@ -1,8 +1,14 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { intlLocale, useLocale, useUI, type UIStrings } from "../i18n";
 
-/** German flat tax on capital gains: 25% + 5.5% Soli on the tax. */
-const ABGELTUNG = 0.26375;
+/**
+ * Capital-gains tax presets, parallel to ui.taxOptions: German Abgeltung-
+ * steuer variants (± church tax, ETF partial exemption), Austrian KESt,
+ * tax-free, and null = custom rate.
+ */
+const TAX_RATES: (number | null)[] = [
+  26.375, 27.819, 27.99, 18.46, 19.47, 19.59, 27.5, 0, null,
+];
 
 const useFmt = () => {
   const locale = intlLocale(useLocale());
@@ -282,8 +288,10 @@ function Savings({ ui }: { ui: UIStrings }) {
   const [monthly, setMonthly] = useState(500);
   const [rate, setRate] = useState(5);
   const [years, setYears] = useState(20);
-  const [deTax, setDeTax] = useState(true);
+  const [taxIdx, setTaxIdx] = useState(0);
+  const [customRate, setCustomRate] = useState(26.375);
   const [allowance, setAllowance] = useState(1000);
+  const taxRate = (TAX_RATES[taxIdx] ?? customRate) / 100;
 
   const i = rate / 100 / 12;
   const yr = Math.max(1, Math.min(60, Math.round(years)));
@@ -297,16 +305,14 @@ function Savings({ ui }: { ui: UIStrings }) {
     growth.push(total - (initial + monthly * n));
   }
   const future = contributions[yr] + growth[yr];
-  const tax = deTax
-    ? Math.max(0, growth[yr] - allowance * yr) * ABGELTUNG
-    : 0;
+  const tax = Math.max(0, growth[yr] - allowance * yr) * taxRate;
 
   const rows: [string, string][] = [
     [ui.futureValue, fmt.euro.format(future)],
     [ui.totalInvested, fmt.euro.format(contributions[yr])],
     [ui.growthEarned, fmt.euro.format(growth[yr])],
   ];
-  if (deTax) {
+  if (taxRate > 0) {
     rows.push(
       [ui.taxesLabel, `−${fmt.euro.format(tax)}`],
       [ui.afterTaxLabel, fmt.euro.format(future - tax)],
@@ -321,15 +327,24 @@ function Savings({ ui }: { ui: UIStrings }) {
         <Field label={ui.annualReturn} value={rate} onChange={setRate} step={0.1} suffix="%" />
         <Field label={ui.years} value={years} onChange={setYears} />
       </div>
-      <label className="fin-check">
-        <input
-          type="checkbox"
-          checked={deTax}
-          onChange={(e) => setDeTax(e.target.checked)}
-        />
-        {ui.deTaxToggle}
+      <label className="fin-field">
+        <span>{ui.taxRateLabel}</span>
+        <select
+          className="fin-select"
+          value={taxIdx}
+          onChange={(e) => setTaxIdx(Number(e.target.value))}
+        >
+          {ui.taxOptions.map((label, idx) => (
+            <option key={label} value={idx}>
+              {label}
+            </option>
+          ))}
+        </select>
       </label>
-      {deTax && (
+      {TAX_RATES[taxIdx] === null && (
+        <Field label={ui.taxRateLabel} value={customRate} onChange={setCustomRate} step={0.1} suffix="%" />
+      )}
+      {taxRate > 0 && (
         <Field label={ui.allowanceLabel} value={allowance} onChange={setAllowance} step={100} suffix="€" />
       )}
       <Chart
