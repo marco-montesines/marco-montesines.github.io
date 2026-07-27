@@ -4,7 +4,10 @@ import { DEFAULT_WALLPAPER, WALLPAPERS } from "../os/wallpapers";
  * Desktop wallpaper — resolved from the wallpaper registry (photos are
  * Marco's own, EXIF/GPS stripped at asset creation; keep it that way).
  */
-export function Wallpaper({ id }: { id: string }) {
+export function Wallpaper({ id, src }: { id: string; src?: string }) {
+  if (src) {
+    return <img className="wallpaper" src={src} alt="" aria-hidden="true" />;
+  }
   const def =
     WALLPAPERS.find((w) => w.id === id) ??
     WALLPAPERS.find((w) => w.id === DEFAULT_WALLPAPER)!;

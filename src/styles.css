@@ -1208,6 +1208,127 @@ button.mb-item:hover,
   border-color: var(--mango);
 }
 
+.wp-thumb {
+  position: relative;
+}
+
+.wp-remove {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.65rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.wp-remove:hover {
+  color: #c25630;
+}
+
+.wp-add-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.5rem;
+}
+
+.wp-add:hover .wp-add-art {
+  border-color: var(--mango);
+  color: var(--mango);
+}
+
+/* ---------- finance ---------- */
+
+.finance {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.fin-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.fin-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  font-size: 0.86rem;
+}
+
+.fin-input {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.fin-input input {
+  width: 108px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.86rem;
+  padding: 0.3rem 0.55rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+}
+
+.fin-input input:focus {
+  border-color: var(--mango);
+}
+
+.fin-input em {
+  font-style: normal;
+  color: var(--muted);
+  width: 1.1em;
+}
+
+.fin-results {
+  margin: 0.4rem 0 0;
+  padding: 0.7rem 0.85rem;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.fin-results div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+}
+
+.fin-results dt {
+  color: var(--muted);
+}
+
+.fin-results dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
 .settings-row-group {
   display: flex;
   gap: 0.5rem;
@@ -1594,6 +1715,16 @@ button.mb-item:hover,
 /* flat Spotify brand black — no gradient/effects behind the official icon */
 .tile-spotify {
   background: #191414;
+}
+
+.tile-finance {
+  background: linear-gradient(165deg, #2a3342, #141b26);
+  color: #a7cc4e;
+}
+
+.tile-finance svg {
+  width: 74%;
+  height: 74%;
 }
 
 .tile-settings {

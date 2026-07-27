@@ -2,6 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { About } from "./apps/About";
 import { Experience } from "./apps/Experience";
 import { Chromium } from "./apps/Chromium";
+import { Finance } from "./apps/Finance";
 import { Harapan } from "./apps/Harapan";
 import { MangoNotes } from "./apps/MangoNotes";
 import { Spotify } from "./apps/Spotify";
@@ -24,6 +25,12 @@ import { Window } from "./components/Window";
 import { useRef } from "react";
 import type { AppId } from "./os/apps";
 import { TRACKS } from "./os/tracks";
+import {
+  addCustomWallpaper,
+  loadCustomWallpapers,
+  removeCustomWallpaper,
+  type CustomWallpaper,
+} from "./os/customWallpapers";
 import { DEFAULT_WALLPAPER } from "./os/wallpapers";
 import { useWindowManager } from "./os/windowing";
 
@@ -53,6 +60,28 @@ export default function App() {
     setWallpaper(id);
     localStorage.setItem("wallpaper", id);
   };
+
+  const [customWps, setCustomWps] = useState<CustomWallpaper[]>([]);
+  useEffect(() => {
+    void loadCustomWallpapers().then(setCustomWps);
+  }, []);
+
+  const addWallpaper = (file: File) => {
+    if (!file.type.startsWith("image/") || file.size > 10 * 1024 * 1024) return;
+    void addCustomWallpaper(file).then((w) => {
+      if (!w) return;
+      setCustomWps((ws) => [...ws, w]);
+      changeWallpaper(w.id);
+    });
+  };
+
+  const removeWallpaper = (id: string) => {
+    void removeCustomWallpaper(id);
+    setCustomWps((ws) => ws.filter((w) => w.id !== id));
+    if (wallpaper === id) changeWallpaper(DEFAULT_WALLPAPER);
+  };
+
+  const customSrc = customWps.find((w) => w.id === wallpaper)?.url;
   const [musicPlaying, setMusicPlaying] = useState(false);
   const [trackIdx, setTrackIdx] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -218,6 +247,8 @@ export default function App() {
         return <Harapan autoStart={callAccepted} />;
       case "spotify":
         return <Spotify />;
+      case "finance":
+        return <Finance />;
       case "settings":
         return (
           <Settings
@@ -225,6 +256,9 @@ export default function App() {
             setTheme={setTheme}
             wallpaper={wallpaper}
             setWallpaper={changeWallpaper}
+            customWallpapers={customWps}
+            onAddWallpaper={addWallpaper}
+            onRemoveWallpaper={removeWallpaper}
           />
         );
       case "experience":
@@ -242,10 +276,14 @@ export default function App() {
 
   return (
     <div className="os" style={{ filter: `brightness(${brightness / 100})` }}>
-      <Wallpaper id={wallpaper} />
+      <Wallpaper id={wallpaper} src={customSrc} />
       <BootScreen done={booted} />
       {booted && locked && (
-        <LoginScreen wallpaper={wallpaper} onLogin={() => setLocked(false)} />
+        <LoginScreen
+          wallpaper={wallpaper}
+          wallpaperSrc={customSrc}
+          onLogin={() => setLocked(false)}
+        />
       )}
       <MenuBar
         activeApp={wm.activeApp}

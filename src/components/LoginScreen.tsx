@@ -5,10 +5,15 @@ import { Wallpaper } from "./Wallpaper";
 
 interface LoginScreenProps {
   wallpaper: string;
+  wallpaperSrc?: string;
   onLogin: () => void;
 }
 
-export function LoginScreen({ wallpaper, onLogin }: LoginScreenProps) {
+export function LoginScreen({
+  wallpaper,
+  wallpaperSrc,
+  onLogin,
+}: LoginScreenProps) {
   const [password, setPassword] = useState("");
   const [leaving, setLeaving] = useState(false);
   const [now, setNow] = useState(() => new Date());
@@ -27,7 +32,7 @@ export function LoginScreen({ wallpaper, onLogin }: LoginScreenProps) {
 
   return (
     <div className={`login ${leaving ? "login-leaving" : ""}`}>
-      <Wallpaper id={wallpaper} />
+      <Wallpaper id={wallpaper} src={wallpaperSrc} />
       <div className="login-scrim" />
       <div className="login-clock">
         <div className="login-time">

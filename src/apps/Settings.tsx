@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { bio } from "../content";
 import { AvatarLogo } from "../icons";
+import type { CustomWallpaper } from "../os/customWallpapers";
 import { WALLPAPERS } from "../os/wallpapers";
 import { SPECS } from "../components/AboutDialog";
 import type { Theme } from "../components/MenuBar";
@@ -10,6 +11,9 @@ interface SettingsProps {
   setTheme: (t: Theme) => void;
   wallpaper: string;
   setWallpaper: (id: string) => void;
+  customWallpapers: CustomWallpaper[];
+  onAddWallpaper: (file: File) => void;
+  onRemoveWallpaper: (id: string) => void;
 }
 
 const SECTIONS = [
@@ -35,10 +39,16 @@ const STORAGE_SEGMENTS: [string, number, string][] = [
 function WallpaperPane({
   wallpaper,
   setWallpaper,
-}: Pick<SettingsProps, "wallpaper" | "setWallpaper">) {
+  customWallpapers,
+  onAddWallpaper,
+  onRemoveWallpaper,
+}: Omit<SettingsProps, "theme" | "setTheme">) {
   return (
     <>
-      <p className="settings-hint">Click a wallpaper to apply it.</p>
+      <p className="settings-hint">
+        Click a wallpaper to apply it. Ones you add stay in this browser
+        only — nothing is uploaded.
+      </p>
       <div className="wp-grid">
         {WALLPAPERS.map((w) => (
           <button
@@ -55,6 +65,42 @@ function WallpaperPane({
             {w.name}
           </button>
         ))}
+        {customWallpapers.map((w) => (
+          <button
+            key={w.id}
+            className={`wp-thumb ${w.id === wallpaper ? "wp-thumb-sel" : ""}`}
+            onClick={() => setWallpaper(w.id)}
+            aria-pressed={w.id === wallpaper}
+          >
+            <img className="wp-art" src={w.url} alt="" loading="lazy" />
+            {w.name}
+            <span
+              className="wp-remove"
+              role="button"
+              aria-label={`Remove ${w.name}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemoveWallpaper(w.id);
+              }}
+            >
+              ✕
+            </span>
+          </button>
+        ))}
+        <label className="wp-thumb wp-add">
+          <span className="wp-art wp-add-art">+</span>
+          Add wallpaper…
+          <input
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) onAddWallpaper(f);
+              e.target.value = "";
+            }}
+          />
+        </label>
       </div>
     </>
   );
@@ -184,6 +230,9 @@ export function Settings({
   setTheme,
   wallpaper,
   setWallpaper,
+  customWallpapers,
+  onAddWallpaper,
+  onRemoveWallpaper,
 }: SettingsProps) {
   const [section, setSection] = useState<Section>("Wallpaper");
   return (
@@ -202,7 +251,13 @@ export function Settings({
       <div className="settings-content">
         <h2>{section}</h2>
         {section === "Wallpaper" && (
-          <WallpaperPane wallpaper={wallpaper} setWallpaper={setWallpaper} />
+          <WallpaperPane
+            wallpaper={wallpaper}
+            setWallpaper={setWallpaper}
+            customWallpapers={customWallpapers}
+            onAddWallpaper={onAddWallpaper}
+            onRemoveWallpaper={onRemoveWallpaper}
+          />
         )}
         {section === "Appearance" && (
           <AppearancePane theme={theme} setTheme={setTheme} />

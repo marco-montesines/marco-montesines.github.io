@@ -115,6 +115,36 @@ function ChromiumIcon() {
   );
 }
 
+function FinanceIcon() {
+  return (
+    <>
+      <rect
+        x="4"
+        y="2.8"
+        width="16"
+        height="18.4"
+        rx="2.6"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.9"
+      />
+      <path
+        d="M7.2 6.4 H16.8"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinecap="round"
+      />
+      <g fill="currentColor">
+        {[10.6, 14, 17.4].flatMap((y) =>
+          [7.6, 12, 16.4].map((x) => (
+            <circle key={`${x}-${y}`} cx={x} cy={y} r="1.25" />
+          )),
+        )}
+      </g>
+    </>
+  );
+}
+
 function SettingsIcon() {
   return (
     <>
@@ -220,6 +250,7 @@ const APP_ICONS: Record<AppId, () => ReturnType<typeof AboutIcon>> = {
   vscode: VSCodeIcon,
   harapan: HarapanIcon,
   spotify: SpotifyIcon,
+  finance: FinanceIcon,
   settings: SettingsIcon,
   experience: ExperienceIcon,
   skills: SkillsIcon,
