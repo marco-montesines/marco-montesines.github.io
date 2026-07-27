@@ -1,17 +1,39 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { bio, experience, projects, skills } from "../content";
+import {
+  achievements,
+  bio,
+  education,
+  experience,
+  projects,
+  skills,
+} from "../content";
 import type { AppId } from "../os/apps";
 
 const HELP = [
   "available commands:",
-  "  help        this list",
-  "  about       who marco is",
-  "  skills      skill groups",
-  "  experience  work stations",
-  "  projects    public projects",
-  "  open <app>  open a window (about|experience|skills|projects)",
-  "  clear       clear the screen",
-  "  exit        close the terminal",
+  "  help          this list",
+  "  about         who marco is",
+  "  skills        skill groups",
+  "  experience    work stations",
+  "  projects      public projects",
+  "  education     schools & degrees",
+  "  achievements  selected wins",
+  "  languages     human languages",
+  "  links         public profiles",
+  "  certificates  🔒 request via LinkedIn",
+  "  diplomas      🔒 request via LinkedIn",
+  "  references    🔒 request via LinkedIn",
+  "  open <app>    open a window (about|experience|skills|projects)",
+  "  clear         clear the screen",
+  "  exit          close the terminal",
+];
+
+const LINKEDIN =
+  bio.links.find((l) => l.label === "LinkedIn")?.href ?? "LinkedIn";
+
+const locked = (what: string): string[] => [
+  `🔒  ${what} are shared privately, not published.`,
+  `    DM me on LinkedIn → ${LINKEDIN}`,
 ];
 
 function run(cmd: string, openApp: (id: AppId) => void): string[] {
@@ -31,6 +53,22 @@ function run(cmd: string, openApp: (id: AppId) => void): string[] {
       return experience.map((s) => `${s.period}  ${s.role} · ${s.org}`);
     case "projects":
       return projects.map((p) => `${p.name} — ${p.note}`);
+    case "education":
+      return education.map(
+        (e) => `${e.period}  ${e.degree} — ${e.school}`,
+      );
+    case "achievements":
+      return achievements.map((a) => `${a.title}: ${a.note}`);
+    case "languages":
+      return [bio.languages];
+    case "links":
+      return bio.links.map((l) => `${l.label}: ${l.href}`);
+    case "certificates":
+      return locked("Certificates");
+    case "diplomas":
+      return locked("Diplomas");
+    case "references":
+      return locked("References");
     case "whoami":
       return ["guest"];
     case "open": {
