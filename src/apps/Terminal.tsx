@@ -106,15 +106,48 @@ export function Terminal({
   ]);
   const [input, setInput] = useState("");
   const endRef = useRef<HTMLDivElement>(null);
+  const history = useRef<string[]>([]);
+  const histIdx = useRef(-1); // -1 = not browsing history
+  const draft = useRef("");
 
   useEffect(() => {
     endRef.current?.scrollIntoView();
   }, [lines]);
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      const h = history.current;
+      if (!h.length) return;
+      if (histIdx.current === -1) {
+        draft.current = input;
+        histIdx.current = h.length - 1;
+      } else if (histIdx.current > 0) {
+        histIdx.current -= 1;
+      }
+      setInput(h[histIdx.current]);
+      return;
+    }
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (histIdx.current === -1) return;
+      histIdx.current += 1;
+      if (histIdx.current >= history.current.length) {
+        histIdx.current = -1;
+        setInput(draft.current);
+      } else {
+        setInput(history.current[histIdx.current]);
+      }
+      return;
+    }
     if (e.key !== "Enter") return;
     const cmd = input;
     setInput("");
+    if (cmd.trim() && cmd !== history.current[history.current.length - 1]) {
+      history.current.push(cmd);
+    }
+    histIdx.current = -1;
+    draft.current = "";
     if (cmd.trim() === "clear") {
       setLines([]);
       return;
