@@ -1005,6 +1005,114 @@ button.mb-item:hover,
   overflow: auto;
 }
 
+/* ---------- login screen ---------- */
+
+.login {
+  position: fixed;
+  inset: 0;
+  z-index: 950;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  transition: opacity 0.4s ease;
+}
+
+.login-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.login .wallpaper {
+  filter: blur(22px) brightness(0.75);
+  transform: scale(1.1);
+}
+
+.login-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 18, 32, 0.35);
+}
+
+.login-clock {
+  position: relative;
+  margin-top: 9vh;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+
+.login-time {
+  font-size: clamp(3rem, 9vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.login-date {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 0.4rem;
+}
+
+.login-card {
+  position: relative;
+  margin-top: auto;
+  margin-bottom: 12vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  color: #ffffff;
+}
+
+.login-card .logo-avatar {
+  box-shadow:
+    0 0 0 3px rgba(167, 204, 78, 0.55),
+    0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.login-name {
+  font-weight: 600;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+.login-card input {
+  width: 190px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.4rem 1rem;
+  outline: none;
+  text-align: center;
+}
+
+.login-card input::placeholder {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.login-card input:focus {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.login-hint {
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login {
+    transition: none;
+  }
+}
+
 /* ---------- system settings ---------- */
 
 .settings {

@@ -16,6 +16,7 @@ import { BootScreen } from "./components/BootScreen";
 import { CallBanner } from "./components/CallBanner";
 import { Dock } from "./components/Dock";
 import { Launchpad } from "./components/Launchpad";
+import { LoginScreen } from "./components/LoginScreen";
 import { MenuBar, type Theme } from "./components/MenuBar";
 import { Spotlight } from "./components/Spotlight";
 import { Wallpaper } from "./components/Wallpaper";
@@ -33,6 +34,7 @@ type Power = "on" | "sleep" | "restart" | "off";
 export default function App() {
   const wm = useWindowManager();
   const [booted, setBooted] = useState(false);
+  const [locked, setLocked] = useState(true);
   const [power, setPower] = useState<Power>("on");
   const [theme, setTheme] = useState<Theme>("auto");
   const [brightness, setBrightness] = useState(100);
@@ -152,18 +154,18 @@ export default function App() {
     return () => window.removeEventListener("keydown", wake);
   }, [power]);
 
-  // Greet with the Mango notes window once the boot screen clears.
+  // Greet with the Mango notes window once the user logs in.
   const openGreeter = wm.open;
   useEffect(() => {
-    if (booted) openGreeter("mango");
-  }, [booted, openGreeter]);
+    if (booted && !locked) openGreeter("mango");
+  }, [booted, locked, openGreeter]);
 
   // A “Recruiter” video call rings shortly after the desktop appears.
   useEffect(() => {
-    if (!booted || call !== "pending") return;
+    if (!booted || locked || call !== "pending") return;
     const t = setTimeout(() => setCall("ringing"), 6000);
     return () => clearTimeout(t);
-  }, [booted, call]);
+  }, [booted, locked, call]);
 
   const appBody = (id: AppId): ReactNode => {
     switch (id) {
@@ -207,6 +209,9 @@ export default function App() {
     <div className="os" style={{ filter: `brightness(${brightness / 100})` }}>
       <Wallpaper id={wallpaper} />
       <BootScreen done={booted} />
+      {booted && locked && (
+        <LoginScreen wallpaper={wallpaper} onLogin={() => setLocked(false)} />
+      )}
       <MenuBar
         activeApp={wm.activeApp}
         windows={wm.windows}
