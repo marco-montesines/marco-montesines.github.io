@@ -1193,8 +1193,13 @@ button.mb-item:hover,
 }
 
 .tile-markdown {
-  background: linear-gradient(165deg, #56b6f0, #1f6fb2);
+  background: linear-gradient(165deg, #2a3342, #141b26);
   color: #ffffff;
+}
+
+.tile-markdown svg {
+  width: 74%;
+  height: 74%;
 }
 
 .tile-chromium {
