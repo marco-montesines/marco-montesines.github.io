@@ -129,21 +129,25 @@ function VSCodeIcon() {
   );
 }
 
+/** Harapan: a head-on camera lens — own drawing, olive glass on slate. */
 function HarapanIcon() {
   return (
     <>
-      <rect
-        x="2.5"
-        y="6"
-        width="13"
-        height="12"
-        rx="3"
-        fill="currentColor"
+      <circle cx="12" cy="12" r="11.2" fill="#0b1220" />
+      <circle
+        cx="12"
+        cy="12"
+        r="11.2"
+        fill="none"
+        stroke="rgba(255, 255, 255, 0.16)"
+        strokeWidth="0.8"
       />
-      <path
-        d="M16.5 10.5 L20.5 8 C21.1 7.6 21.5 7.9 21.5 8.5 V15.5 C21.5 16.1 21.1 16.4 20.5 16 L16.5 13.5 Z"
-        fill="currentColor"
-      />
+      <circle cx="12" cy="12" r="8.9" fill="#5c7d0b" />
+      <circle cx="12" cy="12" r="6.6" fill="#7ba00f" />
+      <circle cx="12" cy="12" r="3.9" fill="#a7cc4e" />
+      <circle cx="12" cy="12" r="1.8" fill="#4d6a0a" />
+      <circle cx="15" cy="8.6" r="2.8" fill="rgba(255, 255, 255, 0.3)" />
+      <circle cx="9.2" cy="15" r="0.9" fill="rgba(255, 255, 255, 0.22)" />
     </>
   );
 }

@@ -1200,8 +1200,13 @@ button.mb-item:hover,
 }
 
 .tile-harapan {
-  background: linear-gradient(165deg, #5fd068, #1f8b3b);
-  color: #ffffff;
+  background: linear-gradient(165deg, #2a3342, #141b26);
+}
+
+/* the lens reads best large — override the default 55% glyph ratio */
+.tile-harapan svg {
+  width: 74%;
+  height: 74%;
 }
 
 .tile-github {
