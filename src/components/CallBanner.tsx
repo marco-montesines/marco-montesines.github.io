@@ -1,3 +1,4 @@
+import { useUI } from "../i18n";
 import { AppTile } from "../icons";
 
 interface CallBannerProps {
@@ -6,18 +7,19 @@ interface CallBannerProps {
 }
 
 export function CallBanner({ onAccept, onDecline }: CallBannerProps) {
+  const ui = useUI();
   return (
     <div className="call-banner" role="alert">
       <AppTile id="harapan" size={40} />
       <div className="call-info">
-        <strong>Recruiter</strong>
-        <span>Harapan video call…</span>
+        <strong>{ui.caller}</strong>
+        <span>{ui.callKind}</span>
         <div className="call-actions">
           <button className="call-decline" onClick={onDecline}>
-            Decline
+            {ui.decline}
           </button>
           <button className="call-accept" onClick={onAccept}>
-            Accept
+            {ui.accept}
           </button>
         </div>
       </div>

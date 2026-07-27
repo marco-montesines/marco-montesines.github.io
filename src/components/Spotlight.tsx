@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { bio, experience, projects, skills } from "../content";
+import { useContent, type Content } from "../i18n";
 import { AppIcon, SearchIcon } from "../icons";
 import { APPS, type AppId } from "../os/apps";
 
@@ -9,27 +9,27 @@ interface Hit {
   appId: AppId;
 }
 
-function buildIndex(): Hit[] {
+function buildIndex(c: Content): Hit[] {
   const hits: Hit[] = [];
   for (const app of APPS) {
     hits.push({ label: app.title, sub: "Application", appId: app.id });
   }
-  for (const [group, items] of Object.entries(skills)) {
+  for (const [group, items] of Object.entries(c.skills)) {
     for (const s of items) {
       hits.push({ label: s, sub: `Skills — ${group}`, appId: "skills" });
     }
   }
-  for (const p of projects) {
+  for (const p of c.projects) {
     hits.push({ label: p.name, sub: "Project", appId: "projects" });
   }
-  for (const s of experience) {
+  for (const s of c.experience) {
     hits.push({
       label: `${s.role} · ${s.org}`,
       sub: `Experience — ${s.period}`,
       appId: "experience",
     });
   }
-  hits.push({ label: bio.name, sub: "About", appId: "about" });
+  hits.push({ label: c.bio.name, sub: "About", appId: "about" });
   return hits;
 }
 
@@ -42,7 +42,8 @@ export function Spotlight({ onLaunch, onClose }: SpotlightProps) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-  const index = useMemo(buildIndex, []);
+  const content = useContent();
+  const index = useMemo(() => buildIndex(content), [content]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();

@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { bio } from "../content";
+import { useContent, useUI, type Locale, type UIStrings } from "../i18n";
 import { AvatarLogo } from "../icons";
 import type { CustomWallpaper } from "../os/customWallpapers";
 import { WALLPAPERS } from "../os/wallpapers";
-import { SPECS } from "../components/AboutDialog";
 import type { Theme } from "../components/MenuBar";
 
 interface SettingsProps {
   theme: Theme;
   setTheme: (t: Theme) => void;
+  locale: Locale;
+  setLocale: (l: Locale) => void;
   wallpaper: string;
   setWallpaper: (id: string) => void;
   customWallpapers: CustomWallpaper[];
@@ -16,17 +17,17 @@ interface SettingsProps {
   onRemoveWallpaper: (id: string) => void;
 }
 
-const SECTIONS = [
-  "Wallpaper",
-  "Appearance",
-  "Language & Region",
-  "Storage",
-  "About",
+const SECTION_KEYS = [
+  "wallpaper",
+  "appearance",
+  "language",
+  "storage",
+  "about",
 ] as const;
 
-type Section = (typeof SECTIONS)[number];
+type SectionKey = (typeof SECTION_KEYS)[number];
 
-/** Skill mix rendered as a macangelo-style segmented storage bar. */
+/** Skill mix rendered as a segmented storage bar. */
 const STORAGE_SEGMENTS: [string, number, string][] = [
   ["Go", 30, "#7ba00f"],
   ["Python", 20, "#a7cc4e"],
@@ -42,13 +43,18 @@ function WallpaperPane({
   customWallpapers,
   onAddWallpaper,
   onRemoveWallpaper,
-}: Omit<SettingsProps, "theme" | "setTheme">) {
+  ui,
+}: Pick<
+  SettingsProps,
+  | "wallpaper"
+  | "setWallpaper"
+  | "customWallpapers"
+  | "onAddWallpaper"
+  | "onRemoveWallpaper"
+> & { ui: UIStrings }) {
   return (
     <>
-      <p className="settings-hint">
-        Click a wallpaper to apply it. Ones you add stay in this browser
-        only — nothing is uploaded.
-      </p>
+      <p className="settings-hint">{ui.wallpaperHint}</p>
       <div className="wp-grid">
         {WALLPAPERS.map((w) => (
           <button
@@ -60,7 +66,12 @@ function WallpaperPane({
             {w.css ? (
               <span className="wp-art" style={{ background: w.css }} />
             ) : (
-              <img className="wp-art" src={w.thumb ?? w.src} alt="" loading="lazy" />
+              <img
+                className="wp-art"
+                src={w.thumb ?? w.src}
+                alt=""
+                loading="lazy"
+              />
             )}
             {w.name}
           </button>
@@ -89,7 +100,7 @@ function WallpaperPane({
         ))}
         <label className="wp-thumb wp-add">
           <span className="wp-art wp-add-art">+</span>
-          Add wallpaper…
+          {ui.addWallpaper}
           <input
             type="file"
             accept="image/*"
@@ -109,17 +120,16 @@ function WallpaperPane({
 function AppearancePane({
   theme,
   setTheme,
-}: Pick<SettingsProps, "theme" | "setTheme">) {
+  ui,
+}: Pick<SettingsProps, "theme" | "setTheme"> & { ui: UIStrings }) {
   const options: [Theme, string][] = [
-    ["auto", "Auto"],
-    ["light", "Light"],
-    ["dark", "Dark"],
+    ["auto", ui.themeAuto],
+    ["light", ui.themeLight],
+    ["dark", ui.themeDark],
   ];
   return (
     <>
-      <p className="settings-hint">
-        Auto follows this device’s system preference.
-      </p>
+      <p className="settings-hint">{ui.appearanceHint}</p>
       <div className="settings-row-group">
         {options.map(([value, label]) => (
           <button
@@ -136,32 +146,56 @@ function AppearancePane({
   );
 }
 
-function LanguagePane() {
+function LanguagePane({
+  locale,
+  setLocale,
+  ui,
+}: Pick<SettingsProps, "locale" | "setLocale"> & { ui: UIStrings }) {
+  const { bio } = useContent();
   const resolved = Intl.DateTimeFormat().resolvedOptions();
+  const options: [Locale, string][] = [
+    ["en", "English"],
+    ["de", "Deutsch"],
+  ];
   return (
-    <dl className="settings-facts">
-      <div>
-        <dt>Marco speaks</dt>
-        <dd>{bio.languages}</dd>
+    <>
+      <p className="settings-hint">{ui.languageLabel}</p>
+      <div className="settings-row-group">
+        {options.map(([value, label]) => (
+          <button
+            key={value}
+            className={`settings-chip ${locale === value ? "settings-chip-sel" : ""}`}
+            onClick={() => setLocale(value)}
+            aria-pressed={locale === value}
+          >
+            {label}
+          </button>
+        ))}
       </div>
-      <div>
-        <dt>Your locale</dt>
-        <dd>{navigator.language}</dd>
-      </div>
-      <div>
-        <dt>Your time zone</dt>
-        <dd>{resolved.timeZone}</dd>
-      </div>
-      <div>
-        <dt>Your calendar</dt>
-        <dd>{resolved.calendar}</dd>
-      </div>
-    </dl>
+      <dl className="settings-facts" style={{ marginTop: "1rem" }}>
+        <div>
+          <dt>{ui.marcoSpeaks}</dt>
+          <dd>{bio.languages}</dd>
+        </div>
+        <div>
+          <dt>{ui.yourLocale}</dt>
+          <dd>{navigator.language}</dd>
+        </div>
+        <div>
+          <dt>{ui.yourTimeZone}</dt>
+          <dd>{resolved.timeZone}</dd>
+        </div>
+        <div>
+          <dt>{ui.yourCalendar}</dt>
+          <dd>{resolved.calendar}</dd>
+        </div>
+      </dl>
+    </>
   );
 }
 
-function StoragePane() {
-  const [estimate, setEstimate] = useState<string | null>(null);
+function StoragePane({ ui }: { ui: UIStrings }) {
+  const [estimate, setEstimate] = useState<[string, string] | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -169,12 +203,10 @@ function StoragePane() {
       ?.estimate?.()
       .then((e) => {
         if (cancelled || e.usage == null || e.quota == null) return;
-        const mb = (n: number) => (n / 1024 / 1024).toFixed(1);
-        setEstimate(
-          `This site uses ${mb(e.usage)} MB of the ${Math.round(
-            e.quota / 1024 / 1024 / 1024,
-          )} GB your browser allows it.`,
-        );
+        setEstimate([
+          (e.usage / 1024 / 1024).toFixed(1),
+          String(Math.round(e.quota / 1024 / 1024 / 1024)),
+        ]);
       })
       .catch(() => {});
     return () => {
@@ -184,7 +216,7 @@ function StoragePane() {
 
   return (
     <>
-      <p className="settings-hint">23 years in production, allocated as:</p>
+      <p className="settings-hint">{ui.storageHint}</p>
       <div className="storage-bar" role="img" aria-label="Skill storage bar">
         {STORAGE_SEGMENTS.map(([label, pct, color]) => (
           <span
@@ -202,19 +234,22 @@ function StoragePane() {
           </li>
         ))}
       </ul>
-      {estimate && <p className="settings-hint">{estimate}</p>}
+      {estimate && (
+        <p className="settings-hint">{ui.storageEstimate(...estimate)}</p>
+      )}
     </>
   );
 }
 
-function AboutPane() {
+function AboutPane({ ui }: { ui: UIStrings }) {
+  const { bio } = useContent();
   return (
     <div className="settings-about">
       <AvatarLogo size={64} />
       <h3>{bio.name}</h3>
       <p className="settings-hint">{bio.role}</p>
       <dl className="settings-facts">
-        {SPECS.map(([k, v]) => (
+        {ui.specs.map(([k, v]) => (
           <div key={k}>
             <dt>{k}</dt>
             <dd>{v}</dd>
@@ -225,46 +260,29 @@ function AboutPane() {
   );
 }
 
-export function Settings({
-  theme,
-  setTheme,
-  wallpaper,
-  setWallpaper,
-  customWallpapers,
-  onAddWallpaper,
-  onRemoveWallpaper,
-}: SettingsProps) {
-  const [section, setSection] = useState<Section>("Wallpaper");
+export function Settings(props: SettingsProps) {
+  const ui = useUI();
+  const [section, setSection] = useState<SectionKey>("wallpaper");
   return (
     <div className="settings">
       <aside className="settings-side">
-        {SECTIONS.map((s) => (
+        {SECTION_KEYS.map((s) => (
           <button
             key={s}
             className={`settings-item ${s === section ? "settings-item-sel" : ""}`}
             onClick={() => setSection(s)}
           >
-            {s}
+            {ui.sections[s]}
           </button>
         ))}
       </aside>
       <div className="settings-content">
-        <h2>{section}</h2>
-        {section === "Wallpaper" && (
-          <WallpaperPane
-            wallpaper={wallpaper}
-            setWallpaper={setWallpaper}
-            customWallpapers={customWallpapers}
-            onAddWallpaper={onAddWallpaper}
-            onRemoveWallpaper={onRemoveWallpaper}
-          />
-        )}
-        {section === "Appearance" && (
-          <AppearancePane theme={theme} setTheme={setTheme} />
-        )}
-        {section === "Language & Region" && <LanguagePane />}
-        {section === "Storage" && <StoragePane />}
-        {section === "About" && <AboutPane />}
+        <h2>{ui.sections[section]}</h2>
+        {section === "wallpaper" && <WallpaperPane {...props} ui={ui} />}
+        {section === "appearance" && <AppearancePane {...props} ui={ui} />}
+        {section === "language" && <LanguagePane {...props} ui={ui} />}
+        {section === "storage" && <StoragePane ui={ui} />}
+        {section === "about" && <AboutPane ui={ui} />}
       </div>
     </div>
   );

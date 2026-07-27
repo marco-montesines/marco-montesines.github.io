@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { intlLocale, useLocale } from "../i18n";
 import { AvatarLogo, SearchIcon } from "../icons";
 import { appMeta, type AppId } from "../os/apps";
 import type { OSWindow } from "../os/windowing";
@@ -56,12 +57,13 @@ function Clock() {
     const t = setInterval(() => setNow(new Date()), 15_000);
     return () => clearInterval(t);
   }, []);
-  const date = now.toLocaleDateString(undefined, {
+  const loc = intlLocale(useLocale());
+  const date = now.toLocaleDateString(loc, {
     weekday: "short",
     month: "short",
     day: "numeric",
   });
-  const time = now.toLocaleTimeString(undefined, {
+  const time = now.toLocaleTimeString(loc, {
     hour: "numeric",
     minute: "2-digit",
   });

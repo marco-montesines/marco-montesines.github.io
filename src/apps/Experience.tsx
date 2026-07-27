@@ -1,15 +1,12 @@
-import {
-  achievements,
-  award,
-  education,
-  experience,
-  recognition,
-} from "../content";
+import { useContent, useUI } from "../i18n";
 
 export function Experience() {
+  const { achievements, award, education, experience, recognition } =
+    useContent();
+  const ui = useUI();
   return (
     <div className="app-pad">
-      <h2 className="section-head">Professional Experience</h2>
+      <h2 className="section-head">{ui.professionalExperience}</h2>
       <ol className="timeline">
         {experience.map((s) => (
           <li key={s.period + s.org} className="timeline-item">
@@ -22,7 +19,7 @@ export function Experience() {
         ))}
       </ol>
 
-      <h2 className="section-head">Key Achievements</h2>
+      <h2 className="section-head">{ui.keyAchievements}</h2>
       {achievements.map((a) => (
         <div key={a.title} className="ach-card">
           <strong>{a.title}</strong>
@@ -30,20 +27,24 @@ export function Experience() {
         </div>
       ))}
 
-      <h2 className="section-head">Education</h2>
+      <h2 className="section-head">{ui.education}</h2>
       <ol className="timeline">
         {education.map((e) => (
           <li key={e.period} className="timeline-item">
             <span className="timeline-period">{e.period}</span>
             <div className="timeline-body">
               <strong>{e.degree}</strong> · {e.school}
-              {e.focus && <p>Focus: {e.focus}</p>}
+              {e.focus && (
+                <p>
+                  {ui.focusLabel}: {e.focus}
+                </p>
+              )}
             </div>
           </li>
         ))}
       </ol>
 
-      <h2 className="section-head">Recognition</h2>
+      <h2 className="section-head">{ui.recognition}</h2>
       {recognition.map((r) => (
         <div key={r.title} className="ach-card">
           <strong>{r.title}</strong>

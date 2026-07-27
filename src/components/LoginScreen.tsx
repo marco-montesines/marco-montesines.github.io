@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { bio } from "../content";
+import { intlLocale, useLocale, useUI } from "../i18n";
 import { AvatarLogo } from "../icons";
 import { Wallpaper } from "./Wallpaper";
 
@@ -17,6 +18,8 @@ export function LoginScreen({
   const [password, setPassword] = useState("");
   const [leaving, setLeaving] = useState(false);
   const [now, setNow] = useState(() => new Date());
+  const ui = useUI();
+  const loc = intlLocale(useLocale());
 
   useEffect(() => {
     const t = setInterval(() => setNow(new Date()), 10_000);
@@ -36,13 +39,13 @@ export function LoginScreen({
       <div className="login-scrim" />
       <div className="login-clock">
         <div className="login-time">
-          {now.toLocaleTimeString(undefined, {
+          {now.toLocaleTimeString(loc, {
             hour: "2-digit",
             minute: "2-digit",
           })}
         </div>
         <div className="login-date">
-          {now.toLocaleDateString(undefined, {
+          {now.toLocaleDateString(loc, {
             weekday: "long",
             month: "long",
             day: "numeric",
@@ -57,13 +60,13 @@ export function LoginScreen({
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter Password"
+            placeholder={ui.passwordPlaceholder}
             aria-label="Password — any input unlocks this portfolio"
             autoFocus
             autoComplete="off"
           />
         </form>
-        <div className="login-hint">any password works — press Enter</div>
+        <div className="login-hint">{ui.loginHint}</div>
       </div>
     </div>
   );

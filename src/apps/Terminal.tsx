@@ -1,12 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import {
-  achievements,
-  bio,
-  education,
-  experience,
-  projects,
-  skills,
-} from "../content";
+import { bio } from "../content";
+import { useContent, type Content } from "../i18n";
 import type { AppId } from "../os/apps";
 
 const HELP = [
@@ -57,7 +51,11 @@ const locked = (what: string): string[] => [
   `    DM me on LinkedIn → ${LINKEDIN}`,
 ];
 
-function run(cmd: string, openApp: (id: AppId) => void): string[] {
+function run(
+  cmd: string,
+  openApp: (id: AppId) => void,
+  c: Content,
+): string[] {
   const [name, ...args] = cmd.trim().split(/\s+/);
   switch (name) {
     case "":
@@ -65,25 +63,25 @@ function run(cmd: string, openApp: (id: AppId) => void): string[] {
     case "help":
       return HELP;
     case "about":
-      return [`${bio.name} — ${bio.role}`, bio.tagline];
+      return [`${c.bio.name} — ${c.bio.role}`, c.bio.tagline];
     case "skills":
-      return Object.entries(skills).map(
+      return Object.entries(c.skills).map(
         ([g, items]) => `${g}: ${items.join(", ")}`,
       );
     case "experience":
-      return experience.map((s) => `${s.period}  ${s.role} · ${s.org}`);
+      return c.experience.map((s) => `${s.period}  ${s.role} · ${s.org}`);
     case "projects":
-      return projects.map((p) => `${p.name} — ${p.note}`);
+      return c.projects.map((p) => `${p.name} — ${p.note}`);
     case "education":
-      return education.map(
+      return c.education.map(
         (e) => `${e.period}  ${e.degree} — ${e.school}`,
       );
     case "achievements":
-      return achievements.map((a) => `${a.title}: ${a.note}`);
+      return c.achievements.map((a) => `${a.title}: ${a.note}`);
     case "languages":
-      return [bio.languages];
+      return [c.bio.languages];
     case "links":
-      return bio.links.map((l) => `${l.label}: ${l.href}`);
+      return c.bio.links.map((l) => `${l.label}: ${l.href}`);
     case "certificates":
       return locked("Certificates");
     case "diplomas":
@@ -126,6 +124,7 @@ export function Terminal({
     'Type "help" to explore.',
   ]);
   const [input, setInput] = useState("");
+  const content = useContent();
   const endRef = useRef<HTMLDivElement>(null);
   const history = useRef<string[]>([]);
   const histIdx = useRef(-1); // -1 = not browsing history
@@ -207,7 +206,11 @@ export function Terminal({
       setTimeout(onExit, 350);
       return;
     }
-    setLines((ls) => [...ls, `guest@marco:~$ ${cmd}`, ...run(cmd, openApp)]);
+    setLines((ls) => [
+      ...ls,
+      `guest@marco:~$ ${cmd}`,
+      ...run(cmd, openApp, content),
+    ]);
   };
 
   return (

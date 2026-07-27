@@ -22,6 +22,7 @@ import { MenuBar, type Theme } from "./components/MenuBar";
 import { Spotlight } from "./components/Spotlight";
 import { Wallpaper } from "./components/Wallpaper";
 import { Window } from "./components/Window";
+import { LocaleContext, type Locale } from "./i18n";
 import { useRef } from "react";
 import type { AppId } from "./os/apps";
 import { TRACKS } from "./os/tracks";
@@ -55,6 +56,16 @@ export default function App() {
   const [wallpaper, setWallpaper] = useState(
     () => localStorage.getItem("wallpaper") ?? DEFAULT_WALLPAPER,
   );
+  const [locale, setLocale] = useState<Locale>(() => {
+    const saved = localStorage.getItem("locale");
+    if (saved === "en" || saved === "de") return saved;
+    return navigator.language.toLowerCase().startsWith("de") ? "de" : "en";
+  });
+
+  const changeLocale = (l: Locale) => {
+    setLocale(l);
+    localStorage.setItem("locale", l);
+  };
 
   const changeWallpaper = (id: string) => {
     setWallpaper(id);
@@ -254,6 +265,8 @@ export default function App() {
           <Settings
             theme={theme}
             setTheme={setTheme}
+            locale={locale}
+            setLocale={changeLocale}
             wallpaper={wallpaper}
             setWallpaper={changeWallpaper}
             customWallpapers={customWps}
@@ -275,6 +288,7 @@ export default function App() {
   };
 
   return (
+    <LocaleContext.Provider value={locale}>
     <div className="os" style={{ filter: `brightness(${brightness / 100})` }}>
       <Wallpaper id={wallpaper} src={customSrc} />
       <BootScreen done={booted} />
@@ -394,5 +408,6 @@ export default function App() {
         onLaunchpad={() => setLaunchpad((l) => !l)}
       />
     </div>
+    </LocaleContext.Provider>
   );
 }

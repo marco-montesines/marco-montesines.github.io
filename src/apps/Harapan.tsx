@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { bio } from "../content";
+import { useUI } from "../i18n";
 import { AvatarLogo } from "../icons";
 
 type CamState = "idle" | "active" | "denied";
@@ -9,6 +10,7 @@ export function Harapan({ autoStart = false }: { autoStart?: boolean }) {
   const streamRef = useRef<MediaStream | null>(null);
   const [state, setState] = useState<CamState>("idle");
   const autoStartRef = useRef(autoStart);
+  const ui = useUI();
 
   const start = async () => {
     try {
@@ -53,9 +55,7 @@ export function Harapan({ autoStart = false }: { autoStart?: boolean }) {
           {state === "denied" ? (
             <div className="harapan-card">
               <AvatarLogo size={72} />
-              <p className="harapan-note">
-                Camera feed offline — let’s connect instead.
-              </p>
+              <p className="harapan-note">{ui.cameraOffline}</p>
               <div className="harapan-links">
                 {bio.links.map((l) => (
                   <a
@@ -71,12 +71,9 @@ export function Harapan({ autoStart = false }: { autoStart?: boolean }) {
             </div>
           ) : (
             <>
-              <p className="harapan-note">
-                Uses your camera as a mirror. The video never leaves your
-                device — no recording, no uploading, just you.
-              </p>
+              <p className="harapan-note">{ui.cameraIdle}</p>
               <button className="harapan-btn" onClick={() => void start()}>
-                Turn on camera
+                {ui.cameraOn}
               </button>
             </>
           )}

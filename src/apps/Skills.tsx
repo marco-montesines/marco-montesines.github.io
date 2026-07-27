@@ -1,9 +1,11 @@
-import { bio, competencies, skills } from "../content";
+import { useContent, useUI } from "../i18n";
 
 export function Skills() {
+  const { bio, competencies, skills } = useContent();
+  const ui = useUI();
   return (
     <div className="app-pad">
-      <h2 className="section-head">Core Competencies</h2>
+      <h2 className="section-head">{ui.coreCompetencies}</h2>
       {competencies.map((c) => (
         <div key={c.name} className="comp">
           <span className="comp-label">
@@ -16,7 +18,7 @@ export function Skills() {
         </div>
       ))}
 
-      <h2 className="section-head">Technology Stack</h2>
+      <h2 className="section-head">{ui.techStack}</h2>
       {Object.entries(skills).map(([group, items]) => (
         <section key={group} className="skill-group">
           <h2>{group}</h2>
@@ -28,7 +30,7 @@ export function Skills() {
         </section>
       ))}
 
-      <h2 className="section-head">Languages</h2>
+      <h2 className="section-head">{ui.languages}</h2>
       <p className="lang-line">{bio.languages}</p>
     </div>
   );

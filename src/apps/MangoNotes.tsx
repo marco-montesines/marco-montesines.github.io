@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { bio } from "../content";
+import { useUI, type UIStrings } from "../i18n";
 import { AppIcon } from "../icons";
 import type { AppId } from "../os/apps";
 import { About } from "./About";
@@ -29,14 +30,15 @@ function LockIcon({ size = 16 }: { size?: number }) {
 }
 
 function LockedNote({ what }: { what: string }) {
+  const ui = useUI();
   const linkedIn = bio.links.find((l) => l.label === "LinkedIn")?.href;
   return (
     <div className="locked-note">
       <LockIcon size={38} />
       <h2>{what}</h2>
-      <p>Shared privately on request — not published here.</p>
+      <p>{ui.lockedBody}</p>
       <a href={linkedIn} target="_blank" rel="noreferrer">
-        DM me on LinkedIn
+        {ui.lockedCta}
       </a>
     </div>
   );
@@ -49,38 +51,43 @@ interface Note {
   body: () => ReactNode;
 }
 
-const NOTES: Note[] = [
-  { id: "about", icon: "about", title: "About Me", body: () => <About /> },
+const notesFor = (ui: UIStrings): Note[] => [
+  { id: "about", icon: "about", title: ui.aboutMe, body: () => <About /> },
   {
     id: "experience",
     icon: "experience",
-    title: "Experience",
+    title: ui.experienceTitle,
     body: () => <Experience />,
   },
-  { id: "skills", icon: "skills", title: "Skills", body: () => <Skills /> },
+  {
+    id: "skills",
+    icon: "skills",
+    title: ui.skillsTitle,
+    body: () => <Skills />,
+  },
   {
     id: "projects",
     icon: "projects",
-    title: "Projects",
+    title: ui.projectsTitle,
     body: () => <Projects />,
   },
   {
     id: "references",
     icon: "lock",
-    title: "References",
-    body: () => <LockedNote what="References" />,
+    title: ui.references,
+    body: () => <LockedNote what={ui.references} />,
   },
   {
     id: "certificates",
     icon: "lock",
-    title: "Certificates",
-    body: () => <LockedNote what="Certificates" />,
+    title: ui.certificates,
+    body: () => <LockedNote what={ui.certificates} />,
   },
   {
     id: "diplomas",
     icon: "lock",
-    title: "Diplomas",
-    body: () => <LockedNote what="Diplomas" />,
+    title: ui.diplomas,
+    body: () => <LockedNote what={ui.diplomas} />,
   },
 ];
 
@@ -118,6 +125,8 @@ function SlidersIcon() {
 }
 
 export function MangoNotes() {
+  const ui = useUI();
+  const NOTES = notesFor(ui);
   const [selected, setSelected] = useState(NOTES[0].id);
   const note = NOTES.find((n) => n.id === selected) ?? NOTES[0];
   return (

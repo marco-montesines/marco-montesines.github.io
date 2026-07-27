@@ -1,14 +1,6 @@
 import { useEffect } from "react";
+import { useUI } from "../i18n";
 import { AvatarLogo } from "../icons";
-
-export const SPECS: [string, string][] = [
-  ["Chip", "Human Brain — 86 billion neurons"],
-  ["Memory", "~2.5 PB associative (lossy, coffee-dependent)"],
-  ["Power draw", "~20 W — outperforms any silicon per watt"],
-  ["Uptime", "23+ years in production · 99.9%"],
-  ["OS", "Marco 26.5 “Bayside”"],
-  ["Languages", "English · Tagalog · German (B1)"],
-];
 
 interface AboutDialogProps {
   onClose: () => void;
@@ -16,6 +8,7 @@ interface AboutDialogProps {
 }
 
 export function AboutDialog({ onClose, onMoreInfo }: AboutDialogProps) {
+  const ui = useUI();
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -43,7 +36,7 @@ export function AboutDialog({ onClose, onMoreInfo }: AboutDialogProps) {
         <h1>Marco Montesines</h1>
         <p className="about-dlg-sub">Head of Software Development, est. 2002</p>
         <dl className="about-dlg-specs">
-          {SPECS.map(([k, v]) => (
+          {ui.specs.map(([k, v]) => (
             <div key={k}>
               <dt>{k}</dt>
               <dd>{v}</dd>
@@ -57,7 +50,7 @@ export function AboutDialog({ onClose, onMoreInfo }: AboutDialogProps) {
             onMoreInfo();
           }}
         >
-          More Info…
+          {ui.moreInfo}
         </button>
         <p className="about-dlg-fine">
           Human capacity: creativity, judgment & humor — unbenchmarkable.

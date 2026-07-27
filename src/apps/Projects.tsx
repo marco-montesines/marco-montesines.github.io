@@ -1,6 +1,7 @@
-import { projects } from "../content";
+import { useContent } from "../i18n";
 
 export function Projects() {
+  const { projects } = useContent();
   return (
     <div className="app-pad">
       {projects.map((p) => (

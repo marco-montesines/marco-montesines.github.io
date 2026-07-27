@@ -1,10 +1,18 @@
-import { useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
+import { intlLocale, useLocale, useUI, type UIStrings } from "../i18n";
 
-const euro = new Intl.NumberFormat(undefined, {
-  style: "currency",
-  currency: "EUR",
-  maximumFractionDigits: 0,
-});
+const useEuro = () => {
+  const locale = useLocale();
+  return useMemo(
+    () =>
+      new Intl.NumberFormat(intlLocale(locale), {
+        style: "currency",
+        currency: "EUR",
+        maximumFractionDigits: 0,
+      }),
+    [locale],
+  );
+};
 
 function Field({
   label,
@@ -49,7 +57,8 @@ function Results({ rows }: { rows: [string, string][] }) {
   );
 }
 
-function Savings() {
+function Savings({ ui }: { ui: UIStrings }) {
+  const euro = useEuro();
   const [initial, setInitial] = useState(10000);
   const [monthly, setMonthly] = useState(500);
   const [rate, setRate] = useState(5);
@@ -66,22 +75,23 @@ function Savings() {
 
   return (
     <>
-      <Field label="Starting amount" value={initial} onChange={setInitial} step={500} suffix="€" />
-      <Field label="Monthly contribution" value={monthly} onChange={setMonthly} step={50} suffix="€" />
-      <Field label="Annual return" value={rate} onChange={setRate} step={0.1} suffix="%" />
-      <Field label="Years" value={years} onChange={setYears} />
+      <Field label={ui.startingAmount} value={initial} onChange={setInitial} step={500} suffix="€" />
+      <Field label={ui.monthlyContribution} value={monthly} onChange={setMonthly} step={50} suffix="€" />
+      <Field label={ui.annualReturn} value={rate} onChange={setRate} step={0.1} suffix="%" />
+      <Field label={ui.years} value={years} onChange={setYears} />
       <Results
         rows={[
-          ["Future value", euro.format(future)],
-          ["Total invested", euro.format(invested)],
-          ["Growth earned", euro.format(future - invested)],
+          [ui.futureValue, euro.format(future)],
+          [ui.totalInvested, euro.format(invested)],
+          [ui.growthEarned, euro.format(future - invested)],
         ]}
       />
     </>
   );
 }
 
-function Loan() {
+function Loan({ ui }: { ui: UIStrings }) {
+  const euro = useEuro();
   const [principal, setPrincipal] = useState(300000);
   const [rate, setRate] = useState(3.8);
   const [years, setYears] = useState(25);
@@ -94,31 +104,31 @@ function Loan() {
 
   return (
     <>
-      <Field label="Loan amount" value={principal} onChange={setPrincipal} step={5000} suffix="€" />
-      <Field label="Annual interest" value={rate} onChange={setRate} step={0.1} suffix="%" />
-      <Field label="Years" value={years} onChange={setYears} />
+      <Field label={ui.loanAmount} value={principal} onChange={setPrincipal} step={5000} suffix="€" />
+      <Field label={ui.annualInterest} value={rate} onChange={setRate} step={0.1} suffix="%" />
+      <Field label={ui.years} value={years} onChange={setYears} />
       <Results
         rows={[
-          ["Monthly payment", euro.format(monthly)],
-          ["Total paid", euro.format(total)],
-          ["Total interest", euro.format(total - principal)],
+          [ui.monthlyPayment, euro.format(monthly)],
+          [ui.totalPaid, euro.format(total)],
+          [ui.totalInterest, euro.format(total - principal)],
         ]}
       />
     </>
   );
 }
 
-const TABS: [string, () => ReactNode][] = [
-  ["Savings", () => <Savings />],
-  ["Loan", () => <Loan />],
-];
-
 export function Finance() {
+  const ui = useUI();
   const [tab, setTab] = useState(0);
+  const tabs: [string, ReactNode][] = [
+    [ui.financeTabs[0], <Savings key="s" ui={ui} />],
+    [ui.financeTabs[1], <Loan key="l" ui={ui} />],
+  ];
   return (
     <div className="finance app-pad">
       <div className="settings-row-group">
-        {TABS.map(([name], idx) => (
+        {tabs.map(([name], idx) => (
           <button
             key={name}
             className={`settings-chip ${idx === tab ? "settings-chip-sel" : ""}`}
@@ -128,10 +138,8 @@ export function Finance() {
           </button>
         ))}
       </div>
-      <div className="fin-body">{TABS[tab][1]()}</div>
-      <p className="settings-hint">
-        Quick estimates with monthly compounding — not financial advice.
-      </p>
+      <div className="fin-body">{tabs[tab][1]}</div>
+      <p className="settings-hint">{ui.financeNote}</p>
     </div>
   );
 }
