@@ -1198,13 +1198,21 @@ button.mb-item:hover,
 }
 
 .tile-chromium {
-  background: linear-gradient(165deg, #fdfdfd, #dde5ef);
-  color: #2b57b7;
+  background: linear-gradient(165deg, #2a3342, #141b26);
+}
+
+.tile-chromium svg {
+  width: 74%;
+  height: 74%;
 }
 
 .tile-vscode {
-  background: linear-gradient(165deg, #fdfdfd, #dde5ef);
-  color: #007acc;
+  background: linear-gradient(165deg, #2a3342, #141b26);
+}
+
+.tile-vscode svg {
+  width: 74%;
+  height: 74%;
 }
 
 .tile-harapan {
