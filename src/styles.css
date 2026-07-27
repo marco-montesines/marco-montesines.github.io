@@ -1005,6 +1005,193 @@ button.mb-item:hover,
   overflow: auto;
 }
 
+/* ---------- system settings ---------- */
+
+.settings {
+  display: flex;
+  height: 100%;
+}
+
+.settings-side {
+  flex: none;
+  width: 168px;
+  padding: 0.6rem 0.45rem;
+  background: var(--cream);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+.settings-item {
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-radius: 7px;
+  cursor: default;
+}
+
+.settings-item:hover {
+  background: color-mix(in srgb, var(--muted) 16%, transparent);
+}
+
+.settings-item-sel,
+.settings-item-sel:hover {
+  background: var(--mango);
+  color: #ffffff;
+}
+
+.settings-content {
+  flex: 1;
+  padding: 1rem 1.2rem;
+  overflow-y: auto;
+}
+
+.settings-content h2 {
+  margin: 0 0 0.7rem;
+  font-size: 1.05rem;
+}
+
+.settings-hint {
+  color: var(--muted);
+  font-size: 0.83rem;
+  margin: 0 0 0.8rem;
+}
+
+.wp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.7rem;
+}
+
+.wp-thumb {
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.76rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0;
+  cursor: default;
+}
+
+.wp-art {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid transparent;
+}
+
+.wp-thumb:hover .wp-art {
+  border-color: color-mix(in srgb, var(--mango) 55%, transparent);
+}
+
+.wp-thumb-sel .wp-art,
+.wp-thumb-sel:hover .wp-art {
+  border-color: var(--mango);
+}
+
+.settings-row-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.settings-chip {
+  border: 1px solid var(--border);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.35rem 1rem;
+  border-radius: 8px;
+  cursor: default;
+}
+
+.settings-chip-sel {
+  background: var(--mango);
+  border-color: var(--mango);
+  color: #ffffff;
+}
+
+.settings-facts {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.settings-facts div {
+  display: flex;
+  gap: 0.8rem;
+  font-size: 0.85rem;
+}
+
+.settings-facts dt {
+  flex: none;
+  width: 118px;
+  color: var(--muted);
+}
+
+.settings-facts dd {
+  margin: 0;
+}
+
+.storage-bar {
+  display: flex;
+  height: 14px;
+  border-radius: 7px;
+  overflow: hidden;
+  margin-bottom: 0.7rem;
+}
+
+.storage-legend {
+  list-style: none;
+  margin: 0 0 0.9rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.storage-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.storage-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.settings-about {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+.settings-about .logo-avatar {
+  box-shadow: 0 0 0 2px rgba(167, 204, 78, 0.55);
+}
+
+.settings-about h3 {
+  margin: 0.2rem 0 0;
+  font-size: 1rem;
+}
+
 /* locked notes (references / certificates / diplomas) */
 .locked-note {
   height: 100%;
@@ -1302,6 +1489,16 @@ button.mb-item:hover,
 /* flat Spotify brand black — no gradient/effects behind the official icon */
 .tile-spotify {
   background: #191414;
+}
+
+.tile-settings {
+  background: linear-gradient(165deg, #2a3342, #141b26);
+  color: #94a2b3;
+}
+
+.tile-settings svg {
+  width: 74%;
+  height: 74%;
 }
 
 .tile-launchpad {

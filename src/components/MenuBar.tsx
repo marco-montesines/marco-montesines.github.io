@@ -261,6 +261,8 @@ export function MenuBar(props: MenuBarProps) {
       rows: [
         { label: "About This Marco", action: onAboutInfo },
         "sep",
+        { label: "System Settings…", action: () => openApp("settings") },
+        "sep",
         { label: "Sleep", action: onSleep },
         { label: "Restart…", action: onRestart },
         { label: "Shut Down…", action: onShutdown },

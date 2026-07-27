@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { AvatarLogo } from "../icons";
 
-const SPECS: [string, string][] = [
+export const SPECS: [string, string][] = [
   ["Chip", "Human Brain — 86 billion neurons"],
   ["Memory", "~2.5 PB associative (lossy, coffee-dependent)"],
   ["Power draw", "~20 W — outperforms any silicon per watt"],

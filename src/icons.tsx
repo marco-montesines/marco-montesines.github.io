@@ -115,6 +115,31 @@ function ChromiumIcon() {
   );
 }
 
+function SettingsIcon() {
+  return (
+    <>
+      <circle
+        cx="12"
+        cy="12"
+        r="3.4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.1"
+      />
+      <g stroke="currentColor" strokeWidth="2.1" strokeLinecap="round">
+        <path d="M12 2.6 V5.3" />
+        <path d="M12 18.7 V21.4" />
+        <path d="M2.6 12 H5.3" />
+        <path d="M18.7 12 H21.4" />
+        <path d="M5.35 5.35 L7.25 7.25" />
+        <path d="M16.75 16.75 L18.65 18.65" />
+        <path d="M18.65 5.35 L16.75 7.25" />
+        <path d="M5.35 18.65 L7.25 16.75" />
+      </g>
+    </>
+  );
+}
+
 /** Community-rebuilt VS Code ribbon from Devicon (MIT), flat variant. */
 function VSCodeIcon() {
   return (
@@ -195,6 +220,7 @@ const APP_ICONS: Record<AppId, () => ReturnType<typeof AboutIcon>> = {
   vscode: VSCodeIcon,
   harapan: HarapanIcon,
   spotify: SpotifyIcon,
+  settings: SettingsIcon,
   experience: ExperienceIcon,
   skills: SkillsIcon,
   projects: ProjectsIcon,

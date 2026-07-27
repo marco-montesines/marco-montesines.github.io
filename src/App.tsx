@@ -7,6 +7,7 @@ import { MangoNotes } from "./apps/MangoNotes";
 import { Spotify } from "./apps/Spotify";
 import { Markdown } from "./apps/Markdown";
 import { Projects } from "./apps/Projects";
+import { Settings } from "./apps/Settings";
 import { Skills } from "./apps/Skills";
 import { Terminal } from "./apps/Terminal";
 import { VSCode } from "./apps/VSCode";
@@ -22,6 +23,7 @@ import { Window } from "./components/Window";
 import { useRef } from "react";
 import type { AppId } from "./os/apps";
 import { TRACKS } from "./os/tracks";
+import { DEFAULT_WALLPAPER } from "./os/wallpapers";
 import { useWindowManager } from "./os/windowing";
 
 const BOOT_MS = 2000;
@@ -41,6 +43,14 @@ export default function App() {
   const [aboutInfo, setAboutInfo] = useState(false);
   const [call, setCall] = useState<"pending" | "ringing" | "done">("pending");
   const [callAccepted, setCallAccepted] = useState(false);
+  const [wallpaper, setWallpaper] = useState(
+    () => localStorage.getItem("wallpaper") ?? DEFAULT_WALLPAPER,
+  );
+
+  const changeWallpaper = (id: string) => {
+    setWallpaper(id);
+    localStorage.setItem("wallpaper", id);
+  };
   const [musicPlaying, setMusicPlaying] = useState(false);
   const [trackIdx, setTrackIdx] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -171,6 +181,15 @@ export default function App() {
         return <Harapan autoStart={callAccepted} />;
       case "spotify":
         return <Spotify />;
+      case "settings":
+        return (
+          <Settings
+            theme={theme}
+            setTheme={setTheme}
+            wallpaper={wallpaper}
+            setWallpaper={changeWallpaper}
+          />
+        );
       case "experience":
         return <Experience />;
       case "skills":
@@ -186,7 +205,7 @@ export default function App() {
 
   return (
     <div className="os" style={{ filter: `brightness(${brightness / 100})` }}>
-      <Wallpaper />
+      <Wallpaper id={wallpaper} />
       <BootScreen done={booted} />
       <MenuBar
         activeApp={wm.activeApp}
