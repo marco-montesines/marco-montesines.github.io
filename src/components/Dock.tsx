@@ -1,4 +1,4 @@
-import { AppTile, GitBranchIcon, LaunchpadIcon } from "../icons";
+import { AppTile, GitHubMarkIcon, LaunchpadIcon } from "../icons";
 import { APPS, type AppId } from "../os/apps";
 import type { OSWindow } from "../os/windowing";
 
@@ -49,7 +49,7 @@ export function Dock({ windows, activeApp, onLaunch, onLaunchpad }: DockProps) {
         rel="noreferrer"
       >
         <span className="tile tile-github">
-          <GitBranchIcon />
+          <GitHubMarkIcon />
         </span>
         <span className="dock-dot" />
       </a>

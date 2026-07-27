@@ -1,9 +1,9 @@
 import { useState, type ReactNode } from "react";
 
-const WELCOME = `# Sulat
+const WELCOME = `# Markdown
 
-*Tagalog for “write.”* A little markdown pad — type on the left,
-see it rendered on the right.
+A little markdown pad — type on the left, see it rendered on the
+right.
 
 ## What works
 
@@ -61,25 +61,25 @@ function render(md: string): ReactNode[] {
     if (line.startsWith("### ")) blocks.push(<h3 key={key++}>{inline(line.slice(4))}</h3>);
     else if (line.startsWith("## ")) blocks.push(<h2 key={key++}>{inline(line.slice(3))}</h2>);
     else if (line.startsWith("# ")) blocks.push(<h1 key={key++}>{inline(line.slice(2))}</h1>);
-    else if (line.trim() === "") blocks.push(<div key={key++} className="sulat-gap" />);
+    else if (line.trim() === "") blocks.push(<div key={key++} className="markdown-gap" />);
     else blocks.push(<p key={key++}>{inline(line)}</p>);
   }
   flushList();
   return blocks;
 }
 
-export function Sulat() {
+export function Markdown() {
   const [text, setText] = useState(WELCOME);
   return (
-    <div className="sulat">
+    <div className="markdown">
       <textarea
-        className="sulat-input"
+        className="markdown-input"
         value={text}
         onChange={(e) => setText(e.target.value)}
         spellCheck={false}
         aria-label="Markdown input"
       />
-      <div className="sulat-preview">{render(text)}</div>
+      <div className="markdown-preview">{render(text)}</div>
     </div>
   );
 }

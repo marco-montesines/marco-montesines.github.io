@@ -12,26 +12,26 @@ const FILES = [
   { name: "windowing.ts", note: "window manager", source: windowingSource },
 ];
 
-export function Likha() {
+export function VSCode() {
   const [view, setView] = useState<"editor" | "quick">("editor");
   const [selected, setSelected] = useState(0);
   const file = FILES[selected];
   return (
-    <div className="likha">
-      <div className="likha-top">
+    <div className="vscode">
+      <div className="vscode-top">
         <button
-          className={`likha-tab ${view === "editor" ? "likha-tab-sel" : ""}`}
+          className={`vscode-tab ${view === "editor" ? "vscode-tab-sel" : ""}`}
           onClick={() => setView("editor")}
         >
           Repo editor
         </button>
         <button
-          className={`likha-tab ${view === "quick" ? "likha-tab-sel" : ""}`}
+          className={`vscode-tab ${view === "quick" ? "vscode-tab-sel" : ""}`}
           onClick={() => setView("quick")}
         >
           Quick view
         </button>
-        <span className="likha-hint">
+        <span className="vscode-hint">
           this site's own source
           {view === "editor" && (
             <>
@@ -45,17 +45,17 @@ export function Likha() {
       </div>
       {view === "editor" ? (
         <iframe
-          className="likha-frame"
+          className="vscode-frame"
           src={REPO_EDITOR_URL}
           title="Repository in a web editor"
         />
       ) : (
-        <div className="likha-main">
-          <aside className="likha-side">
+        <div className="vscode-main">
+          <aside className="vscode-side">
             {FILES.map((f, i) => (
               <button
                 key={f.name}
-                className={`likha-file ${i === selected ? "likha-file-sel" : ""}`}
+                className={`vscode-file ${i === selected ? "vscode-file-sel" : ""}`}
                 onClick={() => setSelected(i)}
               >
                 {f.name}
@@ -63,7 +63,7 @@ export function Likha() {
               </button>
             ))}
           </aside>
-          <pre className="likha-code">
+          <pre className="vscode-code">
             <code>{file.source}</code>
           </pre>
         </div>

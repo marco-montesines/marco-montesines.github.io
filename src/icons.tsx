@@ -70,89 +70,61 @@ function ProjectsIcon() {
 function TerminalIcon() {
   return (
     <>
-      <rect
-        x="3.5"
-        y="4.5"
-        width="17"
-        height="15"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="2"
-        fill="none"
-      />
       <path
-        d="M7.5 9.5L10.5 12L7.5 14.5"
+        d="M4.5 6 L11.5 12 L4.5 18"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="2.8"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
       />
       <path
-        d="M12.5 15.5H16.5"
+        d="M13.5 18.5 H20"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="2.8"
         strokeLinecap="round"
       />
     </>
   );
 }
 
-function SulatIcon() {
+/** The Markdown mark (public domain, via Devicon), single color. */
+function MarkdownIcon() {
+  return (
+    <g transform="scale(0.1875)" fill="currentColor">
+      <path d="M11.95 24.348c-5.836 0-10.618 4.867-10.618 10.681v57.942c0 5.814 4.782 10.681 10.617 10.681h104.102c5.835 0 10.617-4.867 10.617-10.681V35.03c0-5.814-4.783-10.681-10.617-10.681H14.898l-.002-.002H11.95zm-.007 9.543h104.108c.625 0 1.076.423 1.076 1.14v57.94c0 .717-.453 1.14-1.076 1.14H11.949c-.623 0-1.076-.423-1.076-1.14V35.029c0-.715.451-1.135 1.07-1.138z" />
+      <path d="M20.721 84.1V43.9H32.42l11.697 14.78L55.81 43.9h11.696v40.2H55.81V61.044l-11.694 14.78-11.698-14.78V84.1H20.722zm73.104 0L76.28 64.591h11.697V43.9h11.698v20.69h11.698zm0 0" />
+    </g>
+  );
+}
+
+/**
+ * Flat recreation of the open-source Chromium roundel (blue shades only —
+ * never Chrome's red/yellow/green trademark colors).
+ */
+function ChromiumIcon() {
+  const sector = "M12 12 L3.34 7 A10 10 0 0 1 20.66 7 Z";
   return (
     <>
-      <path
-        d="M5 19 L6.2 14.8 L16.5 4.5 C17.3 3.7 18.6 3.7 19.4 4.5 C20.2 5.3 20.2 6.6 19.4 7.4 L9.1 17.7 Z"
-        fill="currentColor"
-      />
-      <path
-        d="M5 19 L9.1 17.7 L6.2 14.8 Z"
-        fill="currentColor"
-        opacity="0.55"
-      />
-      <path
-        d="M4.5 21 H19.5"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
+      <path d={sector} fill="#7fa6ee" />
+      <path d={sector} transform="rotate(120 12 12)" fill="#4577d6" />
+      <path d={sector} transform="rotate(240 12 12)" fill="#2b57b7" />
+      <circle cx="12" cy="12" r="4.7" fill="#e9eff9" />
+      <circle cx="12" cy="12" r="3.5" fill="#4c7fdd" />
     </>
   );
 }
 
-function HanapIcon() {
+/** Community-rebuilt VS Code ribbon from Devicon (MIT), flat variant. */
+function VSCodeIcon() {
   return (
-    <>
-      <circle
-        cx="10.5"
-        cy="10.5"
-        r="5.6"
-        stroke="currentColor"
-        strokeWidth="2.4"
-        fill="none"
-      />
+    <g transform="scale(0.1875)">
       <path
-        d="M14.8 14.8 L19.8 19.8"
-        stroke="currentColor"
-        strokeWidth="2.6"
-        strokeLinecap="round"
+        fill="#007acc"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M90.767 127.126a7.968 7.968 0 0 0 6.35-.244l26.353-12.681a8 8 0 0 0 4.53-7.209V21.009a8 8 0 0 0-4.53-7.21L97.117 1.12a7.97 7.97 0 0 0-9.093 1.548l-50.45 46.026L15.6 32.013a5.328 5.328 0 0 0-6.807.302l-7.048 6.411a5.335 5.335 0 0 0-.006 7.888L20.796 64 1.74 81.387a5.336 5.336 0 0 0 .006 7.887l7.048 6.411a5.327 5.327 0 0 0 6.807.303l21.974-16.68 50.45 46.025a7.96 7.96 0 0 0 2.743 1.793Zm5.252-92.183L57.74 64l38.28 29.058V34.943Z"
       />
-    </>
-  );
-}
-
-function LikhaIcon() {
-  return (
-    <g
-      stroke="currentColor"
-      strokeWidth="2.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-    >
-      <path d="M8 7 L3.5 12 L8 17" />
-      <path d="M16 7 L20.5 12 L16 17" />
-      <path d="M13.2 5 L10.8 19" />
     </g>
   );
 }
@@ -176,16 +148,6 @@ function HarapanIcon() {
   );
 }
 
-function BrowserIcon() {
-  return (
-    <g stroke="currentColor" strokeWidth="1.8" fill="none">
-      <circle cx="12" cy="12" r="8.2" />
-      <ellipse cx="12" cy="12" rx="3.7" ry="8.2" />
-      <path d="M4.4 9.3 H19.6 M4.4 14.7 H19.6" />
-    </g>
-  );
-}
-
 function SpotifyIcon() {
   return (
     <>
@@ -202,15 +164,21 @@ function SpotifyIcon() {
   );
 }
 
-export function GitBranchIcon() {
+/**
+ * GitHub mark via Devicon (MIT). GitHub's logo policy permits the mark on
+ * a personal site strictly to link to a GitHub profile — that is its only
+ * use here; don't reuse it for anything that isn't a link to GitHub.
+ */
+export function GitHubMarkIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
-      <g stroke="currentColor" strokeWidth="2" fill="none">
-        <circle cx="7" cy="5.5" r="2.4" />
-        <circle cx="7" cy="18.5" r="2.4" />
-        <circle cx="17.5" cy="8" r="2.4" />
-        <path d="M7 8 V16" />
-        <path d="M17.5 10.5 C17.5 14 14 14.5 9.5 15.5" />
+    <svg width="26" height="26" viewBox="0 0 128 128" aria-hidden="true">
+      <g fill="currentColor">
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M64 5.103c-33.347 0-60.388 27.035-60.388 60.388 0 26.682 17.303 49.317 41.297 57.303 3.017.56 4.125-1.31 4.125-2.905 0-1.44-.056-6.197-.082-11.243-16.8 3.653-20.345-7.125-20.345-7.125-2.747-6.98-6.705-8.836-6.705-8.836-5.48-3.748.413-3.67.413-3.67 6.063.425 9.257 6.223 9.257 6.223 5.386 9.23 14.127 6.562 17.573 5.02.542-3.903 2.107-6.568 3.834-8.076-13.413-1.525-27.514-6.704-27.514-29.843 0-6.593 2.36-11.98 6.223-16.21-.628-1.52-2.695-7.662.584-15.98 0 0 5.07-1.623 16.61 6.19C53.7 35 58.867 34.327 64 34.304c5.13.023 10.3.694 15.127 2.033 11.526-7.813 16.59-6.19 16.59-6.19 3.287 8.317 1.22 14.46.593 15.98 3.872 4.23 6.215 9.617 6.215 16.21 0 23.194-14.127 28.3-27.574 29.796 2.167 1.874 4.097 5.55 4.097 11.183 0 8.08-.07 14.583-.07 16.572 0 1.607 1.088 3.49 4.148 2.897 23.98-7.994 41.263-30.622 41.263-57.294C124.388 32.14 97.35 5.104 64 5.104z"
+        />
+        <path d="M26.484 91.806c-.133.3-.605.39-1.035.185-.44-.196-.685-.605-.543-.906.13-.31.603-.395 1.04-.188.44.197.69.61.537.91zm2.446 2.729c-.287.267-.85.143-1.232-.28-.396-.42-.47-.983-.177-1.254.298-.266.844-.14 1.24.28.394.426.472.984.17 1.255zM31.312 98.012c-.37.258-.976.017-1.35-.52-.37-.538-.37-1.183.01-1.44.373-.258.97-.025 1.35.507.368.545.368 1.19-.01 1.452zm3.261 3.361c-.33.365-1.036.267-1.552-.23-.527-.487-.674-1.18-.343-1.544.336-.366 1.045-.264 1.564.23.527.486.686 1.18.333 1.543zm4.5 1.951c-.147.473-.825.688-1.51.486-.683-.207-1.13-.76-.99-1.238.14-.477.823-.7 1.512-.485.683.206 1.13.756.988 1.237zm4.943.361c.017.498-.563.91-1.28.92-.723.017-1.308-.387-1.315-.877 0-.503.568-.91 1.29-.924.717-.013 1.306.387 1.306.88zm4.598-.782c.086.485-.413.984-1.126 1.117-.7.13-1.35-.172-1.44-.653-.086-.498.422-.997 1.122-1.126.714-.123 1.354.17 1.444.663zm0 0" />
       </g>
     </svg>
   );
@@ -219,11 +187,10 @@ export function GitBranchIcon() {
 const APP_ICONS: Record<AppId, () => ReturnType<typeof AboutIcon>> = {
   about: AboutIcon,
   mango: AboutIcon,
-  sulat: SulatIcon,
-  hanap: HanapIcon,
-  likha: LikhaIcon,
+  markdown: MarkdownIcon,
+  chromium: ChromiumIcon,
+  vscode: VSCodeIcon,
   harapan: HarapanIcon,
-  browser: BrowserIcon,
   spotify: SpotifyIcon,
   experience: ExperienceIcon,
   skills: SkillsIcon,

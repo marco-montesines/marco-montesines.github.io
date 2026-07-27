@@ -16,9 +16,9 @@ const BOOKMARKS: Bookmark[] = [
   ...bio.links.map((l) => ({ label: l.label, href: l.href, external: true })),
 ];
 
-const START = "hanap://start";
+const START = "chromium://start";
 
-export function Hanap() {
+export function Chromium() {
   const [history, setHistory] = useState<string[]>([]);
   const [typed, setTyped] = useState("");
   const [frameKey, setFrameKey] = useState(0);
@@ -48,10 +48,10 @@ export function Hanap() {
   };
 
   return (
-    <div className="hanap">
-      <div className="hanap-toolbar">
+    <div className="chromium">
+      <div className="chromium-toolbar">
         <button
-          className="hanap-nav"
+          className="chromium-nav"
           aria-label="Back"
           disabled={!url}
           onClick={back}
@@ -68,7 +68,7 @@ export function Hanap() {
           </svg>
         </button>
         <button
-          className="hanap-nav"
+          className="chromium-nav"
           aria-label="Reload"
           onClick={() => setFrameKey((k) => k + 1)}
         >
@@ -82,7 +82,7 @@ export function Hanap() {
             />
           </svg>
         </button>
-        <div className="hanap-address">
+        <div className="chromium-address">
           <svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true">
             <rect
               x="3.5"
@@ -110,7 +110,7 @@ export function Hanap() {
           />
         </div>
         <button
-          className="hanap-nav"
+          className="chromium-nav"
           aria-label="Open current page in a new tab"
           disabled={!url}
           onClick={() => url && window.open(url, "_blank", "noopener")}
@@ -131,30 +131,30 @@ export function Hanap() {
       {url ? (
         <iframe
           key={`${frameKey}-${url}`}
-          className="hanap-frame"
+          className="chromium-frame"
           src={url}
-          title="Hanap browser content"
+          title="Chromium browser content"
         />
       ) : (
-        <div className="hanap-start">
-          <h1>Hanap</h1>
-          <p className="hanap-tag">
-            Tagalog for “find.” Type an address or search above — some sites
+        <div className="chromium-start">
+          <h1>Chromium</h1>
+          <p className="chromium-tag">
+            Type an address or search above — some sites
             forbid embedding and stay blank; use the open-in-new-tab button
             then. Favorites:
           </p>
-          <div className="hanap-grid">
+          <div className="chromium-grid">
             {BOOKMARKS.map((b) => (
               <button
                 key={b.href}
-                className="hanap-card"
+                className="chromium-card"
                 onClick={() =>
                   b.external
                     ? window.open(b.href, "_blank", "noopener")
                     : visit(b.href)
                 }
               >
-                <span className="hanap-fav">{b.label[0].toUpperCase()}</span>
+                <span className="chromium-fav">{b.label[0].toUpperCase()}</span>
                 {b.label}
               </button>
             ))}

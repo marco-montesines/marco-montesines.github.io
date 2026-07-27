@@ -1,16 +1,15 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { About } from "./apps/About";
-import { Browser } from "./apps/Browser";
 import { Experience } from "./apps/Experience";
-import { Hanap } from "./apps/Hanap";
+import { Chromium } from "./apps/Chromium";
 import { Harapan } from "./apps/Harapan";
-import { Likha } from "./apps/Likha";
 import { MangoNotes } from "./apps/MangoNotes";
 import { Spotify } from "./apps/Spotify";
-import { Sulat } from "./apps/Sulat";
+import { Markdown } from "./apps/Markdown";
 import { Projects } from "./apps/Projects";
 import { Skills } from "./apps/Skills";
 import { Terminal } from "./apps/Terminal";
+import { VSCode } from "./apps/VSCode";
 import { AboutDialog } from "./components/AboutDialog";
 import { BootScreen } from "./components/BootScreen";
 import { Dock } from "./components/Dock";
@@ -152,16 +151,14 @@ export default function App() {
         return <About />;
       case "mango":
         return <MangoNotes />;
-      case "sulat":
-        return <Sulat />;
-      case "hanap":
-        return <Hanap />;
-      case "likha":
-        return <Likha />;
+      case "markdown":
+        return <Markdown />;
+      case "chromium":
+        return <Chromium />;
+      case "vscode":
+        return <VSCode />;
       case "harapan":
         return <Harapan />;
-      case "browser":
-        return <Browser />;
       case "spotify":
         return <Spotify />;
       case "experience":

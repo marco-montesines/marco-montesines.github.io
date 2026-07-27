@@ -1,11 +1,10 @@
 export type AppId =
   | "about"
   | "mango"
-  | "sulat"
-  | "hanap"
-  | "likha"
+  | "markdown"
+  | "chromium"
+  | "vscode"
   | "harapan"
-  | "browser"
   | "spotify"
   | "experience"
   | "skills"
@@ -35,11 +34,10 @@ export const APPS: AppMeta[] = [
     hidden: true,
   },
   { id: "mango", title: "Marco", w: 820, h: 560, wf: 0.64, hf: 0.75 },
-  { id: "sulat", title: "Sulat", w: 720, h: 480, wf: 0.56, hf: 0.66 },
-  { id: "hanap", title: "Hanap", w: 700, h: 500, wf: 0.52, hf: 0.66 },
-  { id: "likha", title: "Likha", w: 780, h: 540, wf: 0.6, hf: 0.72 },
+  { id: "markdown", title: "Markdown", w: 720, h: 480, wf: 0.56, hf: 0.66 },
+  { id: "chromium", title: "Chromium", w: 700, h: 500, wf: 0.52, hf: 0.66 },
+  { id: "vscode", title: "VS Code", w: 780, h: 540, wf: 0.6, hf: 0.72 },
   { id: "harapan", title: "Harapan", w: 540, h: 460, wf: 0.42, hf: 0.62 },
-  { id: "browser", title: "Browser", w: 640, h: 480, wf: 0.62, hf: 0.75 },
   { id: "spotify", title: "Spotify", w: 380, h: 480, wf: 0.3, hf: 0.7 },
   {
     id: "experience",

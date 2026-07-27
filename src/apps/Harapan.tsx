@@ -35,7 +35,7 @@ export function Harapan() {
       ) : (
         <div className="harapan-idle">
           <p>
-            <strong>Harapan</strong> — Tagalog for “face-to-face.”
+            <strong>Harapan</strong>
           </p>
           {state === "denied" ? (
             <p className="harapan-note">
