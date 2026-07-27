@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { AppTile, GitHubMarkIcon, LaunchpadIcon } from "../icons";
+import { openInBrowser } from "../os/browserBus";
 import { APPS, type AppId } from "../os/apps";
 import type { OSWindow } from "../os/windowing";
 
@@ -89,8 +90,10 @@ export function Dock({ windows, activeApp, onLaunch, onLaunchpad }: DockProps) {
         data-title="GitHub"
         aria-label="GitHub"
         href="https://github.com/marco-montesines"
-        target="_blank"
-        rel="noreferrer"
+        onClick={(e) => {
+          e.preventDefault();
+          openInBrowser("https://github.com/marco-montesines");
+        }}
       >
         <span className="tile tile-github">
           <GitHubMarkIcon />

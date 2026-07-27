@@ -1614,6 +1614,21 @@ button.mb-item:hover,
   background: var(--mango-deep);
 }
 
+.chromium-open {
+  border: 0;
+  border-radius: 8px;
+  background: var(--mango);
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+}
+
+.chromium-open:hover {
+  background: var(--mango-deep);
+}
+
 /* ---------- incoming call banner ---------- */
 
 .call-banner {

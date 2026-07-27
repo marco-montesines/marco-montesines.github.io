@@ -98,6 +98,9 @@ export const UI = {
     interestPaid: "Interest paid",
     capitalLabel: "Capital",
     targetLabel: "Target",
+    blockedNote: (host: string) =>
+      `${host} doesn’t allow being embedded — open it in a new tab instead.`,
+    openNewTab: "Open in new tab",
     calcTypeLabel: "Calculation type",
     calcTypeOptions: ["One-time investment", "Regular deposits"],
     intervalLabel: "Compounding interval",
@@ -219,6 +222,9 @@ export const UI = {
     interestPaid: "Gezahlte Zinsen",
     capitalLabel: "Kapital",
     targetLabel: "Ziel",
+    blockedNote: (host: string) =>
+      `${host} erlaubt kein Einbetten — öffne die Seite stattdessen in einem neuen Tab.`,
+    openNewTab: "In neuem Tab öffnen",
     calcTypeLabel: "Berechnungsart",
     calcTypeOptions: ["Einmalige Anlage", "Regelmäßige Einzahlungen"],
     intervalLabel: "Verzinsungsintervall",

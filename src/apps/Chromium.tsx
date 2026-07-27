@@ -1,6 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import { bio } from "../content";
+import { useUI } from "../i18n";
 import { consumePendingUrl, onBrowserNavigate } from "../os/browserBus";
+
+/** Hosts that send X-Frame-Options / frame-ancestors and stay blank. */
+const FRAME_BLOCKED = [
+  "github.com",
+  "linkedin.com",
+  "gitlab.com",
+  "pkg.go.dev",
+];
+
+const blockedHost = (url: string): string | null => {
+  try {
+    const host = new URL(url).hostname;
+    return FRAME_BLOCKED.some((b) => host === b || host.endsWith(`.${b}`))
+      ? host
+      : null;
+  } catch {
+    return null;
+  }
+};
 
 interface Bookmark {
   label: string;
@@ -20,6 +40,7 @@ const BOOKMARKS: Bookmark[] = [
 const START = "chromium://start";
 
 export function Chromium() {
+  const ui = useUI();
   const [history, setHistory] = useState<string[]>([]);
   const [typed, setTyped] = useState("");
   const [frameKey, setFrameKey] = useState(0);
@@ -141,7 +162,18 @@ export function Chromium() {
           </svg>
         </button>
       </div>
-      {url ? (
+      {url && blockedHost(url) ? (
+        <div className="chromium-start">
+          <h1>{blockedHost(url)}</h1>
+          <p className="chromium-tag">{ui.blockedNote(blockedHost(url)!)}</p>
+          <button
+            className="chromium-open"
+            onClick={() => window.open(url, "_blank", "noopener")}
+          >
+            {ui.openNewTab}
+          </button>
+        </div>
+      ) : url ? (
         <iframe
           key={`${frameKey}-${url}`}
           className="chromium-frame"

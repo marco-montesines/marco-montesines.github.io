@@ -1,4 +1,5 @@
 import { useContent, useUI } from "../i18n";
+import { openInBrowser } from "../os/browserBus";
 
 export function About() {
   const { bio, recommendations } = useContent();
@@ -12,7 +13,14 @@ export function About() {
       <p>{bio.about}</p>
       <p className="about-links">
         {bio.links.map((l) => (
-          <a key={l.href} href={l.href} target="_blank" rel="noreferrer">
+          <a
+            key={l.href}
+            href={l.href}
+            onClick={(e) => {
+              e.preventDefault();
+              openInBrowser(l.href);
+            }}
+          >
             {l.label}
           </a>
         ))}
