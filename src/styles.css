@@ -1251,9 +1251,13 @@ button.mb-item:hover,
 }
 
 .tile-terminal {
-  background: linear-gradient(165deg, #1c2430, #0b1220);
+  background: linear-gradient(165deg, #2a3342, #141b26);
   color: #7ba00f;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tile-terminal svg {
+  width: 74%;
+  height: 74%;
 }
 
 /* flat Spotify brand black — no gradient/effects behind the official icon */
