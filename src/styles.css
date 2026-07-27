@@ -1005,6 +1005,86 @@ button.mb-item:hover,
   overflow: auto;
 }
 
+/* ---------- incoming call banner ---------- */
+
+.call-banner {
+  position: fixed;
+  top: 40px;
+  right: 14px;
+  z-index: 900;
+  display: flex;
+  gap: 0.7rem;
+  width: 280px;
+  padding: 0.7rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: 14px;
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  animation: call-in 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes call-in {
+  from {
+    transform: translateY(-70px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .call-banner {
+    animation: none;
+  }
+}
+
+.call-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 0.85rem;
+}
+
+.call-info span {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.call-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.45rem;
+}
+
+.call-actions button {
+  flex: 1;
+  border: 0;
+  border-radius: 7px;
+  padding: 0.32rem 0;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.call-decline {
+  background: #c25630;
+}
+
+.call-decline:hover {
+  background: #a84824;
+}
+
+.call-accept {
+  background: var(--mango);
+}
+
+.call-accept:hover {
+  background: var(--mango-deep);
+}
+
 /* ---------- embedded apps ---------- */
 
 .app-frame {
@@ -1816,6 +1896,38 @@ button.mb-item:hover,
   color: #e2e8f0;
   padding: 1.5rem;
   max-width: 26rem;
+}
+
+/* camera-declined fallback: profile card with contact links (no plain-text
+   contact details — links only) */
+.harapan-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.harapan-card .logo-avatar {
+  box-shadow: 0 0 0 3px rgba(167, 204, 78, 0.55);
+}
+
+.harapan-links {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.harapan-links a {
+  background: #2a3342;
+  color: #e2e8f0;
+  text-decoration: none;
+  padding: 0.35rem 0.9rem;
+  border-radius: 7px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.harapan-links a:hover {
+  background: #3a4657;
 }
 
 .harapan-note {

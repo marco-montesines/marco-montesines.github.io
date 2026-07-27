@@ -12,6 +12,7 @@ import { Terminal } from "./apps/Terminal";
 import { VSCode } from "./apps/VSCode";
 import { AboutDialog } from "./components/AboutDialog";
 import { BootScreen } from "./components/BootScreen";
+import { CallBanner } from "./components/CallBanner";
 import { Dock } from "./components/Dock";
 import { Launchpad } from "./components/Launchpad";
 import { MenuBar, type Theme } from "./components/MenuBar";
@@ -38,6 +39,8 @@ export default function App() {
   const [spotlight, setSpotlight] = useState(false);
   const [launchpad, setLaunchpad] = useState(false);
   const [aboutInfo, setAboutInfo] = useState(false);
+  const [call, setCall] = useState<"pending" | "ringing" | "done">("pending");
+  const [callAccepted, setCallAccepted] = useState(false);
   const [musicPlaying, setMusicPlaying] = useState(false);
   const [trackIdx, setTrackIdx] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -145,6 +148,13 @@ export default function App() {
     if (booted) openGreeter("mango");
   }, [booted, openGreeter]);
 
+  // A “Recruiter” video call rings shortly after the desktop appears.
+  useEffect(() => {
+    if (!booted || call !== "pending") return;
+    const t = setTimeout(() => setCall("ringing"), 6000);
+    return () => clearTimeout(t);
+  }, [booted, call]);
+
   const appBody = (id: AppId): ReactNode => {
     switch (id) {
       case "about":
@@ -158,7 +168,7 @@ export default function App() {
       case "vscode":
         return <VSCode />;
       case "harapan":
-        return <Harapan />;
+        return <Harapan autoStart={callAccepted} />;
       case "spotify":
         return <Spotify />;
       case "experience":
@@ -238,6 +248,16 @@ export default function App() {
             </svg>
           </button>
         </div>
+      )}
+      {call === "ringing" && power === "on" && (
+        <CallBanner
+          onAccept={() => {
+            setCall("done");
+            setCallAccepted(true);
+            wm.open("harapan");
+          }}
+          onDecline={() => setCall("done")}
+        />
       )}
       {spotlight && (
         <Spotlight onLaunch={wm.open} onClose={() => setSpotlight(false)} />

@@ -1,25 +1,38 @@
 import { useEffect, useRef, useState } from "react";
+import { bio } from "../content";
+import { AvatarLogo } from "../icons";
 
 type CamState = "idle" | "active" | "denied";
 
-export function Harapan() {
+export function Harapan({ autoStart = false }: { autoStart?: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const [state, setState] = useState<CamState>("idle");
+  const autoStartRef = useRef(autoStart);
 
   const start = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
+      streamRef.current = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: false,
       });
-      streamRef.current = stream;
-      if (videoRef.current) videoRef.current.srcObject = stream;
       setState("active");
     } catch {
       setState("denied");
     }
   };
+
+  // The <video> only mounts once state flips to active — attach then.
+  useEffect(() => {
+    if (state === "active" && videoRef.current && streamRef.current) {
+      videoRef.current.srcObject = streamRef.current;
+    }
+  }, [state]);
+
+  // Opened by accepting the incoming call: go straight to the camera.
+  useEffect(() => {
+    if (autoStartRef.current) void start();
+  }, []);
 
   useEffect(
     () => () => {
@@ -38,9 +51,24 @@ export function Harapan() {
             <strong>Harapan</strong>
           </p>
           {state === "denied" ? (
-            <p className="harapan-note">
-              Camera access was declined — nothing to see here (literally).
-            </p>
+            <div className="harapan-card">
+              <AvatarLogo size={72} />
+              <p className="harapan-note">
+                Camera feed offline — let’s connect instead.
+              </p>
+              <div className="harapan-links">
+                {bio.links.map((l) => (
+                  <a
+                    key={l.href}
+                    href={l.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {l.label}
+                  </a>
+                ))}
+              </div>
+            </div>
           ) : (
             <>
               <p className="harapan-note">
