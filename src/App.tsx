@@ -173,7 +173,10 @@ export default function App() {
     if (call !== "ringing" || power !== "on") return;
     const ctx = new AudioContext();
     void ctx.resume();
+    const master = ctx.createGain();
+    master.connect(ctx.destination);
     const chime = () => {
+      if (ctx.state === "closed") return;
       [659.25, 830.61, 987.77].forEach((freq, i) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
@@ -183,7 +186,7 @@ export default function App() {
         gain.gain.setValueAtTime(0, t);
         gain.gain.linearRampToValueAtTime(0.16 * (volume / 100), t + 0.03);
         gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
-        osc.connect(gain).connect(ctx.destination);
+        osc.connect(gain).connect(master);
         osc.start(t);
         osc.stop(t + 0.55);
       });
@@ -192,6 +195,9 @@ export default function App() {
     const iv = setInterval(chime, 2100);
     return () => {
       clearInterval(iv);
+      // silence instantly — close() alone is async and can let a chime tail out
+      master.gain.value = 0;
+      master.disconnect();
       void ctx.close();
     };
   }, [call, power, volume]);
