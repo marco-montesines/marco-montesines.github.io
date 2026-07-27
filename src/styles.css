@@ -1468,11 +1468,8 @@ button.mb-item:hover,
   border: none;
   background: transparent;
   cursor: default;
-  transition: transform 0.12s ease;
-}
-
-.dock-item:hover {
-  transform: translateY(-8px) scale(1.14);
+  transform-origin: bottom center;
+  transition: transform 0.09s ease-out;
 }
 
 /* name bubble above the hovered icon */
