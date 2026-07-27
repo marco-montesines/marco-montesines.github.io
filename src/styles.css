@@ -1314,6 +1314,14 @@ button.mb-item:hover,
   gap: 0.45rem 1.4rem;
 }
 
+.fin-info {
+  display: inline-block;
+  margin-left: 0.35rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+  cursor: help;
+}
+
 .fin-select {
   max-width: 62%;
   border: 1px solid var(--border);

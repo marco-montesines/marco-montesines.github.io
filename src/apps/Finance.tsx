@@ -10,6 +10,9 @@ const TAX_RATES: (number | null)[] = [
   26.375, 27.819, 27.99, 18.46, 19.47, 19.59, 27.5, 0, null,
 ];
 
+/** Compounding periods per year, parallel to ui.intervalOptions. */
+const INTERVALS = [1, 2, 4, 12, 365];
+
 const useFmt = () => {
   const locale = intlLocale(useLocale());
   return useMemo(
@@ -28,22 +31,36 @@ const useFmt = () => {
   );
 };
 
+function Info({ text }: { text?: string }) {
+  if (!text) return null;
+  return (
+    <span className="fin-info" title={text} aria-label={text} role="img">
+      ⓘ
+    </span>
+  );
+}
+
 function Field({
   label,
   value,
   onChange,
   step = 1,
   suffix,
+  info,
 }: {
   label: string;
   value: number;
   onChange: (n: number) => void;
   step?: number;
   suffix?: string;
+  info?: string;
 }) {
   return (
     <label className="fin-field">
-      <span>{label}</span>
+      <span>
+        {label}
+        <Info text={info} />
+      </span>
       <span className="fin-input">
         <input
           type="number"
@@ -54,6 +71,40 @@ function Field({
         />
         {suffix && <em>{suffix}</em>}
       </span>
+    </label>
+  );
+}
+
+function SelectField({
+  label,
+  value,
+  onChange,
+  options,
+  info,
+}: {
+  label: string;
+  value: number;
+  onChange: (n: number) => void;
+  options: readonly string[];
+  info?: string;
+}) {
+  return (
+    <label className="fin-field">
+      <span>
+        {label}
+        <Info text={info} />
+      </span>
+      <select
+        className="fin-select"
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+      >
+        {options.map((o, idx) => (
+          <option key={o} value={idx}>
+            {o}
+          </option>
+        ))}
+      </select>
     </label>
   );
 }
@@ -284,25 +335,32 @@ const C2 = "var(--chart-2)";
 
 function Savings({ ui }: { ui: UIStrings }) {
   const fmt = useFmt();
+  const [mode, setMode] = useState(1); // 0 one-time, 1 regular deposits
   const [initial, setInitial] = useState(10000);
   const [monthly, setMonthly] = useState(500);
   const [rate, setRate] = useState(5);
   const [years, setYears] = useState(20);
+  const [intervalIdx, setIntervalIdx] = useState(0);
   const [taxIdx, setTaxIdx] = useState(0);
   const [customRate, setCustomRate] = useState(26.375);
   const [allowance, setAllowance] = useState(1000);
   const taxRate = (TAX_RATES[taxIdx] ?? customRate) / 100;
 
-  const i = rate / 100 / 12;
+  const deposit = mode === 1 ? monthly : 0;
+  const m = INTERVALS[intervalIdx];
+  // nominal annual rate compounded m times/year, expressed per month
+  const monthlyFactor = (1 + rate / 100 / m) ** (m / 12);
   const yr = Math.max(1, Math.min(60, Math.round(years)));
-  const contributions: number[] = [];
-  const growth: number[] = [];
-  for (let t = 0; t <= yr; t++) {
-    const n = t * 12;
-    const g = (1 + i) ** n;
-    const total = i === 0 ? initial + monthly * n : initial * g + monthly * ((g - 1) / i);
-    contributions.push(initial + monthly * n);
-    growth.push(total - (initial + monthly * n));
+  const contributions: number[] = [initial];
+  const growth: number[] = [0];
+  let cap = initial;
+  for (let month = 1; month <= yr * 12; month++) {
+    cap = cap * monthlyFactor + deposit;
+    if (month % 12 === 0) {
+      const paidIn = initial + deposit * month;
+      contributions.push(paidIn);
+      growth.push(cap - paidIn);
+    }
   }
   const future = contributions[yr] + growth[yr];
   const tax = Math.max(0, growth[yr] - allowance * yr) * taxRate;
@@ -321,31 +379,40 @@ function Savings({ ui }: { ui: UIStrings }) {
 
   return (
     <>
+      <SelectField
+        label={ui.calcTypeLabel}
+        value={mode}
+        onChange={setMode}
+        options={ui.calcTypeOptions}
+        info={ui.infoCalcType}
+      />
       <div className="fin-grid">
-        <Field label={ui.startingAmount} value={initial} onChange={setInitial} step={500} suffix="€" />
-        <Field label={ui.monthlyContribution} value={monthly} onChange={setMonthly} step={50} suffix="€" />
-        <Field label={ui.annualReturn} value={rate} onChange={setRate} step={0.1} suffix="%" />
-        <Field label={ui.years} value={years} onChange={setYears} />
+        <Field label={ui.startingAmount} value={initial} onChange={setInitial} step={500} suffix="€" info={ui.infoStarting} />
+        {mode === 1 && (
+          <Field label={ui.monthlyContribution} value={monthly} onChange={setMonthly} step={50} suffix="€" info={ui.infoMonthly} />
+        )}
+        <Field label={ui.annualReturn} value={rate} onChange={setRate} step={0.1} suffix="%" info={ui.infoReturn} />
+        <Field label={ui.years} value={years} onChange={setYears} info={ui.infoYears} />
       </div>
-      <label className="fin-field">
-        <span>{ui.taxRateLabel}</span>
-        <select
-          className="fin-select"
-          value={taxIdx}
-          onChange={(e) => setTaxIdx(Number(e.target.value))}
-        >
-          {ui.taxOptions.map((label, idx) => (
-            <option key={label} value={idx}>
-              {label}
-            </option>
-          ))}
-        </select>
-      </label>
+      <SelectField
+        label={ui.intervalLabel}
+        value={intervalIdx}
+        onChange={setIntervalIdx}
+        options={ui.intervalOptions}
+        info={ui.infoInterval}
+      />
+      <SelectField
+        label={ui.taxRateLabel}
+        value={taxIdx}
+        onChange={setTaxIdx}
+        options={ui.taxOptions}
+        info={ui.infoTax}
+      />
       {TAX_RATES[taxIdx] === null && (
         <Field label={ui.taxRateLabel} value={customRate} onChange={setCustomRate} step={0.1} suffix="%" />
       )}
       {taxRate > 0 && (
-        <Field label={ui.allowanceLabel} value={allowance} onChange={setAllowance} step={100} suffix="€" />
+        <Field label={ui.allowanceLabel} value={allowance} onChange={setAllowance} step={100} suffix="€" info={ui.infoAllowance} />
       )}
       <Chart
         stacked
@@ -438,7 +505,7 @@ function Freedom({ ui }: { ui: UIStrings }) {
     <>
       <div className="fin-grid">
         <Field label={ui.monthlyExpenses} value={expenses} onChange={setExpenses} step={100} suffix="€" />
-        <Field label={ui.withdrawalRate} value={withdrawal} onChange={setWithdrawal} step={0.5} suffix="%" />
+        <Field label={ui.withdrawalRate} value={withdrawal} onChange={setWithdrawal} step={0.5} suffix="%" info={ui.infoWithdrawal} />
         <Field label={ui.startingAmount} value={initial} onChange={setInitial} step={1000} suffix="€" />
         <Field label={ui.monthlyContribution} value={monthly} onChange={setMonthly} step={50} suffix="€" />
         <Field label={ui.annualReturn} value={rate} onChange={setRate} step={0.5} suffix="%" />

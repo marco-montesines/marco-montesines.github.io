@@ -98,6 +98,23 @@ export const UI = {
     interestPaid: "Interest paid",
     capitalLabel: "Capital",
     targetLabel: "Target",
+    calcTypeLabel: "Calculation type",
+    calcTypeOptions: ["One-time investment", "Regular deposits"],
+    intervalLabel: "Compounding interval",
+    intervalOptions: ["Yearly", "Half-yearly", "Quarterly", "Monthly", "Daily"],
+    infoCalcType:
+      "Invest once at the start, or keep adding a savings rate on top.",
+    infoStarting: "The amount you invest at the start.",
+    infoMonthly: "The amount you add every month.",
+    infoReturn: "Expected return per year, before taxes.",
+    infoYears: "How long the money stays invested, in years.",
+    infoInterval: "How often interest is credited and starts compounding.",
+    infoTax:
+      "Tax withheld on investment gains — pick your situation or a custom rate.",
+    infoAllowance:
+      "Sparerpauschbetrag: in Germany the first €1,000 of gains per year (€2,000 for couples) is tax-free.",
+    infoWithdrawal:
+      "The share of your capital you withdraw per year once financially free — 4 % is the classic rule of thumb.",
     taxRateLabel: "Capital-gains tax",
     taxOptions: [
       "26.375 % (DE — 25 % + solidarity surcharge)",
@@ -202,6 +219,30 @@ export const UI = {
     interestPaid: "Gezahlte Zinsen",
     capitalLabel: "Kapital",
     targetLabel: "Ziel",
+    calcTypeLabel: "Berechnungsart",
+    calcTypeOptions: ["Einmalige Anlage", "Regelmäßige Einzahlungen"],
+    intervalLabel: "Verzinsungsintervall",
+    intervalOptions: [
+      "Jährlich",
+      "Halbjährlich",
+      "Vierteljährlich",
+      "Monatlich",
+      "Täglich",
+    ],
+    infoCalcType:
+      "Einmal zu Beginn anlegen oder zusätzlich regelmäßig einzahlen.",
+    infoStarting: "Der Betrag, den du zu Beginn anlegst.",
+    infoMonthly: "Der Betrag, den du jeden Monat zusätzlich einzahlst.",
+    infoReturn: "Erwartete Rendite pro Jahr, vor Steuern.",
+    infoYears: "Wie lange das Geld angelegt bleibt, in Jahren.",
+    infoInterval:
+      "Wie oft Zinsen gutgeschrieben werden und mitverzinst werden.",
+    infoTax:
+      "Steuer auf Kapitalerträge — wähle deine Situation oder einen eigenen Satz.",
+    infoAllowance:
+      "Sparerpauschbetrag: In Deutschland sind die ersten 1.000 € Ertrag pro Jahr steuerfrei (2.000 € bei Zusammenveranlagung).",
+    infoWithdrawal:
+      "Der Anteil deines Kapitals, den du nach der finanziellen Freiheit pro Jahr entnimmst — 4 % ist die klassische Faustregel.",
     taxRateLabel: "Kapitalertragsteuer",
     taxOptions: [
       "26,375 % (25 % + Solidaritätszuschlag)",
