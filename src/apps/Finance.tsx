@@ -632,48 +632,113 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
   const [rate, setRate] = useState(5);
   const [deplete, setDeplete] = useState(true);
   const [duration, setDuration] = useState(25);
+  const [taxIdx, setTaxIdx] = useState(0);
+  const [customRate, setCustomRate] = useState(26.375);
+  const [allowance, setAllowance] = useState(1000);
 
   const p = WITHDRAW_PERIODS[intervalIdx];
   const j = rate / 100 / p;
   const n = Math.max(1, Math.round(duration)) * p;
+  const preset = TAX_PRESETS[taxIdx];
+  const trate = (preset?.rate ?? customRate) / 100;
+  const ex = preset?.exempt ?? 0;
+  const allow = trate > 0 ? Math.max(0, allowance) : 0;
 
-  // resolve the missing value from the other two
+  // Each period's gains are taxed (Teilfreistellung first, then whatever is
+  // left of the year's allowance), then the withdrawal is taken out.
+  const sim = (c0: number, w: number, maxYears: number) => {
+    const yearly: number[] = [c0];
+    let cap = c0;
+    let taxes = 0;
+    let allowLeft = allow;
+    let zeroAt: number | null = null;
+    for (let t = 1; t <= maxYears * p; t++) {
+      const gain = cap * j;
+      const taxable = Math.max(0, gain * (1 - ex) - allowLeft);
+      allowLeft = Math.max(0, allowLeft - gain * (1 - ex));
+      taxes += taxable * trate;
+      cap = cap + gain - taxable * trate - w;
+      if (cap <= 0 && zeroAt === null) {
+        cap = 0;
+        zeroAt = t;
+      }
+      if (t % p === 0) {
+        yearly.push(cap);
+        allowLeft = allow;
+      }
+    }
+    return { yearly, zeroAt, taxes, capEnd: cap };
+  };
+
+  const sustainable = (c0: number, w: number) =>
+    c0 > 0 && sim(c0, w, 1).capEnd >= c0 - 1e-6;
+
+  // resolve the missing value from the other two (numeric — the tax model
+  // has no closed form)
   let cap0 = capital;
   let w = amount;
-  let periodsLast: number | null = null; // null = forever
-  if (solve === 0) {
-    if (!deplete) cap0 = j > 0 ? w / j : Infinity;
-    else cap0 = j > 0 ? (w * (1 - (1 + j) ** -n)) / j : w * n;
-    periodsLast = deplete ? n : null;
-  } else if (solve === 1) {
-    if (!deplete) w = cap0 * j;
-    else w = j > 0 ? (cap0 * j) / (1 - (1 + j) ** -n) : cap0 / n;
-    periodsLast = deplete ? n : null;
-  } else {
-    if (j > 0 && w <= cap0 * j) periodsLast = null;
-    else if (w > 0)
-      periodsLast =
-        j > 0 ? -Math.log(1 - (cap0 * j) / w) / Math.log(1 + j) : cap0 / w;
-    else periodsLast = null;
+  let unreachable = false;
+  if (solve === 1) {
+    let lo = 0;
+    let hi = deplete ? capital * (1 + j) : capital * j + allow;
+    for (let k = 0; k < 60; k++) {
+      const mid = (lo + hi) / 2;
+      const lasts = deplete
+        ? (() => {
+            const s = sim(capital, mid, Math.round(n / p) + 1);
+            return s.zeroAt === null || s.zeroAt >= n;
+          })()
+        : sustainable(capital, mid);
+      if (lasts) lo = mid;
+      else hi = mid;
+    }
+    w = lo;
+  } else if (solve === 0) {
+    if (!deplete && j <= 0) {
+      unreachable = true;
+      cap0 = 0;
+    } else if (deplete) {
+      let lo = 0;
+      let hi = w * n;
+      for (let k = 0; k < 60; k++) {
+        const mid = (lo + hi) / 2;
+        const s = sim(mid, w, Math.round(n / p) + 1);
+        if (s.zeroAt === null || s.zeroAt >= n) hi = mid;
+        else lo = mid;
+      }
+      cap0 = hi;
+    } else {
+      let hi = w / (j * (1 - trate)) + w;
+      let guard = 0;
+      while (!sustainable(hi, w) && guard++ < 40) hi *= 2;
+      let lo = 0;
+      for (let k = 0; k < 60; k++) {
+        const mid = (lo + hi) / 2;
+        if (sustainable(mid, w)) hi = mid;
+        else lo = mid;
+      }
+      cap0 = hi;
+    }
   }
 
-  // remaining capital per year
+  const forever = !unreachable && sustainable(cap0, w);
+  const probe = sim(cap0, w, 100);
+  const periodsLast = forever ? null : probe.zeroAt;
+
   const horizonYears = Math.min(
     60,
-    periodsLast === null ? 30 : Math.max(5, Math.ceil(periodsLast / p) + 2),
+    periodsLast === null
+      ? 30
+      : Math.max(5, Math.ceil(periodsLast / p) + 2),
   );
-  const remaining: number[] = [cap0 === Infinity ? 0 : cap0];
-  let cap = cap0 === Infinity ? 0 : cap0;
-  for (let t = 1; t <= horizonYears * p; t++) {
-    cap = Math.max(0, cap * (1 + j) - w);
-    if (t % p === 0) remaining.push(cap);
-  }
+  const final = sim(cap0, w, horizonYears);
+  const remaining = final.yearly.slice(0, horizonYears + 1);
 
   const rows: [string, string][] = [];
   if (solve === 0)
     rows.push([
       ui.neededCapital,
-      cap0 === Infinity ? "—" : fmt.euro.format(cap0),
+      unreachable ? "—" : fmt.euro.format(cap0),
     ]);
   if (solve === 1)
     rows.push([
@@ -682,10 +747,14 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
     ]);
   rows.push([
     ui.capitalLasts,
-    periodsLast === null
+    forever
       ? ui.forever
-      : `≈ ${Math.ceil(periodsLast / p)} ${ui.yearsWord}`,
+      : periodsLast === null
+        ? `> 100 ${ui.yearsWord}`
+        : `≈ ${Math.ceil(periodsLast / p)} ${ui.yearsWord}`,
   ]);
+  if (trate > 0 && !unreachable)
+    rows.push([ui.taxesLabel, `−${fmt.euro.format(final.taxes)}`]);
 
   return (
     <>
@@ -716,6 +785,23 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
           options={ui.withdrawIntervalOptions}
           info={ui.infoWithdrawInterval}
         />
+        <SelectField
+          label={ui.taxRateLabel}
+          value={taxIdx}
+          onChange={setTaxIdx}
+          options={ui.taxOptions}
+          info={ui.infoTax}
+        />
+        {preset === null && (
+          <div className="fin-grid">
+            <Field label={ui.taxRateLabel} value={customRate} onChange={setCustomRate} step={0.1} suffix="%" />
+          </div>
+        )}
+        {trate > 0 && (
+          <div className="fin-grid">
+            <Field label={ui.allowanceLabel} value={allowance} onChange={setAllowance} step={100} suffix="€" info={ui.infoAllowance} />
+          </div>
+        )}
         {solve !== 2 && (
           <Toggle
             label={ui.capitalDepletion}

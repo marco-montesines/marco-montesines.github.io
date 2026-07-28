@@ -158,8 +158,8 @@ export const UI = {
         "On: the capital is deliberately used up over the withdrawal period — higher withdrawals, nothing left at the end. Off: you only withdraw what the returns generate, so the capital survives indefinitely.",
       ],
       [
-        "Are taxes included here?",
-        "No — the values are gross. In Germany the gains portion of each withdrawal is subject to Abgeltungsteuer (see the Savings tab), so plan your net need slightly higher or use the Freedom tab, which grosses up for taxes.",
+        "How are taxes calculated here?",
+        "Each period the plan earns returns; those gains are taxed at the chosen rate — after the 30 % ETF Teilfreistellung where applicable and after using up the yearly Sparerpauschbetrag — and only then is the withdrawal taken. Pick “0 % (tax-free)” to disable taxation entirely, e.g. outside Germany. This taxes gains as they accrue; a real fund sale defers part of the tax, so the result is slightly conservative.",
       ],
     ] as [string, string][],
     faqFreedom: [
@@ -412,8 +412,8 @@ export const UI = {
         "An: Das Kapital wird über den Zeitraum bewusst verbraucht — höhere Entnahmen, am Ende bleibt nichts übrig. Aus: Du entnimmst nur die Erträge, das Kapital bleibt dauerhaft erhalten.",
       ],
       [
-        "Sind Steuern berücksichtigt?",
-        "Nein — die Werte sind brutto. In Deutschland unterliegt der Ertragsanteil jeder Entnahme der Abgeltungsteuer (siehe Sparen-Tab). Plane also etwas höher — oder nutze den Freiheit-Tab, der Steuern einrechnet.",
+        "Wie werden Steuern berechnet?",
+        "In jeder Periode erwirtschaftet der Plan Erträge; diese werden mit dem gewählten Satz versteuert — nach der 30-%-Teilfreistellung bei ETFs und nach Verbrauch des jährlichen Sparerpauschbetrags — erst danach erfolgt die Entnahme. Mit „0 % (steuerbefreit)“ lässt sich die Besteuerung komplett abschalten, z. B. außerhalb Deutschlands. Versteuert werden die Erträge bei Entstehung; ein echter Fondsverkauf schiebt einen Teil der Steuer auf — das Ergebnis ist also leicht konservativ.",
       ],
     ] as [string, string][],
     faqFreedom: [
