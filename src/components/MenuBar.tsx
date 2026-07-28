@@ -449,7 +449,10 @@ export function MenuBar(props: MenuBarProps) {
             className={`mb-item ${menu.bold ? "mb-appname" : ""} ${menu.id === "logo" ? "mb-logo" : ""} ${open === menu.id ? "mb-item-open" : ""}`}
             onClick={() => setOpen(open === menu.id ? null : menu.id)}
             onMouseEnter={() => {
-              if (open && open !== menu.id) setOpen(menu.id);
+              // hover-switch stays within the left menu group, never into
+              // or out of the status items — matching real menu bars
+              if (open && open !== menu.id && menus.some((m) => m.id === open))
+                setOpen(menu.id);
             }}
           >
             {menu.label}
@@ -494,9 +497,6 @@ export function MenuBar(props: MenuBarProps) {
         <button
           className={`mb-item mb-lang ${open === "lang" ? "mb-item-open" : ""}`}
           onClick={() => setOpen(open === "lang" ? null : "lang")}
-          onMouseEnter={() => {
-            if (open && open !== "lang") setOpen("lang");
-          }}
           aria-label="Language"
         >
           {locale.toUpperCase()}
@@ -530,9 +530,6 @@ export function MenuBar(props: MenuBarProps) {
         <button
           className={`mb-item ${open === "music" ? "mb-item-open" : ""} ${musicPlaying ? "mb-music-on" : ""}`}
           onClick={() => setOpen(open === "music" ? null : "music")}
-          onMouseEnter={() => {
-            if (open && open !== "music") setOpen("music");
-          }}
           aria-label="Music player"
         >
           <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
@@ -605,9 +602,6 @@ export function MenuBar(props: MenuBarProps) {
         <button
           className={`mb-item ${open === "battery" ? "mb-item-open" : ""}`}
           onClick={() => setOpen(open === "battery" ? null : "battery")}
-          onMouseEnter={() => {
-            if (open && open !== "battery") setOpen("battery");
-          }}
         >
           <BatteryIcon level={battery.level} charging={battery.charging} />
         </button>
@@ -627,9 +621,6 @@ export function MenuBar(props: MenuBarProps) {
         <button
           className={`mb-item ${open === "wifi" ? "mb-item-open" : ""}`}
           onClick={() => setOpen(open === "wifi" ? null : "wifi")}
-          onMouseEnter={() => {
-            if (open && open !== "wifi") setOpen("wifi");
-          }}
         >
           <WifiIcon on={wifi} />
         </button>
@@ -651,9 +642,6 @@ export function MenuBar(props: MenuBarProps) {
         <button
           className={`mb-item ${open === "control" ? "mb-item-open" : ""}`}
           onClick={() => setOpen(open === "control" ? null : "control")}
-          onMouseEnter={() => {
-            if (open && open !== "control") setOpen("control");
-          }}
         >
           <ControlIcon />
         </button>
@@ -823,9 +811,6 @@ export function MenuBar(props: MenuBarProps) {
         <button
           className={`mb-item mb-clock ${open === "clock" ? "mb-item-open" : ""}`}
           onClick={() => setOpen(open === "clock" ? null : "clock")}
-          onMouseEnter={() => {
-            if (open && open !== "clock") setOpen("clock");
-          }}
         >
           <Clock />
         </button>
