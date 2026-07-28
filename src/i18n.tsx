@@ -195,6 +195,8 @@ export const UI = {
     infoWithdrawPeriod: "How many years the withdrawals should last.",
     capitalLasts: "Capital lasts",
     forever: "forever — returns cover the withdrawals",
+    durationFmt: (y: number, m: number) =>
+      `${y} ${y === 1 ? "year" : "years"}${m ? `, ${m} ${m === 1 ? "month" : "months"}` : ""}`,
     perInterval: ["per month", "per quarter", "per year"],
     // financial freedom
     desiredNetIncome: "Desired net income / month",
@@ -450,6 +452,8 @@ export const UI = {
     infoWithdrawPeriod: "Wie viele Jahre die Entnahmen reichen sollen.",
     capitalLasts: "Kapital reicht",
     forever: "für immer — die Erträge decken die Entnahmen",
+    durationFmt: (y: number, m: number) =>
+      `${y} ${y === 1 ? "Jahr" : "Jahre"}${m ? `, ${m} ${m === 1 ? "Monat" : "Monate"}` : ""}`,
     perInterval: ["pro Monat", "pro Quartal", "pro Jahr"],
     // financial freedom
     desiredNetIncome: "Gewünschtes Netto-Einkommen / Monat",

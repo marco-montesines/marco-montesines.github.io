@@ -30,13 +30,14 @@ const useFmt = () => {
       euro: new Intl.NumberFormat(locale, {
         style: "currency",
         currency: "EUR",
-        maximumFractionDigits: 0,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
       }),
       compact: new Intl.NumberFormat(locale, {
         notation: "compact",
         maximumFractionDigits: 1,
       }),
-      num: new Intl.NumberFormat(locale, { maximumFractionDigits: 2 }),
+      num: new Intl.NumberFormat(locale, { maximumFractionDigits: 3 }),
     }),
     [locale],
   );
@@ -745,13 +746,15 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
       ui.withdrawAmount,
       `${fmt.euro.format(w)} ${ui.perInterval[intervalIdx]}`,
     ]);
+  const lastsMonths =
+    periodsLast === null ? null : Math.ceil((periodsLast * 12) / p);
   rows.push([
     ui.capitalLasts,
     forever
       ? ui.forever
-      : periodsLast === null
+      : lastsMonths === null
         ? `> 100 ${ui.yearsWord}`
-        : `≈ ${Math.ceil(periodsLast / p)} ${ui.yearsWord}`,
+        : ui.durationFmt(Math.floor(lastsMonths / 12), lastsMonths % 12),
   ]);
   if (trate > 0 && !unreachable)
     rows.push([ui.taxesLabel, `−${fmt.euro.format(final.taxes)}`]);
