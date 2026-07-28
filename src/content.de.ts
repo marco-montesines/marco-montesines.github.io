@@ -35,7 +35,7 @@ export const de: Content = {
     {
       period: "03.2016 – 11.2021",
       role: "Lead / Senior Softwareentwickler",
-      org: "Suchmaschinen-Unternehmen",
+      org: "Anbieter von Web-Fulfilment-Lösungen & „Big Data Business“-Intelligence-Produkten",
       note: "Backend-Lead für eine öffentliche Suchmaschine und ihr Data Warehouse — Architektur, APIs, Datenbankdesign und Machine Learning (Topic Modeling, SVM-Klassifikation) im großen Maßstab.",
     },
     {
