@@ -16,6 +16,11 @@ window.scrollTo(0, 0);
 const vv = window.visualViewport;
 if (vv) {
   const apply = () => {
+    // The on-screen keyboard also shrinks the visualViewport — but it is
+    // an overlay, not a layout change: keep the shell stable and let iOS
+    // pan to the focused input. Only track toolbar/rotation changes.
+    const keyboardOpen = vv.height < window.innerHeight * 0.8;
+    if (keyboardOpen) return;
     document.documentElement.style.setProperty("--vvh", `${vv.height}px`);
     window.scrollTo(0, 0);
   };
