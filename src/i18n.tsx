@@ -115,10 +115,25 @@ export const UI = {
         "Equity funds holding at least 51 % stocks enjoy a 30 % Teilfreistellung — 30 % of the gains are tax-free, cutting the effective rate to 18.46 %. Note: accumulating ETFs also pay a small annual Vorabpauschale; this calculator simplifies by settling all tax at the end.",
       ],
     ] as [string, string][],
+    infoLoanAmount: "The amount you borrow.",
+    infoLoanRate: "Nominal annual interest rate (Sollzins) of the loan.",
+    infoLoanTerm: "How many years until the loan is fully repaid.",
+    deductToggle: "Interest tax-deductible (rented property)",
+    infoDeduct:
+      "In Germany, loan interest for a rented-out property counts as Werbungskosten and reduces your taxable rental income. Owner-occupied homes get no deduction.",
+    marginalRate: "Marginal income tax rate",
+    infoMarginal:
+      "Your top personal income tax rate — typically 30–45 %. The deduction saves interest × this rate.",
+    taxSaved: "Tax saved",
+    interestAfterTax: "Interest after tax",
     faqLoan: [
       [
         "How is the monthly payment calculated?",
         "As an annuity: the payment stays constant while its mix shifts — early on it is mostly interest, later mostly repayment. Formula: payment = loan × i ÷ (1 − (1+i)⁻ⁿ) with i as the monthly rate and n the number of months.",
+      ],
+      [
+        "Are there tax options for a loan?",
+        "Not the Abgeltungsteuer — that taxes investment gains, not borrowing. But if the financed property is rented out, the loan interest is deductible from rental income at your marginal income tax rate (Werbungskosten). Owner-occupied homes get no such deduction — that is what the toggle models.",
       ],
       [
         "Nominal vs. effective interest rate?",
@@ -350,10 +365,25 @@ export const UI = {
         "Aktienfonds mit mindestens 51 % Aktienanteil genießen die 30-%-Teilfreistellung — 30 % der Erträge sind steuerfrei, effektiv also 18,46 %. Hinweis: Thesaurierende ETFs zahlen zusätzlich jährlich eine kleine Vorabpauschale; der Rechner vereinfacht und versteuert alles am Ende.",
       ],
     ] as [string, string][],
+    infoLoanAmount: "Der Betrag, den du aufnimmst.",
+    infoLoanRate: "Nominaler Jahreszins (Sollzins) des Kredits.",
+    infoLoanTerm: "In wie vielen Jahren der Kredit vollständig getilgt ist.",
+    deductToggle: "Zinsen steuerlich absetzbar (Vermietung)",
+    infoDeduct:
+      "Bei vermieteten Immobilien zählen Kreditzinsen als Werbungskosten und mindern die zu versteuernden Mieteinnahmen. Für selbstgenutztes Wohneigentum gibt es keinen Abzug.",
+    marginalRate: "Persönlicher Grenzsteuersatz",
+    infoMarginal:
+      "Dein Spitzensteuersatz auf Einkommen — typischerweise 30–45 %. Der Abzug spart Zinsen × diesen Satz.",
+    taxSaved: "Steuerersparnis",
+    interestAfterTax: "Zinsen nach Steuern",
     faqLoan: [
       [
         "Wie wird die monatliche Rate berechnet?",
         "Als Annuität: Die Rate bleibt konstant, ihre Zusammensetzung verschiebt sich — anfangs überwiegen Zinsen, später die Tilgung. Formel: Rate = Kredit × i ÷ (1 − (1+i)⁻ⁿ) mit i als Monatszins und n als Monatszahl.",
+      ],
+      [
+        "Gibt es Steuer-Optionen beim Kredit?",
+        "Nicht die Abgeltungsteuer — sie besteuert Kapitalerträge, nicht das Leihen. Aber: Bei einer vermieteten Immobilie sind die Kreditzinsen als Werbungskosten von den Mieteinnahmen absetzbar — mit deinem persönlichen Grenzsteuersatz. Für selbstgenutztes Wohneigentum gilt das nicht — genau das bildet der Schalter ab.",
       ],
       [
         "Sollzins oder Effektivzins?",

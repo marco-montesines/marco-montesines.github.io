@@ -550,6 +550,8 @@ function Loan({ ui }: { ui: UIStrings }) {
   const [principal, setPrincipal] = useState(300000);
   const [rate, setRate] = useState(3.8);
   const [years, setYears] = useState(25);
+  const [deduct, setDeduct] = useState(false);
+  const [marginal, setMarginal] = useState(42);
 
   const i = rate / 100 / 12;
   const yr = Math.max(1, Math.min(50, Math.round(years)));
@@ -570,14 +572,40 @@ function Loan({ ui }: { ui: UIStrings }) {
     }
   }
 
+  const totalInterest = monthly * n - principal;
+  const saved = deduct ? totalInterest * (marginal / 100) : 0;
+
+  const rows: [string, string][] = [
+    [ui.monthlyPayment, fmt.euro.format(monthly)],
+    [ui.totalPaid, fmt.euro.format(monthly * n)],
+    [ui.totalInterest, fmt.euro.format(totalInterest)],
+  ];
+  if (deduct) {
+    rows.push(
+      [ui.taxSaved, `−${fmt.euro.format(saved)}`],
+      [ui.interestAfterTax, fmt.euro.format(totalInterest - saved)],
+    );
+  }
+
   return (
     <>
       <div className="fin-card">
         <div className="fin-grid">
-          <Field label={ui.loanAmount} value={principal} onChange={setPrincipal} step={5000} suffix="€" />
-          <Field label={ui.annualInterest} value={rate} onChange={setRate} step={0.1} suffix="%" />
-          <Field label={ui.years} value={years} onChange={setYears} info={ui.infoYears} />
+          <Field label={ui.loanAmount} value={principal} onChange={setPrincipal} step={5000} suffix="€" info={ui.infoLoanAmount} />
+          <Field label={ui.annualInterest} value={rate} onChange={setRate} step={0.1} suffix="%" info={ui.infoLoanRate} />
+          <Field label={ui.years} value={years} onChange={setYears} info={ui.infoLoanTerm} />
         </div>
+        <Toggle
+          label={ui.deductToggle}
+          checked={deduct}
+          onChange={setDeduct}
+          info={ui.infoDeduct}
+        />
+        {deduct && (
+          <div className="fin-grid">
+            <Field label={ui.marginalRate} value={marginal} onChange={setMarginal} step={1} suffix="%" info={ui.infoMarginal} />
+          </div>
+        )}
       </div>
       <Chart
         series={[
@@ -586,13 +614,7 @@ function Loan({ ui }: { ui: UIStrings }) {
         ]}
         tipFmt={(v) => fmt.euro.format(v)}
       />
-      <Results
-        rows={[
-          [ui.monthlyPayment, fmt.euro.format(monthly)],
-          [ui.totalPaid, fmt.euro.format(monthly * n)],
-          [ui.totalInterest, fmt.euro.format(monthly * n - principal)],
-        ]}
-      />
+      <Results rows={rows} />
       <Faq ui={ui} items={ui.faqLoan} />
     </>
   );
