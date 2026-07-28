@@ -44,7 +44,7 @@ export const experience: Station[] = [
   {
     period: "03.2016 – 11.2021",
     role: "Lead / Senior Software Developer",
-    org: "Internet agency",
+    org: "Digital agency",
     note: "Backend lead for a public search engine and its data warehouse — architecture, APIs, database design, and machine learning (topic modeling, SVM classification) at scale.",
   },
   {
