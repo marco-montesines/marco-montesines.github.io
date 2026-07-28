@@ -197,6 +197,10 @@ export const UI = {
     ] as [string, string][],
     faqWithdrawal: [
       [
+        "Live off the returns, or use up the capital?",
+        "You saved up money, and now it should pay you back regularly. There are two ways to do that.\n\nLive off the returns: you only withdraw what the capital earns each year, so the pot itself never shrinks. It can pay you forever — and one day be passed on. The catch: the withdrawals are smaller, or you need a much bigger pot for the same income.\n\nUse up the capital: you withdraw more than the returns, and the pot slowly shrinks to zero over the period you choose. You get more income from the same savings — but you have to decide how long the money must last, and at the end nothing is left.\n\nSimple rule: if you don't know how long the money needs to last — or want to leave something behind — live off the returns. If you're bridging a defined stretch, say until a pension starts, using up the capital is perfectly fine. The toggle above switches between both. This is general information, not investment advice.",
+      ],
+      [
         "How does a withdrawal plan work?",
         "Your capital keeps earning the assumed return while you withdraw a fixed amount every interval. The calculator solves any of the three values — needed capital, withdrawal amount, or duration — from the other two.",
       ],
@@ -210,6 +214,10 @@ export const UI = {
       ],
     ] as [string, string][],
     faqFreedom: [
+      [
+        "What does financial freedom actually mean?",
+        "Financially free means your money covers your living costs by itself — working becomes a choice, not a must.\n\nHow does that work? You build a pot large enough that regular withdrawals pay your monthly expenses. With the classic 4 % rule that pot is about 25 times your yearly spending: €2,000 a month is €24,000 a year, so roughly €600,000.\n\nHow do you get there? The gap between what you have and what you need closes from two sides: your monthly saving, and the returns your money earns along the way. The earlier you start, the more the returns do the heavy lifting — that's compound growth.\n\nThat is exactly what this calculator shows: enter your desired income, your age, and what you already have, and it tells you the target amount and the monthly saving rate to reach it by your chosen age. This is general information, not investment advice.",
+      ],
       [
         "What is the 4 % rule?",
         "A rule of thumb from the US Trinity study: withdrawing about 4 % of your capital per year has historically sustained a portfolio for 30+ years. It implies you need roughly 25× your annual expenses.",
@@ -502,6 +510,10 @@ export const UI = {
     ] as [string, string][],
     faqWithdrawal: [
       [
+        "Von den Erträgen leben oder das Kapital aufbrauchen?",
+        "Du hast Geld angespart, und jetzt soll es dich regelmäßig auszahlen. Dafür gibt es zwei Wege.\n\nVon den Erträgen leben: Du entnimmst nur das, was das Kapital jedes Jahr erwirtschaftet — der Topf selbst schrumpft nie. Er kann dich für immer auszahlen und eines Tages weitergegeben werden. Der Haken: Die Entnahmen sind kleiner, oder du brauchst für dasselbe Einkommen einen deutlich größeren Topf.\n\nKapital aufbrauchen: Du entnimmst mehr als die Erträge, und der Topf schrumpft über den gewählten Zeitraum langsam auf null. Du bekommst mehr Einkommen aus demselben Ersparten — musst aber festlegen, wie lange das Geld reichen soll, und am Ende bleibt nichts übrig.\n\nEinfache Regel: Wenn du nicht weißt, wie lange das Geld reichen muss — oder etwas hinterlassen willst — lebe von den Erträgen. Überbrückst du eine klar begrenzte Zeit, etwa bis zur Rente, ist Kapitalverzehr völlig in Ordnung. Der Schalter oben wechselt zwischen beidem. Dies ist eine allgemeine Information, keine Anlageberatung.",
+      ],
+      [
         "Wie funktioniert ein Entnahmeplan?",
         "Dein Kapital erwirtschaftet weiter die angenommene Rendite, während du pro Intervall einen festen Betrag entnimmst. Der Rechner bestimmt wahlweise Anlagevermögen, Entnahmebetrag oder Entnahmezeitraum aus den beiden anderen Werten.",
       ],
@@ -515,6 +527,10 @@ export const UI = {
       ],
     ] as [string, string][],
     faqFreedom: [
+      [
+        "Was heißt finanzielle Freiheit eigentlich?",
+        "Finanziell frei heißt: Dein Geld deckt deine Lebenskosten von selbst — Arbeiten wird zur Wahl, nicht zur Pflicht.\n\nWie funktioniert das? Du baust einen Topf auf, der groß genug ist, dass regelmäßige Entnahmen deine monatlichen Ausgaben bezahlen. Nach der klassischen 4-%-Regel ist das etwa das 25-Fache deiner Jahresausgaben: 2.000 € im Monat sind 24.000 € im Jahr, also rund 600.000 €.\n\nWie kommst du dahin? Die Lücke zwischen dem, was du hast, und dem, was du brauchst, schließt sich von zwei Seiten: durch deine monatliche Sparrate und durch die Erträge, die dein Geld unterwegs erwirtschaftet. Je früher du anfängst, desto mehr übernehmen die Erträge — das ist der Zinseszins.\n\nGenau das zeigt dieser Rechner: Gib dein Wunsch-Einkommen, dein Alter und dein vorhandenes Vermögen ein — er nennt dir das Zielkapital und die monatliche Sparrate, um es bis zu deinem Wunschalter zu erreichen. Dies ist eine allgemeine Information, keine Anlageberatung.",
+      ],
       [
         "Was ist die 4-%-Regel?",
         "Eine Faustregel aus der US-Trinity-Studie: Wer jährlich rund 4 % seines Kapitals entnimmt, dessen Portfolio hielt historisch 30+ Jahre durch. Daraus folgt: Du brauchst etwa das 25-Fache deiner Jahresausgaben.",
