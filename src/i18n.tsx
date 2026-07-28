@@ -134,7 +134,7 @@ export const UI = {
       ],
       [
         "Why do other calculators show different results?",
-        "Three settings explain any difference. ① Compounding: many Sparplan calculators silently compound monthly — pick the same Verzinsungsintervall. ② Allowance: most ignore the Sparerpauschbetrag — set it to 0 € to compare. ③ Rounding: by default this calculator applies the effective rates exactly as displayed (19.59 %), so with ① and ② aligned the results match parqet-style calculators to the cent; the strict-rules checkbox switches to the unrounded statutory chain (27.99 % × 0.7 = 19.593 %) instead.",
+        "Three settings explain any difference. ① Compounding: many Sparplan calculators silently compound monthly — pick the same Verzinsungsintervall. ② Allowance: most ignore the Sparerpauschbetrag — set it to 0 € to compare. ③ Rounding: by default this calculator applies the effective rates exactly as displayed (19.59 %), so with ① and ② aligned the results match other common calculators to the cent; the strict-rules checkbox switches to the unrounded statutory chain (27.99 % × 0.7 = 19.593 %) instead.",
       ],
     ] as [string, string][],
     infoLoanAmount: "The amount you borrow.",
@@ -409,7 +409,7 @@ export const UI = {
       ],
       [
         "Warum zeigen andere Rechner andere Ergebnisse?",
-        "Drei Einstellungen erklären jede Abweichung. ① Verzinsung: Viele Sparplanrechner rechnen stillschweigend monatlich — wähle dasselbe Verzinsungsintervall. ② Pauschbetrag: Die meisten ignorieren den Sparerpauschbetrag — setze ihn zum Vergleich auf 0 €. ③ Rundung: Standardmäßig wendet dieser Rechner die Effektivsätze exakt wie angezeigt an (19,59 %) — mit ① und ② gleichgestellt stimmen die Ergebnisse centgenau mit parqet-artigen Rechnern überein; die Checkbox „Strenge Regeln“ schaltet stattdessen auf die ungerundete gesetzliche Kette um (27,99 % × 0,7 = 19,593 %).",
+        "Drei Einstellungen erklären jede Abweichung. ① Verzinsung: Viele Sparplanrechner rechnen stillschweigend monatlich — wähle dasselbe Verzinsungsintervall. ② Pauschbetrag: Die meisten ignorieren den Sparerpauschbetrag — setze ihn zum Vergleich auf 0 €. ③ Rundung: Standardmäßig wendet dieser Rechner die Effektivsätze exakt wie angezeigt an (19,59 %) — mit ① und ② gleichgestellt stimmen die Ergebnisse centgenau mit anderen gängigen Rechnern überein; die Checkbox „Strenge Regeln“ schaltet stattdessen auf die ungerundete gesetzliche Kette um (27,99 % × 0,7 = 19,593 %).",
       ],
     ] as [string, string][],
     infoLoanAmount: "Der Betrag, den du aufnimmst.",
