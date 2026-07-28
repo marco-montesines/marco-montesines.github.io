@@ -169,6 +169,26 @@ export default function App() {
     return () => clearTimeout(t);
   }, []);
 
+  // iPadOS treats any touch pan the page doesn't consume as "swipe down to
+  // exit fullscreen" — CSS touch-action alone doesn't stop it. While in
+  // fullscreen, actively swallow pans that don't start in a scrollable
+  // app area.
+  useEffect(() => {
+    const SCROLLABLE =
+      ".window-body, .menu-panel, .dock, .settings-side, .launchpad-grid";
+    const onTouchMove = (e: TouchEvent) => {
+      const doc = document as Document & {
+        webkitFullscreenElement?: Element | null;
+      };
+      if (!document.fullscreenElement && !doc.webkitFullscreenElement) return;
+      const target = e.target as HTMLElement | null;
+      if (target?.closest(SCROLLABLE)) return;
+      e.preventDefault();
+    };
+    document.addEventListener("touchmove", onTouchMove, { passive: false });
+    return () => document.removeEventListener("touchmove", onTouchMove);
+  }, []);
+
   // Apps hand URLs to the Chromium window via the browser bus.
   const openBrowser = wm.open;
   useEffect(() => {

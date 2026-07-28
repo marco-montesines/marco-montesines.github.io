@@ -1211,6 +1211,13 @@ button.mb-item:hover,
 .window-body {
   flex: 1;
   overflow: auto;
+  /* app scrolling must never chain into the page (iPad fullscreen exit) */
+  overscroll-behavior: contain;
+}
+
+.menu-panel,
+.settings-side {
+  overscroll-behavior: contain;
 }
 
 /* ---------- login screen ---------- */
