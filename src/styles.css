@@ -1414,11 +1414,48 @@ button.mb-item:hover,
 }
 
 .fin-info {
+  position: relative;
   display: inline-block;
   margin-left: 0.35rem;
   color: var(--muted);
   font-size: 0.72rem;
   cursor: help;
+  outline: none;
+}
+
+.fin-info:hover,
+.fin-info:focus-visible {
+  color: var(--mango);
+}
+
+/* instant styled tooltip — the native title attr is too slow to discover */
+.fin-tip {
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-58%);
+  width: 230px;
+  padding: 0.45rem 0.6rem;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  color: var(--ink);
+  font-size: 0.76rem;
+  line-height: 1.4;
+  white-space: normal;
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+  z-index: 30;
+}
+
+.fin-info:hover .fin-tip,
+.fin-info:focus-visible .fin-tip {
+  opacity: 1;
+  visibility: visible;
 }
 
 .fin-check input {

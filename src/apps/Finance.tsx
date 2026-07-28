@@ -35,8 +35,8 @@ const useFmt = () => {
 function Info({ text }: { text?: string }) {
   if (!text) return null;
   return (
-    <span className="fin-info" title={text} aria-label={text} role="img">
-      ⓘ
+    <span className="fin-info" tabIndex={0} aria-label={text}>
+      ⓘ<span className="fin-tip" role="tooltip">{text}</span>
     </span>
   );
 }
