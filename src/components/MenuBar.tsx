@@ -432,7 +432,12 @@ export function MenuBar(props: MenuBarProps) {
   return (
     <header className="menubar" ref={barRef}>
       {menus.map((menu) => (
-        <span key={menu.id} className="mb-menu-wrap">
+        <span
+          key={menu.id}
+          className={`mb-menu-wrap ${
+            menu.id === "logo" || menu.id === "appname" ? "" : "mb-desktop"
+          }`}
+        >
           <button
             className={`mb-item ${menu.bold ? "mb-appname" : ""} ${menu.id === "logo" ? "mb-logo" : ""} ${open === menu.id ? "mb-item-open" : ""}`}
             onClick={() => setOpen(open === menu.id ? null : menu.id)}
@@ -514,7 +519,7 @@ export function MenuBar(props: MenuBarProps) {
           </nav>
         )}
       </span>
-      <span className="mb-menu-wrap">
+      <span className="mb-menu-wrap mb-hide-sm">
         <button
           className={`mb-item ${open === "music" ? "mb-item-open" : ""} ${musicPlaying ? "mb-music-on" : ""}`}
           onClick={() => setOpen(open === "music" ? null : "music")}
@@ -589,7 +594,7 @@ export function MenuBar(props: MenuBarProps) {
           </div>
         )}
       </span>
-      <span className="mb-menu-wrap">
+      <span className="mb-menu-wrap mb-hide-sm">
         <button
           className={`mb-item ${open === "battery" ? "mb-item-open" : ""}`}
           onClick={() => setOpen(open === "battery" ? null : "battery")}
@@ -611,7 +616,7 @@ export function MenuBar(props: MenuBarProps) {
           </div>
         )}
       </span>
-      <span className="mb-menu-wrap">
+      <span className="mb-menu-wrap mb-hide-sm">
         <button
           className={`mb-item ${open === "wifi" ? "mb-item-open" : ""}`}
           onClick={() => setOpen(open === "wifi" ? null : "wifi")}

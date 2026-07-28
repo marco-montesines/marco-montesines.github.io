@@ -649,6 +649,69 @@ button.mb-item:hover,
   }
 }
 
+/* ---------- phone layout ---------- */
+
+@media (max-width: 700px) {
+  .os {
+    height: 100dvh;
+  }
+
+  /* condensed menu bar: logo, app name, search, language, control, clock */
+  .mb-desktop,
+  .mb-hide-sm {
+    display: none;
+  }
+
+  .menubar {
+    gap: 0.35rem;
+    padding: 0 0.45rem;
+  }
+
+  /* windows live full-screen on phones (open() maximizes them) */
+  .window:not(.window-max) {
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .window-resize {
+    display: none;
+  }
+
+  .launchpad-grid {
+    gap: 1.2rem;
+    padding: 1rem;
+  }
+
+  /* app layouts collapse to one column */
+  .fin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings {
+    flex-direction: column;
+  }
+
+  .settings-side {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+    padding: 0.45rem;
+  }
+
+  .settings-item {
+    white-space: nowrap;
+    flex: none;
+  }
+
+  .markdown {
+    flex-direction: column;
+  }
+}
+
 /* ---------- launchpad ---------- */
 
 .launchpad {

@@ -49,6 +49,8 @@ export function useWindowManager(): WindowManager {
         Math.max(meta.h, Math.round(availH * meta.hf)),
         availH - 12,
       );
+      // Phones get no floating-window ergonomics — open full-screen there.
+      const maximized = vw < 700;
       const cascade = (ws.length % 4) * 26;
       const x = Math.max(
         8,
@@ -68,7 +70,7 @@ export function useWindowManager(): WindowManager {
           h,
           z,
           minimized: false,
-          maximized: false,
+          maximized,
         },
       ];
     });
