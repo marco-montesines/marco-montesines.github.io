@@ -179,6 +179,10 @@ export const UI = {
     interestAfterTax: "Interest after tax",
     faqLoan: [
       [
+        "How does a loan actually work?",
+        "You borrow a large amount and pay it back in fixed monthly installments. Every installment has two parts: interest — the bank's fee on what you still owe — and repayment, which shrinks the debt.\n\nAt the start you still owe a lot, so most of the installment is interest. As the debt shrinks, the interest part gets smaller and more of the very same installment goes into repayment — that's why the debt falls slowly at first and faster toward the end.\n\nThe term is the big lever: more years mean a smaller monthly payment, but you pay interest for longer, so the total cost goes up. Fewer years cost more per month and less overall.\n\nPlay with amount, rate, and years above — the chart shows the debt shrinking and the interest adding up. This is general information, not financial advice.",
+      ],
+      [
         "How is the monthly payment calculated?",
         "As an annuity: the payment stays constant while its mix shifts — early on it is mostly interest, later mostly repayment. Formula: payment = loan × i ÷ (1 − (1+i)⁻ⁿ) with i as the monthly rate and n the number of months.",
       ],
@@ -491,6 +495,10 @@ export const UI = {
     taxSaved: "Steuerersparnis",
     interestAfterTax: "Zinsen nach Steuern",
     faqLoan: [
+      [
+        "Wie funktioniert ein Kredit eigentlich?",
+        "Du leihst dir eine große Summe und zahlst sie in festen monatlichen Raten zurück. Jede Rate hat zwei Teile: Zinsen — die Gebühr der Bank auf das, was du noch schuldest — und Tilgung, die die Schuld verkleinert.\n\nAm Anfang schuldest du noch viel, also besteht die Rate größtenteils aus Zinsen. Je kleiner die Schuld wird, desto kleiner wird der Zinsanteil — und desto mehr derselben Rate fließt in die Tilgung. Deshalb sinkt die Schuld anfangs langsam und zum Ende hin immer schneller.\n\nDie Laufzeit ist der große Hebel: Mehr Jahre bedeuten eine kleinere Monatsrate, aber du zahlst länger Zinsen — die Gesamtkosten steigen. Weniger Jahre kosten mehr pro Monat und weniger insgesamt.\n\nSpiel oben mit Summe, Zins und Jahren — das Diagramm zeigt, wie die Schuld schrumpft und die Zinsen sich summieren. Dies ist eine allgemeine Information, keine Finanzberatung.",
+      ],
       [
         "Wie wird die monatliche Rate berechnet?",
         "Als Annuität: Die Rate bleibt konstant, ihre Zusammensetzung verschiebt sich — anfangs überwiegen Zinsen, später die Tilgung. Formel: Rate = Kredit × i ÷ (1 − (1+i)⁻ⁿ) mit i als Monatszins und n als Monatszahl.",
