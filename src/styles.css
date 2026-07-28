@@ -1211,15 +1211,6 @@ button.mb-item:hover,
   overflow: auto;
 }
 
-/* brief placeholder while a lazy-loaded app's chunk arrives */
-.app-loading {
-  height: 100%;
-  background:
-    radial-gradient(circle 5px at 50% 50%, var(--muted) 96%, transparent) center /
-    40px 10px no-repeat;
-  opacity: 0.5;
-}
-
 /* ---------- login screen ---------- */
 
 .login {

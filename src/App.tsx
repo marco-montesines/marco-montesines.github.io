@@ -1,33 +1,17 @@
-import {
-  lazy,
-  Suspense,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { About } from "./apps/About";
 import { Experience } from "./apps/Experience";
 import { Chromium } from "./apps/Chromium";
+import { Finance } from "./apps/Finance";
 import { Harapan } from "./apps/Harapan";
 import { MangoNotes } from "./apps/MangoNotes";
 import { Spotify } from "./apps/Spotify";
 import { Markdown } from "./apps/Markdown";
 import { Projects } from "./apps/Projects";
+import { Settings } from "./apps/Settings";
 import { Skills } from "./apps/Skills";
 import { Terminal } from "./apps/Terminal";
-
-// Heavy apps load on first open instead of at boot: Finance (calculator
-// suite + charts), VS Code (carries raw source text), Settings (wallpaper
-// picker). Everything else is small enough to stay in the main bundle.
-const Finance = lazy(() =>
-  import("./apps/Finance").then((m) => ({ default: m.Finance })),
-);
-const VSCode = lazy(() =>
-  import("./apps/VSCode").then((m) => ({ default: m.VSCode })),
-);
-const Settings = lazy(() =>
-  import("./apps/Settings").then((m) => ({ default: m.Settings })),
-);
+import { VSCode } from "./apps/VSCode";
 import { AboutDialog } from "./components/AboutDialog";
 import { BootScreen } from "./components/BootScreen";
 import { Dock } from "./components/Dock";
@@ -183,14 +167,6 @@ export default function App() {
   useEffect(() => {
     const t = setTimeout(() => setBooted(true), BOOT_MS);
     return () => clearTimeout(t);
-  }, []);
-
-  // The boot screen is the loading cover: warm the split-off app chunks
-  // while it plays, so every app opens instantly once the desktop shows.
-  useEffect(() => {
-    void import("./apps/Finance");
-    void import("./apps/VSCode");
-    void import("./apps/Settings");
   }, []);
 
   // Apps hand URLs to the Chromium window via the browser bus.
@@ -383,9 +359,7 @@ export default function App() {
               onMove={(x, y) => wm.move(w.appId, x, y)}
               onResize={(width, height) => wm.resize(w.appId, width, height)}
             >
-              <Suspense fallback={<div className="app-loading" />}>
-                {appBody(w.appId)}
-              </Suspense>
+              {appBody(w.appId)}
             </Window>
           ))}
       </main>
