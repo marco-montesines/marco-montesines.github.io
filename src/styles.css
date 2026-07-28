@@ -60,6 +60,9 @@ html,
 body,
 #root {
   height: 100%;
+  /* no rubber-banding — a drag on iPad fullscreen must not read as
+     "pull down to exit" */
+  overscroll-behavior: none;
 }
 
 body {
@@ -97,6 +100,15 @@ body {
 .dock {
   position: relative;
   z-index: 1;
+}
+
+/* non-scrolling chrome surfaces: consume touch drags so the system never
+   interprets them as a page gesture (scrollable app areas keep default) */
+.desktop,
+.menubar,
+.login,
+.launchpad {
+  touch-action: none;
 }
 
 /* menubar sits above windows so dropdown panels are never hidden */
