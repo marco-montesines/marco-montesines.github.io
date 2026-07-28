@@ -291,6 +291,12 @@ export function MenuBar(props: MenuBarProps) {
     else void document.documentElement.requestFullscreen().catch(() => {});
   };
 
+  // iPhone Safari has no page-fullscreen API at all; in standalone
+  // (added to home screen) we're already fullscreen. Hide the dead tile.
+  const fullscreenSupported =
+    typeof document.documentElement.requestFullscreen === "function" &&
+    !window.matchMedia("(display-mode: standalone)").matches;
+
   useEffect(() => {
     interface BatteryManager {
       level: number;
@@ -726,6 +732,7 @@ export function MenuBar(props: MenuBarProps) {
                   </span>
                   Dark Mode
                 </button>
+                {fullscreenSupported && (
                 <button
                   className="cc-card cc-bigtile"
                   onClick={toggleFullscreen}
@@ -743,6 +750,7 @@ export function MenuBar(props: MenuBarProps) {
                   </span>
                   {fullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
                 </button>
+                )}
               </div>
             </div>
             <div className="cc-card cc-slider">
