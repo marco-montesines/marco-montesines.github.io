@@ -105,6 +105,31 @@ export const UI = {
       "Your actual profit: end value after taxes minus everything you paid in — the true return on your money.",
     infoTaxesWithheld:
       "Capital-gains tax due at settlement: (gains − allowance) × the effective rate as displayed. In strict mode: gains × 70 % for ETFs, minus the allowance, × the unrounded base rate.",
+    infoNeededCapital: "Capital required for this plan to work out.",
+    infoCapitalLasts:
+      "How long until the capital is used up — “forever” when the after-tax returns cover the withdrawals.",
+    totalWithdrawn: "Total withdrawn",
+    infoTotalWithdrawn:
+      "All withdrawals added up over the period shown in the chart.",
+    infoGainsPhase:
+      "Returns the capital generated during the period shown, before taxes.",
+    infoTaxesPhase:
+      "Capital-gains tax on the ongoing returns — after the yearly allowance, and after the Teilfreistellung in strict mode.",
+    remainingCapital: "Remaining capital",
+    infoRemaining: "Capital left at the end of the charted period.",
+    infoMonthlyPayment:
+      "Constant annuity payment covering interest and repayment.",
+    infoTotalPaid: "Monthly payment × number of months.",
+    infoTotalInterest: "Total paid minus the loan amount.",
+    infoTaxSaved:
+      "Total interest × marginal tax rate (× 1.055 in strict mode).",
+    infoInterestAfterTax: "Interest cost after the tax saving.",
+    infoEffTax:
+      "Combined rate from your tax choices — used to gross up the withdrawal.",
+    infoGrossPerYear:
+      "Annual withdrawal needed so your net income remains after taxes.",
+    infoSavingsNeeded:
+      "Monthly saving needed to close the gap between current assets and the target by your freedom age.",
     strictToggle: "Apply strict rules (unrounded tax rates)",
     infoStrict:
       "Off: the effective rates are applied exactly as displayed (e.g. 19.59 %) — like most calculators. On: the unrounded statutory chain — gains × 70 % for equity ETFs, minus allowance, × 27.99 % (= effectively 19.593 %).",
@@ -380,6 +405,32 @@ export const UI = {
       "Dein tatsächlicher Gewinn: Endwert nach Steuern minus aller Einzahlungen — der echte Ertrag deines Geldes.",
     infoTaxesWithheld:
       "Fällige Kapitalertragsteuer bei der Schlussabrechnung: (Ertrag − Pauschbetrag) × Effektivsatz wie angezeigt. Im strengen Modus: Ertrag × 70 % bei ETFs, minus Pauschbetrag, × ungerundeter Basissatz.",
+    infoNeededCapital: "Erforderliches Kapital, damit der Plan aufgeht.",
+    infoCapitalLasts:
+      "Wie lange das Kapital reicht — „für immer“, wenn die Erträge nach Steuern die Entnahmen decken.",
+    totalWithdrawn: "Gesamt entnommen",
+    infoTotalWithdrawn:
+      "Alle Entnahmen über den im Diagramm gezeigten Zeitraum aufsummiert.",
+    infoGainsPhase:
+      "Erträge, die das Kapital im gezeigten Zeitraum erwirtschaftet hat, vor Steuern.",
+    infoTaxesPhase:
+      "Kapitalertragsteuer auf die laufenden Erträge — nach jährlichem Pauschbetrag, im strengen Modus nach Teilfreistellung.",
+    remainingCapital: "Restkapital",
+    infoRemaining:
+      "Verbleibendes Kapital am Ende des gezeigten Zeitraums.",
+    infoMonthlyPayment:
+      "Konstante Annuitätenrate aus Zins und Tilgung.",
+    infoTotalPaid: "Monatliche Rate × Anzahl der Monate.",
+    infoTotalInterest: "Gesamt gezahlt minus Kreditsumme.",
+    infoTaxSaved:
+      "Zinsen gesamt × Grenzsteuersatz (× 1,055 im strengen Modus).",
+    infoInterestAfterTax: "Zinskosten nach Steuerersparnis.",
+    infoEffTax:
+      "Kombinierter Satz aus deinen Steuer-Einstellungen — dient dem Hochrechnen der Entnahme.",
+    infoGrossPerYear:
+      "Jährliche Entnahme, damit nach Steuern dein Netto übrig bleibt.",
+    infoSavingsNeeded:
+      "Monatliche Sparrate, um die Lücke zwischen heutigem Vermögen und Ziel bis zum Freiheitsalter zu schließen.",
     strictToggle: "Strenge Regeln anwenden (ungerundete Steuersätze)",
     infoStrict:
       "Aus: Die Effektivsätze werden wie angezeigt angewendet (z. B. 19,59 %) — wie bei den meisten Rechnern. An: Die ungerundete gesetzliche Kette — Ertrag × 70 % bei Aktien-ETFs, minus Pauschbetrag, × 27,99 % (= effektiv 19,593 %).",

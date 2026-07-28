@@ -619,15 +619,19 @@ function Loan({ ui }: { ui: UIStrings }) {
     ? totalInterest * (marginal / 100) * (strict ? 1.055 : 1)
     : 0;
 
-  const rows: [string, string][] = [
-    [ui.monthlyPayment, fmt.euro.format(monthly)],
-    [ui.totalPaid, fmt.euro.format(monthly * n)],
-    [ui.totalInterest, fmt.euro.format(totalInterest)],
+  const rows: [string, string, string?][] = [
+    [ui.monthlyPayment, fmt.euro.format(monthly), ui.infoMonthlyPayment],
+    [ui.totalPaid, fmt.euro.format(monthly * n), ui.infoTotalPaid],
+    [ui.totalInterest, fmt.euro.format(totalInterest), ui.infoTotalInterest],
   ];
   if (deduct) {
     rows.push(
-      [ui.taxSaved, `−${fmt.euro.format(saved)}`],
-      [ui.interestAfterTax, fmt.euro.format(totalInterest - saved)],
+      [ui.taxSaved, `−${fmt.euro.format(saved)}`, ui.infoTaxSaved],
+      [
+        ui.interestAfterTax,
+        fmt.euro.format(totalInterest - saved),
+        ui.infoInterestAfterTax,
+      ],
     );
   }
 
@@ -707,25 +711,28 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
     const yearly: number[] = [c0];
     let cap = c0;
     let taxes = 0;
+    let gains = 0;
+    let withdrawn = 0;
     let allowLeft = allow;
     let zeroAt: number | null = null;
     for (let t = 1; t <= maxYears * p; t++) {
       const gain = cap * j;
+      gains += gain;
       const taxBase = gain * (1 - effExempt);
       const taxable = Math.max(0, taxBase - allowLeft);
       allowLeft = Math.max(0, allowLeft - taxBase);
       taxes += taxable * effRate;
-      cap = cap + gain - taxable * effRate - w;
-      if (cap <= 0 && zeroAt === null) {
-        cap = 0;
-        zeroAt = t;
-      }
+      const avail = cap + gain - taxable * effRate;
+      const take = Math.min(w, Math.max(0, avail));
+      withdrawn += take;
+      cap = Math.max(0, avail - take);
+      if (cap <= 0 && take < w && zeroAt === null) zeroAt = t;
       if (t % p === 0) {
         yearly.push(cap);
         allowLeft = allow;
       }
     }
-    return { yearly, zeroAt, taxes, capEnd: cap };
+    return { yearly, zeroAt, taxes, gains, withdrawn, capEnd: cap };
   };
 
   const sustainable = (c0: number, w: number) =>
@@ -792,16 +799,18 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
   const final = sim(cap0, w, horizonYears);
   const remaining = final.yearly.slice(0, horizonYears + 1);
 
-  const rows: [string, string][] = [];
+  const rows: [string, string, string?][] = [];
   if (solve === 0)
     rows.push([
       ui.neededCapital,
       unreachable ? "—" : fmt.euro.format(cap0),
+      ui.infoNeededCapital,
     ]);
   if (solve === 1)
     rows.push([
       ui.withdrawAmount,
       `${fmt.euro.format(w)} ${ui.perInterval[intervalIdx]}`,
+      ui.infoWithdrawAmount,
     ]);
   const lastsMonths =
     periodsLast === null ? null : Math.ceil((periodsLast * 12) / p);
@@ -812,9 +821,30 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
       : lastsMonths === null
         ? `> 100 ${ui.yearsWord}`
         : ui.durationFmt(Math.floor(lastsMonths / 12), lastsMonths % 12),
+    ui.infoCapitalLasts,
   ]);
-  if (trate > 0 && !unreachable)
-    rows.push([ui.taxesLabel, `−${fmt.euro.format(final.taxes)}`]);
+  if (!unreachable) {
+    rows.push(
+      [
+        ui.totalWithdrawn,
+        fmt.euro.format(final.withdrawn),
+        ui.infoTotalWithdrawn,
+      ],
+      [ui.growthEarned, fmt.euro.format(final.gains), ui.infoGainsPhase],
+    );
+    if (trate > 0)
+      rows.push([
+        ui.taxesLabel,
+        `−${fmt.euro.format(final.taxes)}`,
+        ui.infoTaxesPhase,
+      ]);
+    if (forever)
+      rows.push([
+        ui.remainingCapital,
+        fmt.euro.format(final.capEnd),
+        ui.infoRemaining,
+      ]);
+  }
 
   return (
     <>
@@ -972,15 +1002,16 @@ function Freedom({ ui }: { ui: UIStrings }) {
     if (m % 12 === 0) capitalSeries.push(cap);
   }
 
-  const rows: [string, string][] = [
-    [ui.effectiveTax, `${fmt.num.format(effRate)} %`],
-    [ui.grossPerYear, fmt.euro.format(grossYear)],
-    [ui.neededCapital, fmt.euro.format(needed)],
+  const rows: [string, string, string?][] = [
+    [ui.effectiveTax, `${fmt.num.format(effRate)} %`, ui.infoEffTax],
+    [ui.grossPerYear, fmt.euro.format(grossYear), ui.infoGrossPerYear],
+    [ui.neededCapital, fmt.euro.format(needed), ui.infoNeededCapital],
     [
       ui.savingsNeeded,
       savings === 0 && gap <= 0
         ? ui.alreadyReached
         : fmt.euro.format(savings),
+      ui.infoSavingsNeeded,
     ],
   ];
 
