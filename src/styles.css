@@ -639,10 +639,6 @@ button.mb-item:hover,
   .dock {
     max-width: calc(100% - 1rem);
     gap: 0.3rem;
-    overflow-x: auto;
-    /* centered content in a scroll container clips its left overflow
-       unreachably — start left so every icon can be scrolled to */
-    justify-content: flex-start;
   }
 
   /* finger-sized targets — 38px was too small to tap comfortably */
@@ -653,6 +649,18 @@ button.mb-item:hover,
 
   .dock-item:hover {
     transform: none;
+  }
+
+  /* phone dock is curated (like a real phone): Launchpad, Marco, browser,
+     Finance, GitHub — everything else lives in Launchpad and Spotlight */
+  .dock-sep,
+  .dock-item[data-app="markdown"],
+  .dock-item[data-app="vscode"],
+  .dock-item[data-app="harapan"],
+  .dock-item[data-app="spotify"],
+  .dock-item[data-app="settings"],
+  .dock-item[data-app="terminal"] {
+    display: none;
   }
 }
 

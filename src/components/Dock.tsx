@@ -76,6 +76,7 @@ export function Dock({ windows, activeApp, onLaunch, onLaunchpad }: DockProps) {
             key={app.id}
             className={`dock-item ${activeApp === app.id ? "dock-item-active" : ""}`}
             data-title={app.title}
+            data-app={app.id}
             aria-label={app.title}
             onClick={() => onLaunch(app.id)}
           >
