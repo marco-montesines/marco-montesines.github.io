@@ -14,7 +14,6 @@ import { Terminal } from "./apps/Terminal";
 import { VSCode } from "./apps/VSCode";
 import { AboutDialog } from "./components/AboutDialog";
 import { BootScreen } from "./components/BootScreen";
-import { CallBanner } from "./components/CallBanner";
 import { Dock } from "./components/Dock";
 import { Launchpad } from "./components/Launchpad";
 import { LoginScreen } from "./components/LoginScreen";
@@ -51,8 +50,6 @@ export default function App() {
   const [spotlight, setSpotlight] = useState(false);
   const [launchpad, setLaunchpad] = useState(false);
   const [aboutInfo, setAboutInfo] = useState(false);
-  const [call, setCall] = useState<"pending" | "ringing" | "done">("pending");
-  const [callAccepted, setCallAccepted] = useState(false);
   const [wallpaper, setWallpaper] = useState(
     () => localStorage.getItem("wallpaper") ?? DEFAULT_WALLPAPER,
   );
@@ -208,47 +205,9 @@ export default function App() {
     if (booted && !locked) openGreeter("mango");
   }, [booted, locked, openGreeter]);
 
-  // A “Recruiter” video call rings shortly after the desktop appears.
-  useEffect(() => {
-    if (!booted || locked || call !== "pending") return;
-    const t = setTimeout(() => setCall("ringing"), 6000);
-    return () => clearTimeout(t);
-  }, [booted, locked, call]);
-
-  // Synthesized ringtone while the call banner is up (login already gave
-  // the user gesture browsers require before audio may play).
-  useEffect(() => {
-    if (call !== "ringing" || power !== "on") return;
-    const ctx = new AudioContext();
-    void ctx.resume();
-    const master = ctx.createGain();
-    master.connect(ctx.destination);
-    const chime = () => {
-      if (ctx.state === "closed") return;
-      [659.25, 830.61, 987.77].forEach((freq, i) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = "sine";
-        osc.frequency.value = freq;
-        const t = ctx.currentTime + i * 0.18;
-        gain.gain.setValueAtTime(0, t);
-        gain.gain.linearRampToValueAtTime(0.16 * (volume / 100), t + 0.03);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
-        osc.connect(gain).connect(master);
-        osc.start(t);
-        osc.stop(t + 0.55);
-      });
-    };
-    chime();
-    const iv = setInterval(chime, 2100);
-    return () => {
-      clearInterval(iv);
-      // silence instantly — close() alone is async and can let a chime tail out
-      master.gain.value = 0;
-      master.disconnect();
-      void ctx.close();
-    };
-  }, [call, power, volume]);
+  // The “Recruiter” call banner + ringtone are deliberately disabled: an
+  // unprompted incoming call can scare off exactly the visitors this site
+  // is for. The CallBanner component is kept for possible reuse.
 
   const appBody = (id: AppId): ReactNode => {
     switch (id) {
@@ -263,7 +222,7 @@ export default function App() {
       case "vscode":
         return <VSCode />;
       case "harapan":
-        return <Harapan autoStart={callAccepted} />;
+        return <Harapan />;
       case "spotify":
         return <Spotify />;
       case "finance":
@@ -369,16 +328,6 @@ export default function App() {
             </svg>
           </button>
         </div>
-      )}
-      {call === "ringing" && power === "on" && (
-        <CallBanner
-          onAccept={() => {
-            setCall("done");
-            setCallAccepted(true);
-            wm.open("harapan");
-          }}
-          onDecline={() => setCall("done")}
-        />
       )}
       {spotlight && (
         <Spotlight onLaunch={wm.open} onClose={() => setSpotlight(false)} />
