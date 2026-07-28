@@ -18,8 +18,12 @@ const LIFT = 14;
 
 export function Dock({ windows, activeApp, onLaunch, onLaunchpad }: DockProps) {
   const barRef = useRef<HTMLElement>(null);
-  const reduced = useRef(
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  // no magnification for reduced-motion, and none on touch screens — iOS
+  // fires synthetic mouse events on tap but never mouseleave, so the
+  // effect would stick
+  const inert = useRef(
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !window.matchMedia("(hover: hover)").matches,
   );
 
   // Uses offsetLeft (layout position, unaffected by the transforms we set)
@@ -27,7 +31,7 @@ export function Dock({ windows, activeApp, onLaunch, onLaunchpad }: DockProps) {
   // the distance math and wobble.
   const magnify = (clientX: number) => {
     const bar = barRef.current;
-    if (!bar || reduced.current) return;
+    if (!bar || inert.current) return;
     const x = clientX - bar.getBoundingClientRect().left;
     bar.querySelectorAll<HTMLElement>(".dock-item").forEach((el) => {
       const d = Math.abs(x - (el.offsetLeft + el.offsetWidth / 2));

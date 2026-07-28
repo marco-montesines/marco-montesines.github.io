@@ -2142,8 +2142,11 @@ button.mb-item:hover,
   transition: opacity 0.1s ease;
 }
 
-.dock-item:hover::after {
-  opacity: 1;
+/* only real pointers hover — on touch a tap would leave the bubble stuck */
+@media (hover: hover) {
+  .dock-item:hover::after {
+    opacity: 1;
+  }
 }
 
 /* ---------- app tiles ---------- */
