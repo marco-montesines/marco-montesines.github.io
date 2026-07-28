@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { AppTile, GitHubMarkIcon, LaunchpadIcon } from "../icons";
 import { openInBrowser } from "../os/browserBus";
 import { APPS, type AppId } from "../os/apps";
@@ -20,11 +20,24 @@ export function Dock({ windows, activeApp, onLaunch, onLaunchpad }: DockProps) {
   const barRef = useRef<HTMLElement>(null);
   // no magnification for reduced-motion, and none on touch screens — iOS
   // fires synthetic mouse events on tap but never mouseleave, so the
-  // effect would stick
-  const inert = useRef(
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      !window.matchMedia("(hover: hover)").matches,
-  );
+  // effect would stick. Tracked live: device emulation and external
+  // displays can flip these without a reload.
+  const inert = useRef(false);
+  useEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const hover = window.matchMedia("(hover: hover)");
+    const update = () => {
+      inert.current = reduce.matches || !hover.matches;
+      if (inert.current) reset();
+    };
+    update();
+    reduce.addEventListener("change", update);
+    hover.addEventListener("change", update);
+    return () => {
+      reduce.removeEventListener("change", update);
+      hover.removeEventListener("change", update);
+    };
+  }, []);
 
   // Uses offsetLeft (layout position, unaffected by the transforms we set)
   // instead of live rects, so magnifying neighbors can't feed back into
