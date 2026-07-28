@@ -146,6 +146,10 @@ export const UI = {
         "Interest is credited at the chosen compounding interval and immediately earns interest itself; deposits are added monthly. With the dynamics option on, the savings rate rises once a year. The chart splits the result into what you paid in and what the market added.",
       ],
       [
+        "Savings plan or lump sum investment?",
+        "A savings plan invests a fixed amount regularly (e.g. €200/month): purchases spread over time smooth out market swings (cost averaging), the entry barrier is low, and it can be paused or adjusted anytime. A lump sum (e.g. an inheritance or bonus) starts working immediately and maximizes time in the market — historically it beat the savings plan in about two thirds of cases, with lower transaction costs. Rule of thumb: invest available capital immediately and future income via a savings plan — the calculation type above models both, and combining a starting amount with monthly deposits captures the advantages of each.",
+      ],
+      [
         "What is the German Abgeltungsteuer?",
         "A flat 25 % tax on investment gains, plus a 5.5 % solidarity surcharge on that tax — 26.375 % in total. With church tax it rises to 27.819 % (8 %) or 27.99 % (9 %). Your broker usually withholds it automatically.",
       ],
@@ -445,6 +449,10 @@ export const UI = {
       [
         "Wie wird das Endkapital berechnet?",
         "Zinsen werden im gewählten Verzinsungsintervall gutgeschrieben und sofort mitverzinst; Einzahlungen fließen monatlich ein. Mit aktivierter Dynamik steigt die Sparrate einmal pro Jahr. Das Diagramm trennt Einzahlungen und Zinsertrag.",
+      ],
+      [
+        "Sparplan oder Einmalanlage?",
+        "Ein Sparplan investiert regelmäßig einen festen Betrag (z. B. 200 €/Monat): Die Käufe verteilen sich über die Zeit und glätten Marktschwankungen (Cost-Average-Effekt), die Einstiegshürde ist niedrig, und er lässt sich jederzeit pausieren oder anpassen. Eine Einmalanlage (z. B. Erbschaft oder Bonus) arbeitet sofort und maximiert die Zeit im Markt — historisch schlug sie den Sparplan in rund zwei Dritteln der Fälle, bei geringeren Transaktionskosten. Faustregel: Vorhandenes Kapital sofort anlegen, künftiges Einkommen per Sparplan — die Berechnungsart oben bildet beides ab, und Startkapital plus monatliche Raten kombiniert die Vorteile beider Ansätze.",
       ],
       [
         "Was ist die Abgeltungsteuer?",
