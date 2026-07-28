@@ -85,6 +85,27 @@ body {
   flex-direction: column;
   position: relative;
   background: #0d3b4a;
+  /* keep chrome out of notches/punch-holes in landscape */
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* OS chrome is UI, not text: no long-press callouts or accidental selection */
+.menubar,
+.dock,
+.desktop > .window > .window-title,
+.launchpad,
+.login {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* landscape phones: no room for floating-window ergonomics either */
+@media (max-height: 500px) {
+  .window-resize {
+    display: none;
+  }
 }
 
 .wallpaper {

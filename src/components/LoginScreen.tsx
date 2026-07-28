@@ -62,7 +62,7 @@ export function LoginScreen({
             onChange={(e) => setPassword(e.target.value)}
             placeholder={ui.passwordPlaceholder}
             aria-label="Password — any input unlocks this portfolio"
-            autoFocus
+            autoFocus={window.matchMedia("(hover: hover)").matches}
             autoComplete="off"
           />
         </form>

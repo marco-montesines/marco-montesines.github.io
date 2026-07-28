@@ -319,12 +319,18 @@ function Chart({
   const gridVals = [0.25, 0.5, 0.75, 1].map((f) => f * ymax);
   const xtickEvery = years > 40 ? 10 : years > 15 ? 5 : years > 8 ? 2 : 1;
 
-  const onMove = (e: React.MouseEvent<SVGSVGElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    const mx = ((e.clientX - r.left) / r.width) * W;
+  const hoverAt = (clientX: number, el: SVGSVGElement) => {
+    const r = el.getBoundingClientRect();
+    const mx = ((clientX - r.left) / r.width) * W;
     const i = Math.round(((mx - PAD.l) / PW) * years);
     setHover(Math.max(0, Math.min(years, i)));
   };
+  const onMove = (e: React.MouseEvent<SVGSVGElement>) =>
+    hoverAt(e.clientX, e.currentTarget);
+  // touch: scrub with a finger, clear on lift — synthetic mouse events
+  // would otherwise leave the tooltip stuck
+  const onTouch = (e: React.TouchEvent<SVGSVGElement>) =>
+    hoverAt(e.touches[0].clientX, e.currentTarget);
 
   return (
     <div className="chart-wrap" ref={wrapRef}>
@@ -333,6 +339,10 @@ function Chart({
         role="img"
         onMouseMove={onMove}
         onMouseLeave={() => setHover(null)}
+        onTouchStart={onTouch}
+        onTouchMove={onTouch}
+        onTouchEnd={() => setHover(null)}
+        onTouchCancel={() => setHover(null)}
       >
         {gridVals.map((v) => (
           <g key={v}>

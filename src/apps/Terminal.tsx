@@ -232,7 +232,7 @@ export function Terminal({
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={onKeyDown}
           aria-label="Terminal input"
-          autoFocus
+          autoFocus={window.matchMedia("(hover: hover)").matches}
           spellCheck={false}
           autoComplete="off"
         />
