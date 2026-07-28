@@ -35,7 +35,7 @@ export const de: Content = {
     {
       period: "03.2016 – 11.2021",
       role: "Lead / Senior Softwareentwickler",
-      org: "Individuelle Lösungen in den Bereichen Websites, Online-Marketing & Big-Data-Analyse",
+      org: "Individuelle Lösungen in den Bereichen Webauftritt, Online-Marketing und Datenanalyse",
       note: "Backend-Lead für eine öffentliche Suchmaschine und ihr Data Warehouse — Architektur, APIs, Datenbankdesign und Machine Learning (Topic Modeling, SVM-Klassifikation) im großen Maßstab.",
     },
     {
