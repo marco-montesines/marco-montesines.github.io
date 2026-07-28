@@ -32,11 +32,54 @@ const useFmt = () => {
   );
 };
 
+const TIP_W = 230;
+
 function Info({ text }: { text?: string }) {
+  // fixed-position so window overflow can never clip the tooltip
+  const [tip, setTip] = useState<{
+    x: number;
+    y: number;
+    below: boolean;
+  } | null>(null);
   if (!text) return null;
+
+  const show = (e: React.SyntheticEvent<HTMLSpanElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    const below = r.top < 140;
+    setTip({
+      x: Math.min(
+        Math.max(8, r.left + r.width / 2 - TIP_W / 2),
+        window.innerWidth - TIP_W - 8,
+      ),
+      y: below ? r.bottom + 7 : window.innerHeight - r.top + 7,
+      below,
+    });
+  };
+
   return (
-    <span className="fin-info" tabIndex={0} aria-label={text}>
-      ⓘ<span className="fin-tip" role="tooltip">{text}</span>
+    <span
+      className="fin-info"
+      tabIndex={0}
+      aria-label={text}
+      onMouseEnter={show}
+      onMouseLeave={() => setTip(null)}
+      onFocus={show}
+      onBlur={() => setTip(null)}
+    >
+      ⓘ
+      {tip && (
+        <span
+          className="fin-tip"
+          role="tooltip"
+          style={
+            tip.below
+              ? { left: tip.x, top: tip.y }
+              : { left: tip.x, bottom: tip.y }
+          }
+        >
+          {text}
+        </span>
+      )}
     </span>
   );
 }

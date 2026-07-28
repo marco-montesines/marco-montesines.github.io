@@ -1428,12 +1428,10 @@ button.mb-item:hover,
   color: var(--mango);
 }
 
-/* instant styled tooltip — the native title attr is too slow to discover */
+/* instant styled tooltip — fixed to the viewport so window edges and
+   scroll containers can never clip it */
 .fin-tip {
-  position: absolute;
-  bottom: calc(100% + 7px);
-  left: 50%;
-  transform: translateX(-58%);
+  position: fixed;
   width: 230px;
   padding: 0.45rem 0.6rem;
   background: var(--paper);
@@ -1442,20 +1440,25 @@ button.mb-item:hover,
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
   color: var(--ink);
   font-size: 0.76rem;
+  font-weight: 400;
   line-height: 1.4;
   white-space: normal;
   text-align: left;
-  opacity: 0;
-  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.12s ease;
-  z-index: 30;
+  z-index: 1200;
+  animation: tip-in 0.12s ease;
 }
 
-.fin-info:hover .fin-tip,
-.fin-info:focus-visible .fin-tip {
-  opacity: 1;
-  visibility: visible;
+@keyframes tip-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fin-tip {
+    animation: none;
+  }
 }
 
 .fin-check input {
