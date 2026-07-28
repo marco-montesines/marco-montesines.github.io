@@ -1350,6 +1350,19 @@ button.mb-item:hover,
   cursor: help;
 }
 
+.fin-check input {
+  accent-color: var(--mango);
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.fin-note {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
 .fin-select {
   flex: none;
   width: min(62%, 300px);

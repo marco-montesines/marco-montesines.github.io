@@ -26,6 +26,7 @@ const useFmt = () => {
         notation: "compact",
         maximumFractionDigits: 1,
       }),
+      num: new Intl.NumberFormat(locale, { maximumFractionDigits: 2 }),
     }),
     [locale],
   );
@@ -105,6 +106,32 @@ function SelectField({
           </option>
         ))}
       </select>
+    </label>
+  );
+}
+
+function Toggle({
+  label,
+  checked,
+  onChange,
+  info,
+}: {
+  label: string;
+  checked: boolean;
+  onChange: (b: boolean) => void;
+  info?: string;
+}) {
+  return (
+    <label className="fin-field fin-check">
+      <span>
+        {label}
+        <Info text={info} />
+      </span>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+      />
     </label>
   );
 }
@@ -344,9 +371,11 @@ function Savings({ ui }: { ui: UIStrings }) {
   const [taxIdx, setTaxIdx] = useState(0);
   const [customRate, setCustomRate] = useState(26.375);
   const [allowance, setAllowance] = useState(1000);
+  const [dynOn, setDynOn] = useState(false);
+  const [dyn, setDyn] = useState(2);
   const taxRate = (TAX_RATES[taxIdx] ?? customRate) / 100;
 
-  const deposit = mode === 1 ? monthly : 0;
+  let deposit = mode === 1 ? monthly : 0;
   const m = INTERVALS[intervalIdx];
   // nominal annual rate compounded m times/year, expressed per month
   const monthlyFactor = (1 + rate / 100 / m) ** (m / 12);
@@ -354,12 +383,14 @@ function Savings({ ui }: { ui: UIStrings }) {
   const contributions: number[] = [initial];
   const growth: number[] = [0];
   let cap = initial;
+  let paidIn = initial;
   for (let month = 1; month <= yr * 12; month++) {
     cap = cap * monthlyFactor + deposit;
+    paidIn += deposit;
     if (month % 12 === 0) {
-      const paidIn = initial + deposit * month;
       contributions.push(paidIn);
       growth.push(cap - paidIn);
+      if (dynOn && mode === 1) deposit *= 1 + dyn / 100;
     }
   }
   const future = contributions[yr] + growth[yr];
@@ -395,6 +426,19 @@ function Savings({ ui }: { ui: UIStrings }) {
         <Field label={ui.annualReturn} value={rate} onChange={setRate} step={0.1} suffix="%" info={ui.infoReturn} />
         <Field label={ui.years} value={years} onChange={setYears} info={ui.infoYears} />
       </div>
+      {mode === 1 && (
+        <Toggle
+          label={ui.dynamicsToggle}
+          checked={dynOn}
+          onChange={setDynOn}
+          info={ui.infoDynamics}
+        />
+      )}
+      {mode === 1 && dynOn && (
+        <div className="fin-grid">
+          <Field label={ui.dynamicsRate} value={dyn} onChange={setDyn} step={0.5} suffix="%" info={ui.infoDynamics} />
+        </div>
+      )}
       <SelectField
         label={ui.intervalLabel}
         value={intervalIdx}
@@ -481,63 +525,264 @@ function Loan({ ui }: { ui: UIStrings }) {
   );
 }
 
+/** Periods per year, parallel to ui.withdrawIntervalOptions. */
+const WITHDRAW_PERIODS = [12, 4, 1];
+
+function Withdrawal({ ui }: { ui: UIStrings }) {
+  const fmt = useFmt();
+  const [solve, setSolve] = useState(2); // 0 capital, 1 amount, 2 duration
+  const [capital, setCapital] = useState(500000);
+  const [amount, setAmount] = useState(2500);
+  const [intervalIdx, setIntervalIdx] = useState(0);
+  const [rate, setRate] = useState(5);
+  const [deplete, setDeplete] = useState(true);
+  const [duration, setDuration] = useState(25);
+
+  const p = WITHDRAW_PERIODS[intervalIdx];
+  const j = rate / 100 / p;
+  const n = Math.max(1, Math.round(duration)) * p;
+
+  // resolve the missing value from the other two
+  let cap0 = capital;
+  let w = amount;
+  let periodsLast: number | null = null; // null = forever
+  if (solve === 0) {
+    if (!deplete) cap0 = j > 0 ? w / j : Infinity;
+    else cap0 = j > 0 ? (w * (1 - (1 + j) ** -n)) / j : w * n;
+    periodsLast = deplete ? n : null;
+  } else if (solve === 1) {
+    if (!deplete) w = cap0 * j;
+    else w = j > 0 ? (cap0 * j) / (1 - (1 + j) ** -n) : cap0 / n;
+    periodsLast = deplete ? n : null;
+  } else {
+    if (j > 0 && w <= cap0 * j) periodsLast = null;
+    else if (w > 0)
+      periodsLast =
+        j > 0 ? -Math.log(1 - (cap0 * j) / w) / Math.log(1 + j) : cap0 / w;
+    else periodsLast = null;
+  }
+
+  // remaining capital per year
+  const horizonYears = Math.min(
+    60,
+    periodsLast === null ? 30 : Math.max(5, Math.ceil(periodsLast / p) + 2),
+  );
+  const remaining: number[] = [cap0 === Infinity ? 0 : cap0];
+  let cap = cap0 === Infinity ? 0 : cap0;
+  for (let t = 1; t <= horizonYears * p; t++) {
+    cap = Math.max(0, cap * (1 + j) - w);
+    if (t % p === 0) remaining.push(cap);
+  }
+
+  const rows: [string, string][] = [];
+  if (solve === 0)
+    rows.push([
+      ui.neededCapital,
+      cap0 === Infinity ? "—" : fmt.euro.format(cap0),
+    ]);
+  if (solve === 1)
+    rows.push([
+      ui.withdrawAmount,
+      `${fmt.euro.format(w)} ${ui.perInterval[intervalIdx]}`,
+    ]);
+  rows.push([
+    ui.capitalLasts,
+    periodsLast === null
+      ? ui.forever
+      : `≈ ${Math.ceil(periodsLast / p)} ${ui.yearsWord}`,
+  ]);
+
+  return (
+    <>
+      <div className="fin-card">
+        <SelectField
+          label={ui.calcTypeLabel}
+          value={solve}
+          onChange={setSolve}
+          options={ui.withdrawSolveOptions}
+          info={ui.infoWithdrawSolve}
+        />
+        <div className="fin-grid">
+          {solve !== 0 && (
+            <Field label={ui.startingAmount} value={capital} onChange={setCapital} step={10000} suffix="€" info={ui.infoStarting} />
+          )}
+          {solve !== 1 && (
+            <Field label={ui.withdrawAmount} value={amount} onChange={setAmount} step={100} suffix="€" info={ui.infoWithdrawAmount} />
+          )}
+          <Field label={ui.annualReturn} value={rate} onChange={setRate} step={0.1} suffix="%" info={ui.infoReturn} />
+          {solve !== 2 && deplete && (
+            <Field label={ui.withdrawPeriod} value={duration} onChange={setDuration} info={ui.infoWithdrawPeriod} />
+          )}
+        </div>
+        <SelectField
+          label={ui.withdrawInterval}
+          value={intervalIdx}
+          onChange={setIntervalIdx}
+          options={ui.withdrawIntervalOptions}
+          info={ui.infoWithdrawInterval}
+        />
+        {solve !== 2 && (
+          <Toggle
+            label={ui.capitalDepletion}
+            checked={deplete}
+            onChange={setDeplete}
+            info={ui.infoDepletion}
+          />
+        )}
+      </div>
+      <Chart
+        series={[{ label: ui.capitalLabel, color: C1, values: remaining }]}
+        tipFmt={(v) => fmt.euro.format(v)}
+      />
+      <Results rows={rows} />
+    </>
+  );
+}
+
+/** Effective tax presets: [none, 8 % church, 9 % church] German rates. */
+const DE_RATES = [26.375, 27.819, 27.99];
+
 function Freedom({ ui }: { ui: UIStrings }) {
   const fmt = useFmt();
-  const [expenses, setExpenses] = useState(2500);
+  const [netIncome, setNetIncome] = useState(1500);
+  const [ageNow, setAgeNow] = useState(35);
+  const [ageFree, setAgeFree] = useState(60);
+  const [assets, setAssets] = useState(25000);
+  const [rate, setRate] = useState(7);
+  const [deplete, setDeplete] = useState(false);
   const [withdrawal, setWithdrawal] = useState(4);
-  const [initial, setInitial] = useState(25000);
-  const [monthly, setMonthly] = useState(750);
-  const [rate, setRate] = useState(6);
+  const [depletionYears, setDepletionYears] = useState(30);
+  const [inflOn, setInflOn] = useState(true);
+  const [infl, setInfl] = useState(2);
+  const [country, setCountry] = useState(0);
+  const [etf, setEtf] = useState(true);
+  const [church, setChurch] = useState(0);
+  const [customTax, setCustomTax] = useState(26.375);
 
-  const target = withdrawal > 0 ? (expenses * 12) / (withdrawal / 100) : 0;
-  const i = rate / 100 / 12;
-  const HORIZON = 50;
-  const capital: number[] = [initial];
-  let cap = initial;
-  let reachedMonth: number | null = null;
-  for (let m = 1; m <= HORIZON * 12; m++) {
-    cap = cap * (1 + i) + monthly;
-    if (reachedMonth === null && target > 0 && cap >= target) reachedMonth = m;
-    if (m % 12 === 0) capital.push(cap);
+  // effective tax rate on gains, parqet-style
+  let effRate: number;
+  if (country === 0) effRate = DE_RATES[church] * (etf ? 0.7 : 1);
+  else if (country === 1) effRate = 27.5;
+  else if (country === 2) effRate = 0;
+  else effRate = customTax;
+
+  const years = Math.max(0, Math.round(ageFree) - Math.round(ageNow));
+  const f = inflOn ? infl / 100 : 0;
+  const incomeAtFreedom = netIncome * (1 + f) ** years;
+  const grossYear = (incomeAtFreedom * 12) / (1 - effRate / 100);
+
+  // needed capital at freedom
+  const r = rate / 100;
+  let needed: number;
+  if (!deplete) {
+    needed = withdrawal > 0 ? grossYear / (withdrawal / 100) : 0;
+  } else {
+    const rr = (1 + r) / (1 + f) - 1; // real return keeps purchasing power
+    const D = Math.max(1, Math.round(depletionYears));
+    needed =
+      Math.abs(rr) > 1e-9
+        ? (grossYear * (1 - (1 + rr) ** -D)) / rr
+        : grossYear * D;
   }
-  const chartYears =
-    reachedMonth !== null
-      ? Math.min(HORIZON, Math.max(10, Math.ceil(reachedMonth / 12) + 5))
-      : HORIZON;
+
+  // required monthly savings to close the gap
+  const i = r / 12;
+  const nMonths = years * 12;
+  const fvAssets = assets * (1 + i) ** nMonths;
+  const gap = needed - fvAssets;
+  const savings =
+    nMonths === 0 || gap <= 0
+      ? 0
+      : i > 0
+        ? (gap * i) / ((1 + i) ** nMonths - 1)
+        : gap / nMonths;
+
+  // chart: accumulation until freedom, then withdrawal phase
+  const postYears = deplete ? Math.max(1, Math.round(depletionYears)) : 15;
+  const chartYears = Math.min(70, years + postYears);
+  const capitalSeries: number[] = [assets];
+  let cap = assets;
+  let g = (incomeAtFreedom * 12) / (1 - effRate / 100) / 12; // monthly gross
+  for (let m = 1; m <= chartYears * 12; m++) {
+    if (m <= nMonths) {
+      cap = cap * (1 + i) + savings;
+    } else {
+      cap = Math.max(0, cap * (1 + i) - g);
+      g *= 1 + f / 12;
+    }
+    if (m % 12 === 0) capitalSeries.push(cap);
+  }
+
+  const rows: [string, string][] = [
+    [ui.effectiveTax, `${fmt.num.format(effRate)} %`],
+    [ui.grossPerYear, fmt.euro.format(grossYear)],
+    [ui.neededCapital, fmt.euro.format(needed)],
+    [
+      ui.savingsNeeded,
+      savings === 0 && gap <= 0
+        ? ui.alreadyReached
+        : fmt.euro.format(savings),
+    ],
+  ];
 
   return (
     <>
       <div className="fin-card">
         <div className="fin-grid">
-          <Field label={ui.monthlyExpenses} value={expenses} onChange={setExpenses} step={100} suffix="€" />
-          <Field label={ui.withdrawalRate} value={withdrawal} onChange={setWithdrawal} step={0.5} suffix="%" info={ui.infoWithdrawal} />
-          <Field label={ui.startingAmount} value={initial} onChange={setInitial} step={1000} suffix="€" info={ui.infoStarting} />
-          <Field label={ui.monthlyContribution} value={monthly} onChange={setMonthly} step={50} suffix="€" info={ui.infoMonthly} />
-          <Field label={ui.annualReturn} value={rate} onChange={setRate} step={0.5} suffix="%" info={ui.infoReturn} />
+          <Field label={ui.desiredNetIncome} value={netIncome} onChange={setNetIncome} step={100} suffix="€" info={ui.infoNetIncome} />
+          <Field label={ui.existingAssets} value={assets} onChange={setAssets} step={1000} suffix="€" info={ui.infoAssets} />
+          <Field label={ui.ageNow} value={ageNow} onChange={setAgeNow} />
+          <Field label={ui.ageFree} value={ageFree} onChange={setAgeFree} />
+          <Field label={ui.annualReturn} value={rate} onChange={setRate} step={0.5} suffix="%" info={ui.infoFreedomReturn} />
+          {inflOn && (
+            <Field label={ui.inflationRate} value={infl} onChange={setInfl} step={0.1} suffix="%" info={ui.infoInflation} />
+          )}
         </div>
+        <p className="fin-note">
+          {ui.perYearApprox(fmt.euro.format(netIncome * 12))} ·{" "}
+          {ui.yearsToFreedom(years)}
+        </p>
+        <Toggle label={ui.inflationToggle} checked={inflOn} onChange={setInflOn} info={ui.infoInflation} />
+        <Toggle label={ui.capitalDepletion} checked={deplete} onChange={setDeplete} info={ui.infoDepletion} />
+        {deplete ? (
+          <div className="fin-grid">
+            <Field label={ui.withdrawPeriod} value={depletionYears} onChange={setDepletionYears} info={ui.infoWithdrawPeriod} />
+          </div>
+        ) : (
+          <div className="fin-grid">
+            <Field label={ui.withdrawalRate} value={withdrawal} onChange={setWithdrawal} step={0.5} suffix="%" info={ui.infoWithdrawal} />
+          </div>
+        )}
+        <SelectField
+          label={ui.countryTaxLabel}
+          value={country}
+          onChange={setCountry}
+          options={ui.countryTaxOptions}
+          info={ui.infoTax}
+        />
+        {country === 0 && (
+          <>
+            <Toggle label={ui.etfRelief} checked={etf} onChange={setEtf} />
+            <SelectField
+              label={ui.churchTaxLabel}
+              value={church}
+              onChange={setChurch}
+              options={ui.churchTaxOptions}
+            />
+          </>
+        )}
+        {country === 3 && (
+          <div className="fin-grid">
+            <Field label={ui.taxRateLabel} value={customTax} onChange={setCustomTax} step={0.1} suffix="%" />
+          </div>
+        )}
       </div>
       <Chart
-        series={[
-          {
-            label: ui.capitalLabel,
-            color: C2,
-            values: capital.slice(0, chartYears + 1),
-          },
-        ]}
-        target={{ value: target, label: ui.targetLabel }}
+        series={[{ label: ui.capitalLabel, color: C2, values: capitalSeries }]}
+        target={{ value: needed, label: ui.targetLabel }}
         tipFmt={(v) => fmt.euro.format(v)}
       />
-      <Results
-        rows={[
-          [ui.neededCapital, fmt.euro.format(target)],
-          [
-            ui.reachedIn,
-            reachedMonth !== null
-              ? `≈ ${Math.ceil(reachedMonth / 12)} ${ui.yearsWord}`
-              : ui.notReached,
-          ],
-        ]}
-      />
+      <Results rows={rows} />
     </>
   );
 }
@@ -548,7 +793,8 @@ export function Finance() {
   const tabs: [string, ReactNode][] = [
     [ui.financeTabs[0], <Savings key="s" ui={ui} />],
     [ui.financeTabs[1], <Loan key="l" ui={ui} />],
-    [ui.financeTabs[2], <Freedom key="f" ui={ui} />],
+    [ui.financeTabs[2], <Withdrawal key="w" ui={ui} />],
+    [ui.financeTabs[3], <Freedom key="f" ui={ui} />],
   ];
   return (
     <div className="finance app-pad">

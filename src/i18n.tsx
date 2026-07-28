@@ -91,7 +91,53 @@ export const UI = {
     storageHint: "23 years in production, allocated as:",
     storageEstimate: (usage: string, quota: string) =>
       `This site uses ${usage} MB of the ${quota} GB your browser allows it.`,
-    financeTabs: ["Savings", "Loan", "Freedom"],
+    financeTabs: ["Savings", "Loan", "Withdrawal", "Freedom"],
+    dynamicsToggle: "Increase savings rate yearly",
+    dynamicsRate: "Yearly increase",
+    infoDynamics:
+      "Raises your savings rate once a year, e.g. along with salary raises.",
+    // withdrawal calculator
+    withdrawSolveOptions: ["Needed capital", "Withdrawal amount", "Duration"],
+    infoWithdrawSolve: "Pick which value to calculate from the other two.",
+    withdrawAmount: "Withdrawal amount",
+    infoWithdrawAmount: "The amount you withdraw every interval.",
+    withdrawInterval: "Withdrawal interval",
+    withdrawIntervalOptions: ["Monthly", "Quarterly", "Yearly"],
+    infoWithdrawInterval: "How often you withdraw money.",
+    capitalDepletion: "Deplete capital",
+    infoDepletion:
+      "On: the capital is used up over the withdrawal period. Off: you only withdraw what the returns generate — the capital stays intact.",
+    withdrawPeriod: "Withdrawal period",
+    infoWithdrawPeriod: "How many years the withdrawals should last.",
+    capitalLasts: "Capital lasts",
+    forever: "forever — returns cover the withdrawals",
+    perInterval: ["per month", "per quarter", "per year"],
+    // financial freedom
+    desiredNetIncome: "Desired net income / month",
+    infoNetIncome:
+      "What you want to live on later, after taxes, in today's money.",
+    perYearApprox: (v: string) => `≈ ${v} per year`,
+    ageNow: "Your age today",
+    ageFree: "Age at financial freedom",
+    yearsToFreedom: (n: number) =>
+      `${n} ${n === 1 ? "year" : "years"} until financial freedom`,
+    existingAssets: "Existing assets",
+    infoAssets: "Everything already invested: stocks, ETFs, cash, real estate.",
+    infoFreedomReturn:
+      "Broadly diversified equity ETFs returned about 7–9 % per year before inflation over the long run.",
+    inflationToggle: "Consider inflation",
+    infoInflation:
+      "Adjusts your target income upward so it keeps today's purchasing power.",
+    inflationRate: "Inflation p. a.",
+    countryTaxLabel: "Taxation",
+    countryTaxOptions: ["Germany", "Austria", "Tax-free", "Custom"],
+    etfRelief: "Equity ETFs: 30 % partial exemption",
+    churchTaxLabel: "Church tax",
+    churchTaxOptions: ["None", "8 %", "9 %"],
+    effectiveTax: "Effective tax rate",
+    grossPerYear: "Gross withdrawal / year",
+    savingsNeeded: "Required savings rate / month",
+    alreadyReached: "target already reached",
     contributionsLabel: "Contributions",
     interestLabel: "Interest",
     remainingDebt: "Remaining debt",
@@ -215,7 +261,55 @@ export const UI = {
     storageHint: "23 Jahre in Produktion, aufgeteilt in:",
     storageEstimate: (usage: string, quota: string) =>
       `Diese Seite nutzt ${usage} MB von ${quota} GB, die dein Browser erlaubt.`,
-    financeTabs: ["Sparen", "Kredit", "Freiheit"],
+    financeTabs: ["Sparen", "Kredit", "Entnahme", "Freiheit"],
+    dynamicsToggle: "Einzahlungsdynamik aktivieren",
+    dynamicsRate: "Jährliche Erhöhung",
+    infoDynamics:
+      "Erhöht deine Sparrate einmal pro Jahr, z. B. parallel zu Gehaltserhöhungen.",
+    // withdrawal calculator
+    withdrawSolveOptions: ["Anlagevermögen", "Entnahmebetrag", "Entnahmezeitraum"],
+    infoWithdrawSolve:
+      "Wähle, welcher Wert aus den beiden anderen berechnet wird.",
+    withdrawAmount: "Entnahmebetrag",
+    infoWithdrawAmount: "Der Betrag, den du regelmäßig entnimmst.",
+    withdrawInterval: "Entnahmeintervall",
+    withdrawIntervalOptions: ["Monatlich", "Vierteljährlich", "Jährlich"],
+    infoWithdrawInterval: "Wie oft du Geld entnimmst.",
+    capitalDepletion: "Kapital aufbrauchen",
+    infoDepletion:
+      "An: Das Kapital wird über den Entnahmezeitraum verbraucht. Aus: Du entnimmst nur die Erträge — das Kapital bleibt erhalten.",
+    withdrawPeriod: "Entnahmezeitraum",
+    infoWithdrawPeriod: "Wie viele Jahre die Entnahmen reichen sollen.",
+    capitalLasts: "Kapital reicht",
+    forever: "für immer — die Erträge decken die Entnahmen",
+    perInterval: ["pro Monat", "pro Quartal", "pro Jahr"],
+    // financial freedom
+    desiredNetIncome: "Gewünschtes Netto-Einkommen / Monat",
+    infoNetIncome:
+      "Wovon du später leben möchtest — nach Steuern, in heutiger Kaufkraft.",
+    perYearApprox: (v: string) => `≈ ${v} pro Jahr`,
+    ageNow: "Dein Alter heute",
+    ageFree: "Alter bei finanzieller Freiheit",
+    yearsToFreedom: (n: number) =>
+      `${n} ${n === 1 ? "Jahr" : "Jahre"} bis zur finanziellen Freiheit`,
+    existingAssets: "Vorhandenes Vermögen",
+    infoAssets:
+      "Alles bereits Investierte: Aktien, ETFs, Cash, Immobilien.",
+    infoFreedomReturn:
+      "Breit gestreute Aktien-ETFs erzielten langfristig etwa 7–9 % pro Jahr vor Inflation.",
+    inflationToggle: "Inflation berücksichtigen",
+    infoInflation:
+      "Erhöht dein Ziel-Einkommen, damit es die heutige Kaufkraft behält.",
+    inflationRate: "Inflation p. a.",
+    countryTaxLabel: "Besteuerung",
+    countryTaxOptions: ["Deutschland", "Österreich", "Steuerfrei", "Benutzerdefiniert"],
+    etfRelief: "Aktien-ETFs: 30 % Teilfreistellung",
+    churchTaxLabel: "Kirchensteuer",
+    churchTaxOptions: ["Keine", "8 %", "9 %"],
+    effectiveTax: "Effektiver Steuersatz",
+    grossPerYear: "Brutto-Entnahme / Jahr",
+    savingsNeeded: "Nötige Sparrate / Monat",
+    alreadyReached: "Ziel bereits erreicht",
     contributionsLabel: "Einzahlungen",
     interestLabel: "Zinsen",
     remainingDebt: "Restschuld",
