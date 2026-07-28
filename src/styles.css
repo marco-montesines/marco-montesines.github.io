@@ -76,12 +76,13 @@ body {
 }
 
 .os {
-  /* pinned to the visual viewport — a stray page-scroll offset (iOS
-     reload restoration) can then never cut off the menu bar */
-  position: fixed;
-  inset: 0;
+  /* sized to the dynamic viewport (tracks iOS toolbar states); reload
+     scroll offsets are handled via scrollRestoration in main.tsx */
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
+  position: relative;
   background: #0d3b4a;
 }
 
