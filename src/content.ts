@@ -8,7 +8,7 @@
 export const bio = {
   name: "Marco Montesines",
   role: "Head of Software Development",
-  tagline: "Senior Software Developer — Go · Python · PHP · Cloud-Native",
+  tagline: "Senior Software Developer",
   about:
     "Innovative software development leader with 23+ years designing, building and operating scalable, high-performance systems across finance, search, travel, education and the non-profit sector. Versatile developer and hands-on architect — skilled in backend services, data platforms, distributed real-time systems and leading teams from concept to production. Known for bridging technology and business, mentoring developers, and delivering measurable results in every role since 2002.",
   languages: "English (Native) · Tagalog (Native) · German (B1 certificate)",
@@ -57,7 +57,7 @@ export const experience: Station[] = [
     period: "03.2006 – 12.2008",
     role: "Team Leader / Senior Software Developer",
     org: "Software development company",
-    note: "Led a 5-developer team building a large financial mortgage system — technical design, implementation, and international client delivery.",
+    note: "Led a 5-developer team building a large financial mortgage system — technical design, implementation, and international client delivery (Netherlands).",
   },
   {
     period: "09.2002 – 03.2006",
@@ -78,7 +78,7 @@ export const education = [
   {
     period: "06.1993 – 03.1997",
     degree:
-      "High School with Academic & Technical Secondary Course, Specialization in Computers",
+      "High School with Academic & Technical Secondary Course with Specialization in Computers",
     school: "Don Bosco Technical College",
     focus: "Computer System Architecture, Design & Programming",
   },
@@ -127,13 +127,13 @@ export const competencies = [
   { name: "Software Architecture & System Design", pct: 95 },
   { name: "Backend Development (Go · Python · PHP)", pct: 95 },
   { name: "Databases & Data Platforms", pct: 92 },
-  { name: "Technical Leadership & Mentoring", pct: 92 },
-  { name: "Performance & Scalability", pct: 92 },
   { name: "Distributed & Real-time Systems", pct: 90 },
   { name: "Cloud, DevSecOps & AI", pct: 90 },
-  { name: "Agile · Full Lifecycle Delivery", pct: 90 },
   { name: "Reliability, Observability & SLOs (SRE)", pct: 88 },
+  { name: "Technical Leadership & Mentoring", pct: 92 },
   { name: "Security & Compliance", pct: 85 },
+  { name: "Performance & Scalability", pct: 92 },
+  { name: "Agile · Full Lifecycle Delivery", pct: 90 },
 ];
 
 export const skills: Record<string, string[]> = {

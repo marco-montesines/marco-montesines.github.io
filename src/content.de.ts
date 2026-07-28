@@ -10,7 +10,7 @@ export const de: Content = {
   bio: {
     name: "Marco Montesines",
     role: "Head of Software Development",
-    tagline: "Senior Softwareentwickler — Go · Python · PHP · Cloud-Native",
+    tagline: "Senior Softwareentwickler",
     about:
       "Innovative Führungskraft in der Softwareentwicklung mit über 23 Jahren in der Konzeption, Entwicklung und im Betrieb skalierbarer, hochperformanter Systeme in den Bereichen Finanzen, Suche, Touristik, Bildung und Non-Profit. Vielseitiger Entwickler und praxisnaher Architekt — versiert in Backend-Services, Datenplattformen, verteilten Echtzeitsystemen und der Führung von Teams von der Konzeption bis in die Produktion. Bekannt dafür, Technologie und Business zu verbinden, Entwickler zu fördern und messbare Ergebnisse zu liefern — in jeder Rolle seit 2002.",
     languages:
@@ -48,7 +48,7 @@ export const de: Content = {
       period: "03.2006 – 12.2008",
       role: "Teamleiter / Senior Softwareentwickler",
       org: "Softwareentwicklungs-Unternehmen",
-      note: "Führung eines 5-köpfigen Entwicklerteams beim Aufbau eines großen Finanz-Hypothekensystems — technisches Design, Implementierung und internationale Kundenprojekte.",
+      note: "Führung eines 5-köpfigen Entwicklerteams beim Aufbau eines großen Finanz-Hypothekensystems — technisches Design, Implementierung und internationale Kundenbetreuung (Niederlande).",
     },
     {
       period: "09.2002 – 03.2006",
@@ -68,7 +68,7 @@ export const de: Content = {
     {
       period: "06.1993 – 03.1997",
       degree:
-        "High School mit Academic & Technical Secondary Course, Spezialisierung Computer",
+        "High School with Academic & Technical Secondary Course with Specialization in Computers",
       school: "Don Bosco Technical College",
       focus: "Computer System Architecture, Design & Programming",
     },
@@ -113,13 +113,13 @@ export const de: Content = {
     { name: "Softwarearchitektur & Systemdesign", pct: 95 },
     { name: "Backend-Entwicklung (Go · Python · PHP)", pct: 95 },
     { name: "Datenbanken & Datenplattformen", pct: 92 },
-    { name: "Technische Führung & Mentoring", pct: 92 },
-    { name: "Performance & Skalierbarkeit", pct: 92 },
     { name: "Verteilte & Echtzeit-Systeme", pct: 90 },
     { name: "Cloud, DevSecOps & AI", pct: 90 },
-    { name: "Agile · Full-Lifecycle-Delivery", pct: 90 },
     { name: "Zuverlässigkeit, Observability & SLOs (SRE)", pct: 88 },
+    { name: "Technische Führung & Mentoring", pct: 92 },
     { name: "Sicherheit & Compliance", pct: 85 },
+    { name: "Performance & Skalierbarkeit", pct: 92 },
+    { name: "Agile · Full-Lifecycle-Delivery", pct: 90 },
   ],
   skills: {
     Sprachen: [
@@ -140,7 +140,7 @@ export const de: Content = {
       "ClickHouse",
       "Elasticsearch / OpenSearch / SOLR",
       "Redis / Dragonfly",
-      "S3 / S3-kompatibel",
+      "S3 / S3-compatible",
     ],
     "Cloud & Infrastruktur": [
       "AWS",
@@ -175,7 +175,7 @@ export const de: Content = {
       "Nano/Pico/ZeroClaw",
     ],
     "APIs, Web & Frameworks": [
-      "Kong (API-Gateway)",
+      "Kong (API gateway)",
       "REST / HTTP",
       "gRPC",
       "GraphQL",

@@ -41,7 +41,7 @@ export const UI = {
     professionalExperience: "Professional Experience",
     keyAchievements: "Key Achievements",
     education: "Education",
-    furtherTraining: "Further Training",
+    furtherTraining: "Further Education",
     recognition: "Recognition",
     coreCompetencies: "Core Competencies",
     techStack: "Technology Stack",
