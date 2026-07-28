@@ -114,7 +114,7 @@ export const UI = {
       ],
       [
         "What is the Sparerpauschbetrag?",
-        "The first €1,000 of gains per person per year (€2,000 for jointly assessed couples) is tax-free. You claim it with a Freistellungsauftrag at your broker. The calculator deducts it for every saving year before applying the tax rate.",
+        "The first €1,000 of gains per person per year (€2,000 for jointly assessed couples) is tax-free, claimed via a Freistellungsauftrag. In an accumulating plan the gains realize in the year you sell, so the calculator strictly credits the allowance once, at that final settlement. If distributions or the Vorabpauschale already use it every year, the real tax can come out lower.",
       ],
       [
         "Why do ETFs have lower rates like 18.46 %?",
@@ -122,7 +122,7 @@ export const UI = {
       ],
       [
         "Why do other calculators show different results?",
-        "Two settings usually explain it. Compounding: many Sparplan calculators silently compound monthly — pick the same Verzinsungsintervall to compare. Taxes: most ignore the Sparerpauschbetrag entirely, while this calculator credits it for every saving year (assuming distributions or the Vorabpauschale use it annually) — set the allowance to 0 € to reproduce their tax figure.",
+        "Two settings usually explain it. Compounding: many Sparplan calculators silently compound monthly — pick the same Verzinsungsintervall to compare. Taxes: most ignore the Sparerpauschbetrag and use the rounded effective rate (19.59 %); this calculator credits one allowance at settlement and computes with the exact rate (27.99 % × 0.7 = 19.593 %) — set the allowance to 0 € to reproduce their figure almost to the cent.",
       ],
     ] as [string, string][],
     infoLoanAmount: "The amount you borrow.",
@@ -253,7 +253,7 @@ export const UI = {
     infoTax:
       "Tax withheld on investment gains — pick your situation or a custom rate.",
     infoAllowance:
-      "Sparerpauschbetrag: in Germany the first €1,000 of gains per year (€2,000 for couples) is tax-free.",
+      "Sparerpauschbetrag: the first €1,000 of gains per person and year (€2,000 jointly) is tax-free. In the savings plan it is credited once — in the year the plan is sold and taxed.",
     infoWithdrawal:
       "The share of your capital you withdraw per year once financially free — 4 % is the classic rule of thumb.",
     taxRateLabel: "Capital-gains tax",
@@ -376,7 +376,7 @@ export const UI = {
       ],
       [
         "Was ist der Sparerpauschbetrag?",
-        "Die ersten 1.000 € Ertrag pro Person und Jahr (2.000 € bei Zusammenveranlagung) sind steuerfrei — per Freistellungsauftrag bei der Bank. Der Rechner zieht ihn für jedes Sparjahr ab, bevor der Steuersatz greift.",
+        "Die ersten 1.000 € Ertrag pro Person und Jahr (2.000 € bei Zusammenveranlagung) sind steuerfrei — per Freistellungsauftrag. Bei einem thesaurierenden Plan realisieren sich die Gewinne im Verkaufsjahr; der Rechner rechnet den Pauschbetrag daher streng nur einmal an, bei der Schlussabrechnung. Nutzen Ausschüttungen oder die Vorabpauschale ihn schon jährlich, fällt die echte Steuer niedriger aus.",
       ],
       [
         "Warum haben ETFs niedrigere Sätze wie 18,46 %?",
@@ -384,7 +384,7 @@ export const UI = {
       ],
       [
         "Warum zeigen andere Rechner andere Ergebnisse?",
-        "Meist sind es zwei Einstellungen. Verzinsung: Viele Sparplanrechner rechnen stillschweigend mit monatlicher Verzinsung — wähle dasselbe Verzinsungsintervall zum Vergleichen. Steuern: Die meisten ignorieren den Sparerpauschbetrag komplett, während dieser Rechner ihn für jedes Sparjahr anrechnet (Annahme: Ausschüttungen bzw. Vorabpauschale nutzen ihn jährlich) — setze den Pauschbetrag auf 0 €, um deren Steuerbetrag zu reproduzieren.",
+        "Meist sind es zwei Einstellungen. Verzinsung: Viele Sparplanrechner rechnen stillschweigend mit monatlicher Verzinsung — wähle dasselbe Verzinsungsintervall zum Vergleichen. Steuern: Die meisten ignorieren den Sparerpauschbetrag und nutzen den gerundeten Effektivsatz (19,59 %); dieser Rechner rechnet einen Pauschbetrag bei der Schlussabrechnung an und mit dem exakten Satz (27,99 % × 0,7 = 19,593 %) — setze den Pauschbetrag auf 0 €, um deren Betrag fast centgenau zu reproduzieren.",
       ],
     ] as [string, string][],
     infoLoanAmount: "Der Betrag, den du aufnimmst.",
@@ -524,7 +524,7 @@ export const UI = {
     infoTax:
       "Steuer auf Kapitalerträge — wähle deine Situation oder einen eigenen Satz.",
     infoAllowance:
-      "Sparerpauschbetrag: In Deutschland sind die ersten 1.000 € Ertrag pro Jahr steuerfrei (2.000 € bei Zusammenveranlagung).",
+      "Sparerpauschbetrag: Die ersten 1.000 € Ertrag pro Person und Jahr sind steuerfrei (2.000 € bei Zusammenveranlagung). Im Sparplan wird er einmal angerechnet — im Jahr des steuerpflichtigen Verkaufs.",
     infoWithdrawal:
       "Der Anteil deines Kapitals, den du nach der finanziellen Freiheit pro Jahr entnimmst — 4 % ist die klassische Faustregel.",
     taxRateLabel: "Kapitalertragsteuer",

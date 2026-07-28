@@ -503,9 +503,10 @@ function Savings({ ui }: { ui: UIStrings }) {
     }
   }
   const future = contributions[yr] + growth[yr];
-  // Teilfreistellung first, then the yearly allowance off the taxable part
+  // Accumulated gains realize in the sale year, so the Sparerpauschbetrag
+  // counts ONCE: Teilfreistellung first, then one allowance, then the rate.
   const tax =
-    Math.max(0, growth[yr] * (1 - exempt) - allowance * yr) * taxRate;
+    Math.max(0, growth[yr] * (1 - exempt) - allowance) * taxRate;
 
   return (
     <>
