@@ -206,7 +206,9 @@ function Faq({ ui, items }: { ui: UIStrings; items: [string, string][] }) {
       {items.map(([q, a]) => (
         <details key={q}>
           <summary>{q}</summary>
-          <p>{a}</p>
+          {a.split("\n\n").map((para) => (
+            <p key={para.slice(0, 24)}>{para}</p>
+          ))}
         </details>
       ))}
     </section>

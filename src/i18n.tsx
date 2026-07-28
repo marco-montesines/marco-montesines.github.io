@@ -146,8 +146,8 @@ export const UI = {
         "Interest is credited at the chosen compounding interval and immediately earns interest itself; deposits are added monthly. With the dynamics option on, the savings rate rises once a year. The chart splits the result into what you paid in and what the market added.",
       ],
       [
-        "Savings plan or lump sum investment?",
-        "A savings plan invests a fixed amount regularly (e.g. €200/month): purchases spread over time smooth out market swings (cost averaging), the entry barrier is low, and it can be paused or adjusted anytime. A lump sum (e.g. an inheritance or bonus) starts working immediately and maximizes time in the market — historically it beat the savings plan in about two thirds of cases, with lower transaction costs. Rule of thumb: invest available capital immediately and future income via a savings plan — the calculation type above models both, and combining a starting amount with monthly deposits captures the advantages of each.",
+        "Lump sum or monthly investing?",
+        "Both grow your money over time. Which fits depends mostly on whether the money is already there, or arrives bit by bit.\n\nMonthly investing (a savings plan): you invest a fixed amount every month, say €200. You can start small, it runs automatically, and because you buy at many different prices you never have to pick the “perfect” moment. You can raise, pause, or stop it whenever you want. The downside: money that isn't invested yet has less time to grow.\n\nLump sum: you invest everything at once, say €10,000. All of it starts growing immediately and stays invested the longest — historically that earned more than monthly investing about two times out of three. The downside: if the market drops shortly after, the whole amount takes the hit at first.\n\nSimple rule: money you already have — invest it at once. Money that comes with each paycheck — invest it monthly. Many people do both, which is exactly what starting amount plus monthly contribution model above. This is general information, not investment advice.",
       ],
       [
         "What is the German Abgeltungsteuer?",
@@ -451,8 +451,8 @@ export const UI = {
         "Zinsen werden im gewählten Verzinsungsintervall gutgeschrieben und sofort mitverzinst; Einzahlungen fließen monatlich ein. Mit aktivierter Dynamik steigt die Sparrate einmal pro Jahr. Das Diagramm trennt Einzahlungen und Zinsertrag.",
       ],
       [
-        "Sparplan oder Einmalanlage?",
-        "Ein Sparplan investiert regelmäßig einen festen Betrag (z. B. 200 €/Monat): Die Käufe verteilen sich über die Zeit und glätten Marktschwankungen (Cost-Average-Effekt), die Einstiegshürde ist niedrig, und er lässt sich jederzeit pausieren oder anpassen. Eine Einmalanlage (z. B. Erbschaft oder Bonus) arbeitet sofort und maximiert die Zeit im Markt — historisch schlug sie den Sparplan in rund zwei Dritteln der Fälle, bei geringeren Transaktionskosten. Faustregel: Vorhandenes Kapital sofort anlegen, künftiges Einkommen per Sparplan — die Berechnungsart oben bildet beides ab, und Startkapital plus monatliche Raten kombiniert die Vorteile beider Ansätze.",
+        "Einmalanlage oder monatlich investieren?",
+        "Beides lässt dein Geld über die Zeit wachsen. Was passt, hängt vor allem davon ab, ob das Geld schon da ist oder nach und nach reinkommt.\n\nMonatlich investieren (Sparplan): Du legst jeden Monat einen festen Betrag an, z. B. 200 €. Du kannst klein anfangen, es läuft automatisch, und weil du zu vielen verschiedenen Kursen kaufst, musst du nie den „perfekten“ Zeitpunkt treffen. Erhöhen, pausieren oder stoppen geht jederzeit. Der Nachteil: Geld, das noch nicht investiert ist, hat weniger Zeit zu wachsen.\n\nEinmalanlage: Du investierst alles auf einmal, z. B. 10.000 €. Das gesamte Geld wächst sofort und ist am längsten investiert — historisch brachte das in etwa zwei von drei Fällen mehr als monatliches Investieren. Der Nachteil: Fällt der Markt kurz danach, trifft es erst einmal die volle Summe.\n\nEinfache Regel: Geld, das schon da ist — auf einmal anlegen. Geld, das mit jedem Gehalt kommt — monatlich anlegen. Viele machen beides, und genau das bilden Startkapital plus monatliche Sparrate oben ab. Dies ist eine allgemeine Information, keine Anlageberatung.",
       ],
       [
         "Was ist die Abgeltungsteuer?",
