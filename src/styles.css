@@ -102,6 +102,14 @@ body {
   z-index: 1;
 }
 
+/* while locked, the desktop chrome neither shows nor receives input —
+   also sidesteps backdrop-filter stacking quirks over the login screen */
+.os-locked .menubar,
+.os-locked .desktop,
+.os-locked .dock {
+  visibility: hidden;
+}
+
 /* non-scrolling chrome surfaces: consume touch drags so the system never
    interprets them as a page gesture (scrollable app areas keep default) */
 .desktop,
@@ -1198,6 +1206,15 @@ button.mb-item:hover,
 .window-body {
   flex: 1;
   overflow: auto;
+}
+
+/* brief placeholder while a lazy-loaded app's chunk arrives */
+.app-loading {
+  height: 100%;
+  background:
+    radial-gradient(circle 5px at 50% 50%, var(--muted) 96%, transparent) center /
+    40px 10px no-repeat;
+  opacity: 0.5;
 }
 
 /* ---------- login screen ---------- */
