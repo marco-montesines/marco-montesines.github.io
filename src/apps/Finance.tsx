@@ -946,7 +946,7 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
         )}
         {trate > 0 && (
           <div className="fin-grid">
-            <Field label={ui.allowanceLabel} value={allowance} onChange={setAllowance} step={100} suffix="€" info={ui.infoAllowance} />
+            <Field label={ui.allowanceLabel} value={allowance} onChange={setAllowance} step={100} suffix="€" info={ui.infoAllowanceYearly} />
           </div>
         )}
         {trate > 0 && strictTax && (
@@ -1002,6 +1002,7 @@ function Freedom({ ui }: { ui: UIStrings }) {
   const [church, setChurch] = useState(0);
   const [customTax, setCustomTax] = useState(26.375);
   const [strict, setStrict] = useState(false);
+  const [allowance, setAllowance] = useState(1000);
 
   // effective tax rate on gains: rounded published rates by default,
   // the unrounded statutory chain in strict mode
@@ -1019,7 +1020,13 @@ function Freedom({ ui }: { ui: UIStrings }) {
   const years = Math.max(0, Math.round(ageFree) - Math.round(ageNow));
   const f = inflOn ? infl / 100 : 0;
   const incomeAtFreedom = netIncome * (1 + f) ** years;
-  const grossYear = (incomeAtFreedom * 12) / (1 - effRate / 100);
+  // gross withdrawal so that net remains after tax; the yearly allowance
+  // keeps the first slice tax-free, shrinking the gross-up
+  const tr = effRate / 100;
+  const netYear = incomeAtFreedom * 12;
+  const allowEff = tr > 0 ? Math.max(0, allowance) : 0;
+  const grossYear =
+    netYear <= allowEff ? netYear : (netYear - tr * allowEff) / (1 - tr);
 
   // needed capital at freedom
   const r = rate / 100;
@@ -1052,7 +1059,7 @@ function Freedom({ ui }: { ui: UIStrings }) {
   const chartYears = Math.min(70, years + postYears);
   const capitalSeries: number[] = [assets];
   let cap = assets;
-  let g = (incomeAtFreedom * 12) / (1 - effRate / 100) / 12; // monthly gross
+  let g = grossYear / 12; // monthly gross withdrawal
   for (let m = 1; m <= chartYears * 12; m++) {
     if (m <= nMonths) {
       cap = cap * (1 + i) + savings;
@@ -1131,6 +1138,11 @@ function Freedom({ ui }: { ui: UIStrings }) {
         {country === 3 && (
           <div className="fin-grid">
             <Field label={ui.taxRateLabel} value={customTax} onChange={setCustomTax} step={0.1} suffix="%" />
+          </div>
+        )}
+        {effRate > 0 && (
+          <div className="fin-grid">
+            <Field label={ui.allowanceLabel} value={allowance} onChange={setAllowance} step={100} suffix="€" info={ui.infoAllowanceYearly} />
           </div>
         )}
       </div>

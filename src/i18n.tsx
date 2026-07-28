@@ -228,7 +228,7 @@ export const UI = {
       ],
       [
         "Why is the withdrawal grossed up for taxes?",
-        "You enter your desired net income, but capital gains are taxed. The calculator raises the withdrawal so that after the effective tax rate you keep the net amount — that is the “gross withdrawal / year”.",
+        "You enter your desired net income, but capital gains are taxed. The calculator raises the withdrawal so that after the effective tax rate you keep the net amount — that is the “gross withdrawal / year”. The yearly Sparerpauschbetrag stays tax-free and shrinks the gross-up, lowering the capital you need.",
       ],
       [
         "How is the effective tax rate composed?",
@@ -307,6 +307,8 @@ export const UI = {
       "Tax withheld on investment gains — pick your situation or a custom rate.",
     infoAllowance:
       "Sparerpauschbetrag: the first €1,000 of gains per person and year (€2,000 jointly) is tax-free. In the savings plan it is credited once — in the year the plan is sold and taxed.",
+    infoAllowanceYearly:
+      "Sparerpauschbetrag: the first €1,000 of gains per person and year (€2,000 jointly) is tax-free. Here it is credited every year against the ongoing gains.",
     infoWithdrawal:
       "The share of your capital you withdraw per year once financially free — 4 % is the classic rule of thumb.",
     taxRateLabel: "Capital-gains tax",
@@ -545,7 +547,7 @@ export const UI = {
       ],
       [
         "Warum wird die Entnahme brutto gerechnet?",
-        "Du gibst dein Wunsch-Nettoeinkommen an, Kapitalerträge werden aber besteuert. Der Rechner erhöht die Entnahme so, dass nach dem effektiven Steuersatz dein Netto übrig bleibt — das ist die „Brutto-Entnahme / Jahr“.",
+        "Du gibst dein Wunsch-Nettoeinkommen an, Kapitalerträge werden aber besteuert. Der Rechner erhöht die Entnahme so, dass nach dem effektiven Steuersatz dein Netto übrig bleibt — das ist die „Brutto-Entnahme / Jahr“. Der jährliche Sparerpauschbetrag bleibt steuerfrei und verkleinert den Aufschlag — du brauchst also etwas weniger Kapital.",
       ],
       [
         "Wie setzt sich der effektive Steuersatz zusammen?",
@@ -633,6 +635,8 @@ export const UI = {
       "Steuer auf Kapitalerträge — wähle deine Situation oder einen eigenen Satz.",
     infoAllowance:
       "Sparerpauschbetrag: Die ersten 1.000 € Ertrag pro Person und Jahr sind steuerfrei (2.000 € bei Zusammenveranlagung). Im Sparplan wird er einmal angerechnet — im Jahr des steuerpflichtigen Verkaufs.",
+    infoAllowanceYearly:
+      "Sparerpauschbetrag: Die ersten 1.000 € Ertrag pro Person und Jahr sind steuerfrei (2.000 € bei Zusammenveranlagung). Hier wird er jedes Jahr auf die laufenden Erträge angerechnet.",
     infoWithdrawal:
       "Der Anteil deines Kapitals, den du nach der finanziellen Freiheit pro Jahr entnimmst — 4 % ist die klassische Faustregel.",
     taxRateLabel: "Kapitalertragsteuer",
