@@ -119,6 +119,10 @@ function Field({
   suffix?: string;
   info?: string;
 }) {
+  // While the field is being edited it owns its text (so clearing shows an
+  // empty box, not a forced 0, and "3" never becomes "03"); on blur the
+  // text is dropped and the numeric state shows normalized.
+  const [draft, setDraft] = useState<string | null>(null);
   return (
     <label className="fin-field">
       <span>
@@ -128,10 +132,15 @@ function Field({
       <span className="fin-input">
         <input
           type="number"
-          value={Number.isFinite(value) ? value : ""}
+          value={draft ?? (Number.isFinite(value) ? String(value) : "")}
           step={step}
           min={0}
-          onChange={(e) => onChange(e.target.valueAsNumber || 0)}
+          onChange={(e) => {
+            setDraft(e.target.value);
+            const n = e.target.valueAsNumber;
+            onChange(Number.isFinite(n) ? n : 0);
+          }}
+          onBlur={() => setDraft(null)}
         />
         {suffix && <em>{suffix}</em>}
       </span>
