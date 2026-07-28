@@ -96,6 +96,71 @@ export const UI = {
     dynamicsRate: "Yearly increase",
     infoDynamics:
       "Raises your savings rate once a year, e.g. along with salary raises.",
+    faqTitle: "Questions & how this is calculated",
+    faqSavings: [
+      [
+        "How is the final capital calculated?",
+        "Interest is credited at the chosen compounding interval and immediately earns interest itself; deposits are added monthly. With the dynamics option on, the savings rate rises once a year. The chart splits the result into what you paid in and what the market added.",
+      ],
+      [
+        "What is the German Abgeltungsteuer?",
+        "A flat 25 % tax on investment gains, plus a 5.5 % solidarity surcharge on that tax — 26.375 % in total. With church tax it rises to 27.819 % (8 %) or 27.99 % (9 %). Your broker usually withholds it automatically.",
+      ],
+      [
+        "What is the Sparerpauschbetrag?",
+        "The first €1,000 of gains per person per year (€2,000 for jointly assessed couples) is tax-free. You claim it with a Freistellungsauftrag at your broker. The calculator deducts it for every saving year before applying the tax rate.",
+      ],
+      [
+        "Why do ETFs have lower rates like 18.46 %?",
+        "Equity funds holding at least 51 % stocks enjoy a 30 % Teilfreistellung — 30 % of the gains are tax-free, cutting the effective rate to 18.46 %. Note: accumulating ETFs also pay a small annual Vorabpauschale; this calculator simplifies by settling all tax at the end.",
+      ],
+    ] as [string, string][],
+    faqLoan: [
+      [
+        "How is the monthly payment calculated?",
+        "As an annuity: the payment stays constant while its mix shifts — early on it is mostly interest, later mostly repayment. Formula: payment = loan × i ÷ (1 − (1+i)⁻ⁿ) with i as the monthly rate and n the number of months.",
+      ],
+      [
+        "Nominal vs. effective interest rate?",
+        "The calculator uses the nominal rate (Sollzins) divided into monthly steps. The bank's advertised APR (Effektivzins) includes fees and compounding details, so a real offer is usually slightly more expensive.",
+      ],
+      [
+        "What does the chart show?",
+        "The blue line is the remaining debt per year; the olive line is the interest you have paid so far in total.",
+      ],
+    ] as [string, string][],
+    faqWithdrawal: [
+      [
+        "How does a withdrawal plan work?",
+        "Your capital keeps earning the assumed return while you withdraw a fixed amount every interval. The calculator solves any of the three values — needed capital, withdrawal amount, or duration — from the other two.",
+      ],
+      [
+        "What does “deplete capital” change?",
+        "On: the capital is deliberately used up over the withdrawal period — higher withdrawals, nothing left at the end. Off: you only withdraw what the returns generate, so the capital survives indefinitely.",
+      ],
+      [
+        "Are taxes included here?",
+        "No — the values are gross. In Germany the gains portion of each withdrawal is subject to Abgeltungsteuer (see the Savings tab), so plan your net need slightly higher or use the Freedom tab, which grosses up for taxes.",
+      ],
+    ] as [string, string][],
+    faqFreedom: [
+      [
+        "What is the 4 % rule?",
+        "A rule of thumb from the US Trinity study: withdrawing about 4 % of your capital per year has historically sustained a portfolio for 30+ years. It implies you need roughly 25× your annual expenses.",
+      ],
+      [
+        "Why is the withdrawal grossed up for taxes?",
+        "You enter your desired net income, but capital gains are taxed. The calculator raises the withdrawal so that after the effective tax rate you keep the net amount — that is the “gross withdrawal / year”.",
+      ],
+      [
+        "How is the effective tax rate composed?",
+        "Base Abgeltungsteuer 26.375 % (25 % + Soli), church tax raises it to 27.819 %/27.99 %, and the 30 % ETF Teilfreistellung multiplies it by 0.7 — e.g. 26.375 % × 0.7 = 18.46 %. Austria applies a flat 27.5 % KESt.",
+      ],
+      [
+        "How does inflation affect the target?",
+        "Your target income is increased by the inflation rate for every year until freedom, and during capital depletion the plan uses the real (inflation-adjusted) return so withdrawals keep their purchasing power.",
+      ],
+    ] as [string, string][],
     // withdrawal calculator
     withdrawSolveOptions: ["Needed capital", "Withdrawal amount", "Duration"],
     infoWithdrawSolve: "Pick which value to calculate from the other two.",
@@ -266,6 +331,71 @@ export const UI = {
     dynamicsRate: "Jährliche Erhöhung",
     infoDynamics:
       "Erhöht deine Sparrate einmal pro Jahr, z. B. parallel zu Gehaltserhöhungen.",
+    faqTitle: "Fragen & Berechnung",
+    faqSavings: [
+      [
+        "Wie wird das Endkapital berechnet?",
+        "Zinsen werden im gewählten Verzinsungsintervall gutgeschrieben und sofort mitverzinst; Einzahlungen fließen monatlich ein. Mit aktivierter Dynamik steigt die Sparrate einmal pro Jahr. Das Diagramm trennt Einzahlungen und Zinsertrag.",
+      ],
+      [
+        "Was ist die Abgeltungsteuer?",
+        "Eine pauschale Steuer von 25 % auf Kapitalerträge plus 5,5 % Solidaritätszuschlag auf die Steuer — insgesamt 26,375 %. Mit Kirchensteuer steigt sie auf 27,819 % (8 %) bzw. 27,99 % (9 %). Die Depotbank führt sie meist automatisch ab.",
+      ],
+      [
+        "Was ist der Sparerpauschbetrag?",
+        "Die ersten 1.000 € Ertrag pro Person und Jahr (2.000 € bei Zusammenveranlagung) sind steuerfrei — per Freistellungsauftrag bei der Bank. Der Rechner zieht ihn für jedes Sparjahr ab, bevor der Steuersatz greift.",
+      ],
+      [
+        "Warum haben ETFs niedrigere Sätze wie 18,46 %?",
+        "Aktienfonds mit mindestens 51 % Aktienanteil genießen die 30-%-Teilfreistellung — 30 % der Erträge sind steuerfrei, effektiv also 18,46 %. Hinweis: Thesaurierende ETFs zahlen zusätzlich jährlich eine kleine Vorabpauschale; der Rechner vereinfacht und versteuert alles am Ende.",
+      ],
+    ] as [string, string][],
+    faqLoan: [
+      [
+        "Wie wird die monatliche Rate berechnet?",
+        "Als Annuität: Die Rate bleibt konstant, ihre Zusammensetzung verschiebt sich — anfangs überwiegen Zinsen, später die Tilgung. Formel: Rate = Kredit × i ÷ (1 − (1+i)⁻ⁿ) mit i als Monatszins und n als Monatszahl.",
+      ],
+      [
+        "Sollzins oder Effektivzins?",
+        "Der Rechner nutzt den nominalen Sollzins in monatlichen Schritten. Der beworbene Effektivzins der Bank enthält Gebühren und Verrechnungsdetails — ein echtes Angebot ist daher meist etwas teurer.",
+      ],
+      [
+        "Was zeigt das Diagramm?",
+        "Die blaue Linie ist die Restschuld pro Jahr, die olivgrüne die bis dahin insgesamt gezahlten Zinsen.",
+      ],
+    ] as [string, string][],
+    faqWithdrawal: [
+      [
+        "Wie funktioniert ein Entnahmeplan?",
+        "Dein Kapital erwirtschaftet weiter die angenommene Rendite, während du pro Intervall einen festen Betrag entnimmst. Der Rechner bestimmt wahlweise Anlagevermögen, Entnahmebetrag oder Entnahmezeitraum aus den beiden anderen Werten.",
+      ],
+      [
+        "Was ändert „Kapital aufbrauchen“?",
+        "An: Das Kapital wird über den Zeitraum bewusst verbraucht — höhere Entnahmen, am Ende bleibt nichts übrig. Aus: Du entnimmst nur die Erträge, das Kapital bleibt dauerhaft erhalten.",
+      ],
+      [
+        "Sind Steuern berücksichtigt?",
+        "Nein — die Werte sind brutto. In Deutschland unterliegt der Ertragsanteil jeder Entnahme der Abgeltungsteuer (siehe Sparen-Tab). Plane also etwas höher — oder nutze den Freiheit-Tab, der Steuern einrechnet.",
+      ],
+    ] as [string, string][],
+    faqFreedom: [
+      [
+        "Was ist die 4-%-Regel?",
+        "Eine Faustregel aus der US-Trinity-Studie: Wer jährlich rund 4 % seines Kapitals entnimmt, dessen Portfolio hielt historisch 30+ Jahre durch. Daraus folgt: Du brauchst etwa das 25-Fache deiner Jahresausgaben.",
+      ],
+      [
+        "Warum wird die Entnahme brutto gerechnet?",
+        "Du gibst dein Wunsch-Nettoeinkommen an, Kapitalerträge werden aber besteuert. Der Rechner erhöht die Entnahme so, dass nach dem effektiven Steuersatz dein Netto übrig bleibt — das ist die „Brutto-Entnahme / Jahr“.",
+      ],
+      [
+        "Wie setzt sich der effektive Steuersatz zusammen?",
+        "Basis 26,375 % (25 % Abgeltungsteuer + Soli), Kirchensteuer erhöht auf 27,819 %/27,99 %, die 30-%-Teilfreistellung für Aktien-ETFs multipliziert mit 0,7 — z. B. 26,375 % × 0,7 = 18,46 %. Österreich: pauschal 27,5 % KESt.",
+      ],
+      [
+        "Wie wirkt die Inflation?",
+        "Dein Ziel-Einkommen wächst bis zur Freiheit jährlich mit der Inflationsrate; in der Verzehrphase rechnet der Plan mit der realen (inflationsbereinigten) Rendite, damit die Entnahmen ihre Kaufkraft behalten.",
+      ],
+    ] as [string, string][],
     // withdrawal calculator
     withdrawSolveOptions: ["Anlagevermögen", "Entnahmebetrag", "Entnahmezeitraum"],
     infoWithdrawSolve:

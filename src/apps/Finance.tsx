@@ -136,6 +136,20 @@ function Toggle({
   );
 }
 
+function Faq({ ui, items }: { ui: UIStrings; items: [string, string][] }) {
+  return (
+    <section className="fin-faq">
+      <h3>{ui.faqTitle}</h3>
+      {items.map(([q, a]) => (
+        <details key={q}>
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </section>
+  );
+}
+
 function Results({ rows }: { rows: [string, string][] }) {
   return (
     <dl className="fin-results">
@@ -469,6 +483,7 @@ function Savings({ ui }: { ui: UIStrings }) {
         tipFmt={(n) => fmt.euro.format(n)}
       />
       <Results rows={rows} />
+      <Faq ui={ui} items={ui.faqSavings} />
     </>
   );
 }
@@ -521,6 +536,7 @@ function Loan({ ui }: { ui: UIStrings }) {
           [ui.totalInterest, fmt.euro.format(monthly * n - principal)],
         ]}
       />
+      <Faq ui={ui} items={ui.faqLoan} />
     </>
   );
 }
@@ -635,6 +651,7 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
         tipFmt={(v) => fmt.euro.format(v)}
       />
       <Results rows={rows} />
+      <Faq ui={ui} items={ui.faqWithdrawal} />
     </>
   );
 }
@@ -783,6 +800,7 @@ function Freedom({ ui }: { ui: UIStrings }) {
         tipFmt={(v) => fmt.euro.format(v)}
       />
       <Results rows={rows} />
+      <Faq ui={ui} items={ui.faqFreedom} />
     </>
   );
 }

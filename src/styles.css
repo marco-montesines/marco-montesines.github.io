@@ -1577,6 +1577,75 @@ button.mb-item:hover,
   background: none !important;
 }
 
+/* Q&A accordion below each calculator */
+.fin-faq {
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.7rem;
+}
+
+.fin-faq h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.fin-faq details {
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--cream);
+  margin-bottom: 0.35rem;
+  overflow: hidden;
+}
+
+.fin-faq summary {
+  padding: 0.45rem 0.7rem;
+  font-size: 0.83rem;
+  font-weight: 500;
+  cursor: default;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fin-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.fin-faq summary::before {
+  content: "›";
+  color: var(--mango);
+  font-weight: 700;
+  transition: transform 0.15s ease;
+  flex: none;
+}
+
+.fin-faq details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.fin-faq summary:hover {
+  background: color-mix(in srgb, var(--muted) 10%, transparent);
+}
+
+.fin-faq p {
+  margin: 0;
+  padding: 0 0.75rem 0.6rem 1.55rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fin-faq summary::before {
+    transition: none;
+  }
+}
+
 .fin-results {
   margin: 0.4rem 0 0;
   padding: 0.7rem 0.85rem;
