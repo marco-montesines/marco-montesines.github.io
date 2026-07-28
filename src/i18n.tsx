@@ -92,12 +92,19 @@ export const UI = {
     storageEstimate: (usage: string, quota: string) =>
       `This site uses ${usage} MB of the ${quota} GB your browser allows it.`,
     financeTabs: ["Savings", "Loan", "Withdrawal", "Freedom"],
-    endValueTitle: "Final value of your savings plan",
     paidInLabel: "Paid in",
     gainLabel: "Capital gains",
-    afterTaxTitle: "Final value after taxes",
+    afterTaxTitle: "End value after taxes",
     netEarnings: "Total earnings after taxes",
     taxesWithheld: "Taxes withheld",
+    infoEndValue: "Value of the plan at the end of the term, before taxes.",
+    infoPaidIn: "Starting amount plus all deposits.",
+    infoGain: "End value minus what you paid in — the market's contribution.",
+    infoAfterTax: "End value after settling capital-gains tax at sale.",
+    infoNetEarnings:
+      "Your actual profit: end value after taxes minus everything you paid in — the true return on your money.",
+    infoTaxesWithheld:
+      "Capital-gains tax due at settlement: gains × 70 % for ETFs, minus the allowance, times the tax rate.",
     dynamicsToggle: "Increase savings rate yearly",
     dynamicsRate: "Yearly increase",
     infoDynamics:
@@ -354,12 +361,20 @@ export const UI = {
     storageEstimate: (usage: string, quota: string) =>
       `Diese Seite nutzt ${usage} MB von ${quota} GB, die dein Browser erlaubt.`,
     financeTabs: ["Sparen", "Kredit", "Entnahme", "Freiheit"],
-    endValueTitle: "Endwert deines Sparplans",
     paidInLabel: "Davon eingezahlt",
     gainLabel: "Kursgewinn",
     afterTaxTitle: "Endwert nach Steuern",
     netEarnings: "Gesamtertrag nach Steuern",
     taxesWithheld: "Abgeführte Steuern",
+    infoEndValue: "Wert des Sparplans am Ende der Laufzeit, vor Steuern.",
+    infoPaidIn: "Startkapital plus alle Einzahlungen.",
+    infoGain: "Endwert minus Einzahlungen — der Beitrag des Marktes.",
+    infoAfterTax:
+      "Endwert nach Abzug der Kapitalertragsteuer beim Verkauf.",
+    infoNetEarnings:
+      "Dein tatsächlicher Gewinn: Endwert nach Steuern minus aller Einzahlungen — der echte Ertrag deines Geldes.",
+    infoTaxesWithheld:
+      "Fällige Kapitalertragsteuer bei der Schlussabrechnung: Ertrag × 70 % bei ETFs, minus Pauschbetrag, mal Steuersatz.",
     dynamicsToggle: "Einzahlungsdynamik aktivieren",
     dynamicsRate: "Jährliche Erhöhung",
     infoDynamics:

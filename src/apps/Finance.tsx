@@ -204,51 +204,15 @@ function Faq({ ui, items }: { ui: UIStrings; items: [string, string][] }) {
   );
 }
 
-function HeroCard({
-  title,
-  value,
-  tiles,
-  rows,
-}: {
-  title: string;
-  value: string;
-  tiles?: [string, string, boolean?][];
-  rows?: [string, string][];
-}) {
-  return (
-    <div className="fin-hero">
-      <span className="fin-hero-label">{title}</span>
-      <strong className="fin-hero-value">{value}</strong>
-      {tiles && (
-        <div className="fin-hero-tiles">
-          {tiles.map(([k, v, accent]) => (
-            <div key={k}>
-              <span>{k}</span>
-              <strong className={accent ? "fin-pos" : undefined}>{v}</strong>
-            </div>
-          ))}
-        </div>
-      )}
-      {rows && (
-        <dl className="fin-hero-rows">
-          {rows.map(([k, v]) => (
-            <div key={k}>
-              <dt>{k}</dt>
-              <dd>{v}</dd>
-            </div>
-          ))}
-        </dl>
-      )}
-    </div>
-  );
-}
-
-function Results({ rows }: { rows: [string, string][] }) {
+function Results({ rows }: { rows: [string, string, string?][] }) {
   return (
     <dl className="fin-results">
-      {rows.map(([k, v]) => (
+      {rows.map(([k, v, info]) => (
         <div key={k}>
-          <dt>{k}</dt>
+          <dt>
+            {k}
+            <Info text={info} />
+          </dt>
           <dd>{v}</dd>
         </div>
       ))}
@@ -568,24 +532,32 @@ function Savings({ ui }: { ui: UIStrings }) {
         ]}
         tipFmt={(n) => fmt.euro.format(n)}
       />
-      <HeroCard
-        title={ui.endValueTitle}
-        value={fmt.euro.format(future)}
-        tiles={[
-          [ui.paidInLabel, fmt.euro.format(contributions[yr])],
-          [ui.gainLabel, fmt.euro.format(growth[yr]), true],
+      <Results
+        rows={[
+          [ui.futureValue, fmt.euro.format(future), ui.infoEndValue],
+          [ui.paidInLabel, fmt.euro.format(contributions[yr]), ui.infoPaidIn],
+          [ui.gainLabel, fmt.euro.format(growth[yr]), ui.infoGain],
+          ...(taxRate > 0
+            ? ([
+                [
+                  ui.afterTaxTitle,
+                  fmt.euro.format(future - tax),
+                  ui.infoAfterTax,
+                ],
+                [
+                  ui.netEarnings,
+                  fmt.euro.format(future - tax - contributions[yr]),
+                  ui.infoNetEarnings,
+                ],
+                [
+                  ui.taxesWithheld,
+                  `−${fmt.euro.format(tax)}`,
+                  ui.infoTaxesWithheld,
+                ],
+              ] as [string, string, string][])
+            : []),
         ]}
       />
-      {taxRate > 0 && (
-        <HeroCard
-          title={ui.afterTaxTitle}
-          value={fmt.euro.format(future - tax)}
-          rows={[
-            [ui.netEarnings, fmt.euro.format(future - tax - contributions[yr])],
-            [ui.taxesWithheld, fmt.euro.format(tax)],
-          ]}
-        />
-      )}
       <Faq ui={ui} items={ui.faqSavings} />
     </>
   );
