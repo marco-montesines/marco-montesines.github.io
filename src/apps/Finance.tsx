@@ -592,6 +592,7 @@ function Loan({ ui }: { ui: UIStrings }) {
   const [years, setYears] = useState(25);
   const [deduct, setDeduct] = useState(false);
   const [marginal, setMarginal] = useState(42);
+  const [strict, setStrict] = useState(false);
 
   const i = rate / 100 / 12;
   const yr = Math.max(1, Math.min(50, Math.round(years)));
@@ -613,7 +614,10 @@ function Loan({ ui }: { ui: UIStrings }) {
   }
 
   const totalInterest = monthly * n - principal;
-  const saved = deduct ? totalInterest * (marginal / 100) : 0;
+  // strict: the deduction also saves the 5.5 % Soli on the saved tax
+  const saved = deduct
+    ? totalInterest * (marginal / 100) * (strict ? 1.055 : 1)
+    : 0;
 
   const rows: [string, string][] = [
     [ui.monthlyPayment, fmt.euro.format(monthly)],
@@ -645,6 +649,14 @@ function Loan({ ui }: { ui: UIStrings }) {
           <div className="fin-grid">
             <Field label={ui.marginalRate} value={marginal} onChange={setMarginal} step={1} suffix="%" info={ui.infoMarginal} />
           </div>
+        )}
+        {deduct && (
+          <Toggle
+            label={ui.strictToggle}
+            checked={strict}
+            onChange={setStrict}
+            info={ui.infoStrictLoan}
+          />
         )}
       </div>
       <Chart
@@ -879,6 +891,8 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
 
 /** Effective tax presets: [none, 8 % church, 9 % church] German rates. */
 const DE_RATES = [26.375, 27.819, 27.99];
+/** Rounded published ETF rates; strict mode uses DE_RATES × 0.7 instead. */
+const DE_RATES_ETF = [18.46, 19.47, 19.59];
 
 function Freedom({ ui }: { ui: UIStrings }) {
   const fmt = useFmt();
@@ -896,10 +910,17 @@ function Freedom({ ui }: { ui: UIStrings }) {
   const [etf, setEtf] = useState(true);
   const [church, setChurch] = useState(0);
   const [customTax, setCustomTax] = useState(26.375);
+  const [strict, setStrict] = useState(false);
 
-  // effective tax rate on gains, parqet-style
+  // effective tax rate on gains: rounded published rates by default,
+  // the unrounded statutory chain in strict mode
   let effRate: number;
-  if (country === 0) effRate = DE_RATES[church] * (etf ? 0.7 : 1);
+  if (country === 0)
+    effRate = etf
+      ? strict
+        ? DE_RATES[church] * 0.7
+        : DE_RATES_ETF[church]
+      : DE_RATES[church];
   else if (country === 1) effRate = 27.5;
   else if (country === 2) effRate = 0;
   else effRate = customTax;
@@ -1006,6 +1027,12 @@ function Freedom({ ui }: { ui: UIStrings }) {
               value={church}
               onChange={setChurch}
               options={ui.churchTaxOptions}
+            />
+            <Toggle
+              label={ui.strictToggle}
+              checked={strict}
+              onChange={setStrict}
+              info={ui.infoStrict}
             />
           </>
         )}

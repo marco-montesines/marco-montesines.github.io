@@ -108,6 +108,8 @@ export const UI = {
     strictToggle: "Apply strict rules (unrounded tax rates)",
     infoStrict:
       "Off: the effective rates are applied exactly as displayed (e.g. 19.59 %) — like most calculators. On: the unrounded statutory chain — gains × 70 % for equity ETFs, minus allowance, × 27.99 % (= effectively 19.593 %).",
+    infoStrictLoan:
+      "On: the tax saving also includes the 5.5 % solidarity surcharge levied on the saved income tax (marginal rate × 1.055).",
     dynamicsToggle: "Increase savings rate yearly",
     dynamicsRate: "Yearly increase",
     infoDynamics:
@@ -153,7 +155,7 @@ export const UI = {
       ],
       [
         "Are there tax options for a loan?",
-        "Not the Abgeltungsteuer — that taxes investment gains, not borrowing. But if the financed property is rented out, the loan interest is deductible from rental income at your marginal income tax rate (Werbungskosten). Owner-occupied homes get no such deduction — that is what the toggle models.",
+        "Not the Abgeltungsteuer — that taxes investment gains, not borrowing. But if the financed property is rented out, the loan interest is deductible from rental income at your marginal income tax rate (Werbungskosten). Owner-occupied homes get no such deduction — that is what the toggle models. Strict mode additionally credits the 5.5 % solidarity surcharge on the saved tax.",
       ],
       [
         "Nominal vs. effective interest rate?",
@@ -189,7 +191,7 @@ export const UI = {
       ],
       [
         "How is the effective tax rate composed?",
-        "Base Abgeltungsteuer 26.375 % (25 % + Soli), church tax raises it to 27.819 %/27.99 %, and the 30 % ETF Teilfreistellung multiplies it by 0.7 — e.g. 26.375 % × 0.7 = 18.46 %. Austria applies a flat 27.5 % KESt.",
+        "Base Abgeltungsteuer 26.375 % (25 % + Soli), church tax raises it to 27.819 %/27.99 %, and the 30 % ETF Teilfreistellung multiplies it by 0.7 — e.g. 26.375 % × 0.7 = 18.46 %. Austria applies a flat 27.5 % KESt. By default the rounded published ETF rates are used; the strict-rules checkbox computes the unrounded product (e.g. 19.593 %) instead.",
       ],
       [
         "How does inflation affect the target?",
@@ -381,6 +383,8 @@ export const UI = {
     strictToggle: "Strenge Regeln anwenden (ungerundete Steuersätze)",
     infoStrict:
       "Aus: Die Effektivsätze werden wie angezeigt angewendet (z. B. 19,59 %) — wie bei den meisten Rechnern. An: Die ungerundete gesetzliche Kette — Ertrag × 70 % bei Aktien-ETFs, minus Pauschbetrag, × 27,99 % (= effektiv 19,593 %).",
+    infoStrictLoan:
+      "An: Die Steuerersparnis berücksichtigt zusätzlich den Solidaritätszuschlag von 5,5 % auf die ersparte Einkommensteuer (Grenzsteuersatz × 1,055).",
     dynamicsToggle: "Einzahlungsdynamik aktivieren",
     dynamicsRate: "Jährliche Erhöhung",
     infoDynamics:
@@ -426,7 +430,7 @@ export const UI = {
       ],
       [
         "Gibt es Steuer-Optionen beim Kredit?",
-        "Nicht die Abgeltungsteuer — sie besteuert Kapitalerträge, nicht das Leihen. Aber: Bei einer vermieteten Immobilie sind die Kreditzinsen als Werbungskosten von den Mieteinnahmen absetzbar — mit deinem persönlichen Grenzsteuersatz. Für selbstgenutztes Wohneigentum gilt das nicht — genau das bildet der Schalter ab.",
+        "Nicht die Abgeltungsteuer — sie besteuert Kapitalerträge, nicht das Leihen. Aber: Bei einer vermieteten Immobilie sind die Kreditzinsen als Werbungskosten von den Mieteinnahmen absetzbar — mit deinem persönlichen Grenzsteuersatz. Für selbstgenutztes Wohneigentum gilt das nicht — genau das bildet der Schalter ab. Der strenge Modus rechnet zusätzlich den Solidaritätszuschlag von 5,5 % auf die ersparte Steuer an.",
       ],
       [
         "Sollzins oder Effektivzins?",
@@ -462,7 +466,7 @@ export const UI = {
       ],
       [
         "Wie setzt sich der effektive Steuersatz zusammen?",
-        "Basis 26,375 % (25 % Abgeltungsteuer + Soli), Kirchensteuer erhöht auf 27,819 %/27,99 %, die 30-%-Teilfreistellung für Aktien-ETFs multipliziert mit 0,7 — z. B. 26,375 % × 0,7 = 18,46 %. Österreich: pauschal 27,5 % KESt.",
+        "Basis 26,375 % (25 % Abgeltungsteuer + Soli), Kirchensteuer erhöht auf 27,819 %/27,99 %, die 30-%-Teilfreistellung für Aktien-ETFs multipliziert mit 0,7 — z. B. 26,375 % × 0,7 = 18,46 %. Österreich: pauschal 27,5 % KESt. Standardmäßig gelten die gerundeten veröffentlichten ETF-Sätze; die Checkbox „Strenge Regeln“ rechnet stattdessen mit dem ungerundeten Produkt (z. B. 19,593 %).",
       ],
       [
         "Wie wirkt die Inflation?",
