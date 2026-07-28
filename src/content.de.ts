@@ -202,7 +202,7 @@ export const de: Content = {
     },
     {
       title: "23+ Jahre, wachsendes Vertrauen",
-      note: "Vom Entwickler zum Head of Software Development — seit 2002 wiederholt mit geschäftskritischen Aufgaben betraut.",
+      note: "Von der Entwicklung bis zur Leitung — wiederholt mit geschäftskritischen Aufgaben betraut, seit 2002.",
     },
   ],
   award: {
