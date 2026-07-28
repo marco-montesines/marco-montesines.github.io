@@ -686,10 +686,18 @@ button.mb-item:hover,
 
 /* ---------- phone layout ---------- */
 
+/* tablets: keep the dropdown menus, shed the widgets and the long date —
+   an iPad portrait can't fit the full desktop strip */
+@media (max-width: 1080px) {
+  .mb-hide-sm,
+  .mb-clock-date {
+    display: none;
+  }
+}
+
 @media (max-width: 700px) {
   /* condensed menu bar: logo, app name, search, language, control, clock */
-  .mb-desktop,
-  .mb-hide-sm {
+  .mb-desktop {
     display: none;
   }
 
@@ -705,11 +713,6 @@ button.mb-item:hover,
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-
-  /* time only — the weekday/date needs too much of a phone's width */
-  .mb-clock-date {
-    display: none;
   }
 
   /* finance: selects get their own line, tab chips may wrap */
