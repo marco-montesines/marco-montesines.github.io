@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { intlLocale, useLocale } from "../i18n";
+import { intlLocale, useLocale, type Locale } from "../i18n";
 import { AvatarLogo, SearchIcon } from "../icons";
 import { appMeta, type AppId } from "../os/apps";
 import type { OSWindow } from "../os/windowing";
@@ -22,6 +22,8 @@ interface MenuBarProps {
   setVolume: (v: number) => void;
   wifi: boolean;
   setWifi: (w: boolean) => void;
+  locale: Locale;
+  setLocale: (l: Locale) => void;
   onSpotlight: () => void;
   onAboutInfo: () => void;
   musicPlaying: boolean;
@@ -68,9 +70,83 @@ function Clock() {
     minute: "2-digit",
   });
   return (
-    <span className="mb-item mb-clock">
+    <>
       {date}&ensp;{time}
-    </span>
+    </>
+  );
+}
+
+/** Month calendar dropped down from the clock. State resets on close. */
+function CalendarPanel() {
+  const loc = intlLocale(useLocale());
+  const today = new Date();
+  const [view, setView] = useState(
+    () => new Date(today.getFullYear(), today.getMonth(), 1),
+  );
+  const mondayFirst = !loc.startsWith("en");
+  const firstDow = (view.getDay() + (mondayFirst ? 6 : 0)) % 7;
+  const daysInMonth = new Date(
+    view.getFullYear(),
+    view.getMonth() + 1,
+    0,
+  ).getDate();
+  const title = view.toLocaleDateString(loc, {
+    month: "long",
+    year: "numeric",
+  });
+  // 2024-01-01 is a Monday, 2024-01-07 a Sunday — stable weekday labels
+  const dows = Array.from({ length: 7 }, (_, i) =>
+    new Date(2024, 0, mondayFirst ? i + 1 : i + 7).toLocaleDateString(loc, {
+      weekday: "narrow",
+    }),
+  );
+  const isToday = (d: number) =>
+    d === today.getDate() &&
+    view.getMonth() === today.getMonth() &&
+    view.getFullYear() === today.getFullYear();
+  const shift = (by: number) =>
+    setView(new Date(view.getFullYear(), view.getMonth() + by, 1));
+
+  return (
+    <div className="menu-panel menu-attached-right cal-panel">
+      <div className="cal-head">
+        <strong>{title}</strong>
+        <span className="cal-nav">
+          <button onClick={() => shift(-1)} aria-label="Previous month">
+            ‹
+          </button>
+          <button
+            onClick={() =>
+              setView(new Date(today.getFullYear(), today.getMonth(), 1))
+            }
+            aria-label="Current month"
+          >
+            •
+          </button>
+          <button onClick={() => shift(1)} aria-label="Next month">
+            ›
+          </button>
+        </span>
+      </div>
+      <div className="cal-grid">
+        {dows.map((d, i) => (
+          <span key={`d${i}`} className="cal-dow">
+            {d}
+          </span>
+        ))}
+        {Array.from({ length: firstDow }, (_, i) => (
+          <span key={`b${i}`} />
+        ))}
+        {Array.from({ length: daysInMonth }, (_, i) => (
+          <span
+            key={i}
+            className={`cal-day ${isToday(i + 1) ? "cal-today" : ""}`}
+          >
+            {i + 1}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -183,6 +259,8 @@ export function MenuBar(props: MenuBarProps) {
     setVolume,
     wifi,
     setWifi,
+    locale,
+    setLocale,
     onSpotlight,
     onAboutInfo,
     musicPlaying,
@@ -400,6 +478,42 @@ export function MenuBar(props: MenuBarProps) {
       >
         <SearchIcon />
       </button>
+      <span className="mb-menu-wrap">
+        <button
+          className={`mb-item mb-lang ${open === "lang" ? "mb-item-open" : ""}`}
+          onClick={() => setOpen(open === "lang" ? null : "lang")}
+          onMouseEnter={() => {
+            if (open && open !== "lang") setOpen("lang");
+          }}
+          aria-label="Language"
+        >
+          {locale.toUpperCase()}
+        </button>
+        {open === "lang" && (
+          <nav className="menu-panel menu-attached-right">
+            {(
+              [
+                ["en", "English"],
+                ["de", "Deutsch"],
+              ] as [Locale, string][]
+            ).map(([value, label]) => (
+              <button
+                key={value}
+                className="menu-row"
+                onClick={() => {
+                  setLocale(value);
+                  setOpen(null);
+                }}
+              >
+                <span className="menu-check">
+                  {locale === value ? "✓" : ""}
+                </span>
+                {label}
+              </button>
+            ))}
+          </nav>
+        )}
+      </span>
       <span className="mb-menu-wrap">
         <button
           className={`mb-item ${open === "music" ? "mb-item-open" : ""} ${musicPlaying ? "mb-music-on" : ""}`}
@@ -691,7 +805,18 @@ export function MenuBar(props: MenuBarProps) {
           </div>
         )}
       </span>
-      <Clock />
+      <span className="mb-menu-wrap">
+        <button
+          className={`mb-item mb-clock ${open === "clock" ? "mb-item-open" : ""}`}
+          onClick={() => setOpen(open === "clock" ? null : "clock")}
+          onMouseEnter={() => {
+            if (open && open !== "clock") setOpen("clock");
+          }}
+        >
+          <Clock />
+        </button>
+        {open === "clock" && <CalendarPanel />}
+      </span>
     </header>
   );
 }

@@ -323,6 +323,8 @@ export default function App() {
         setVolume={setVolume}
         wifi={wifi}
         setWifi={setWifi}
+        locale={locale}
+        setLocale={changeLocale}
         onSpotlight={() => setSpotlight(true)}
         onAboutInfo={() => setAboutInfo(true)}
         musicPlaying={musicPlaying}
