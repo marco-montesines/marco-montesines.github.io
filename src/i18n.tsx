@@ -92,6 +92,12 @@ export const UI = {
     storageEstimate: (usage: string, quota: string) =>
       `This site uses ${usage} MB of the ${quota} GB your browser allows it.`,
     financeTabs: ["Savings", "Loan", "Withdrawal", "Freedom"],
+    endValueTitle: "Final value of your savings plan",
+    paidInLabel: "Paid in",
+    gainLabel: "Capital gains",
+    afterTaxTitle: "Final value after taxes",
+    netEarnings: "Total earnings after taxes",
+    taxesWithheld: "Taxes withheld",
     dynamicsToggle: "Increase savings rate yearly",
     dynamicsRate: "Yearly increase",
     infoDynamics:
@@ -348,6 +354,12 @@ export const UI = {
     storageEstimate: (usage: string, quota: string) =>
       `Diese Seite nutzt ${usage} MB von ${quota} GB, die dein Browser erlaubt.`,
     financeTabs: ["Sparen", "Kredit", "Entnahme", "Freiheit"],
+    endValueTitle: "Endwert deines Sparplans",
+    paidInLabel: "Davon eingezahlt",
+    gainLabel: "Kursgewinn",
+    afterTaxTitle: "Endwert nach Steuern",
+    netEarnings: "Gesamtertrag nach Steuern",
+    taxesWithheld: "Abgeführte Steuern",
     dynamicsToggle: "Einzahlungsdynamik aktivieren",
     dynamicsRate: "Jährliche Erhöhung",
     infoDynamics:

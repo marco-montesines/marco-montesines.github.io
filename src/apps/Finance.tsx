@@ -204,6 +204,45 @@ function Faq({ ui, items }: { ui: UIStrings; items: [string, string][] }) {
   );
 }
 
+function HeroCard({
+  title,
+  value,
+  tiles,
+  rows,
+}: {
+  title: string;
+  value: string;
+  tiles?: [string, string, boolean?][];
+  rows?: [string, string][];
+}) {
+  return (
+    <div className="fin-hero">
+      <span className="fin-hero-label">{title}</span>
+      <strong className="fin-hero-value">{value}</strong>
+      {tiles && (
+        <div className="fin-hero-tiles">
+          {tiles.map(([k, v, accent]) => (
+            <div key={k}>
+              <span>{k}</span>
+              <strong className={accent ? "fin-pos" : undefined}>{v}</strong>
+            </div>
+          ))}
+        </div>
+      )}
+      {rows && (
+        <dl className="fin-hero-rows">
+          {rows.map(([k, v]) => (
+            <div key={k}>
+              <dt>{k}</dt>
+              <dd>{v}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+    </div>
+  );
+}
+
 function Results({ rows }: { rows: [string, string][] }) {
   return (
     <dl className="fin-results">
@@ -468,18 +507,6 @@ function Savings({ ui }: { ui: UIStrings }) {
   const tax =
     Math.max(0, growth[yr] * (1 - exempt) - allowance * yr) * taxRate;
 
-  const rows: [string, string][] = [
-    [ui.futureValue, fmt.euro.format(future)],
-    [ui.totalInvested, fmt.euro.format(contributions[yr])],
-    [ui.growthEarned, fmt.euro.format(growth[yr])],
-  ];
-  if (taxRate > 0) {
-    rows.push(
-      [ui.taxesLabel, `−${fmt.euro.format(tax)}`],
-      [ui.afterTaxLabel, fmt.euro.format(future - tax)],
-    );
-  }
-
   return (
     <>
       <div className="fin-card">
@@ -540,7 +567,24 @@ function Savings({ ui }: { ui: UIStrings }) {
         ]}
         tipFmt={(n) => fmt.euro.format(n)}
       />
-      <Results rows={rows} />
+      <HeroCard
+        title={ui.endValueTitle}
+        value={fmt.euro.format(future)}
+        tiles={[
+          [ui.paidInLabel, fmt.euro.format(contributions[yr])],
+          [ui.gainLabel, fmt.euro.format(growth[yr]), true],
+        ]}
+      />
+      {taxRate > 0 && (
+        <HeroCard
+          title={ui.afterTaxTitle}
+          value={fmt.euro.format(future - tax)}
+          rows={[
+            [ui.netEarnings, fmt.euro.format(future - tax - contributions[yr])],
+            [ui.taxesWithheld, fmt.euro.format(tax)],
+          ]}
+        />
+      )}
       <Faq ui={ui} items={ui.faqSavings} />
     </>
   );
