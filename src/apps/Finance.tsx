@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { intlLocale, useLocale, useUI, type UIStrings } from "../i18n";
 
 /**
@@ -237,10 +237,8 @@ interface Series {
   values: number[]; // one value per year, index 0..years
 }
 
-const W = 520;
-const H = 210;
+const H = 220;
 const PAD = { l: 46, r: 10, t: 10, b: 20 };
-const PW = W - PAD.l - PAD.r;
 const PH = H - PAD.t - PAD.b;
 
 const niceCeil = (v: number) => {
@@ -263,6 +261,19 @@ function Chart({
 }) {
   const fmt = useFmt();
   const [hover, setHover] = useState<number | null>(null);
+  // render the SVG at its real pixel width so text is never scaled
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [W, setW] = useState(520);
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() =>
+      setW(Math.max(260, Math.round(el.clientWidth))),
+    );
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const PW = W - PAD.l - PAD.r;
   const years = series[0].values.length - 1;
 
   const tops = stacked
@@ -305,7 +316,7 @@ function Chart({
   };
 
   return (
-    <div className="chart-wrap">
+    <div className="chart-wrap" ref={wrapRef}>
       <svg
         viewBox={`0 0 ${W} ${H}`}
         role="img"
@@ -435,6 +446,33 @@ function Chart({
   );
 }
 
+/** Chart left, results right; the grow button gives the chart the full row. */
+function ChartRow({
+  chart,
+  results,
+}: {
+  chart: ReactNode;
+  results: ReactNode;
+}) {
+  const [big, setBig] = useState(false);
+  return (
+    <div className={`fin-cr ${big ? "fin-cr-big" : ""}`}>
+      <div className="fin-cr-chart">
+        <button
+          className="fin-expand"
+          onClick={() => setBig(!big)}
+          aria-label={big ? "Shrink chart" : "Expand chart"}
+          aria-pressed={big}
+        >
+          {big ? "⤡" : "⤢"}
+        </button>
+        {chart}
+      </div>
+      <div className="fin-cr-results">{results}</div>
+    </div>
+  );
+}
+
 /* ---------- calculators ---------- */
 
 const C1 = "var(--chart-1)";
@@ -546,15 +584,18 @@ function Savings({ ui }: { ui: UIStrings }) {
         />
       )}
       </div>
-      <Chart
-        stacked
-        series={[
-          { label: ui.contributionsLabel, color: C1, values: contributions },
-          { label: ui.interestLabel, color: C2, values: growth },
-        ]}
-        tipFmt={(n) => fmt.euro.format(n)}
-      />
-      <Results
+      <ChartRow
+        chart={
+          <Chart
+            stacked
+            series={[
+              { label: ui.contributionsLabel, color: C1, values: contributions },
+              { label: ui.interestLabel, color: C2, values: growth },
+            ]}
+            tipFmt={(n) => fmt.euro.format(n)}
+          />
+        }
+        results={<Results
         rows={[
           [ui.futureValue, fmt.euro.format(future), ui.infoEndValue],
           [ui.paidInLabel, fmt.euro.format(contributions[yr]), ui.infoPaidIn],
@@ -579,6 +620,7 @@ function Savings({ ui }: { ui: UIStrings }) {
               ] as [string, string, string][])
             : []),
         ]}
+      />}
       />
       <Faq ui={ui} items={ui.faqSavings} />
     </>
@@ -663,14 +705,18 @@ function Loan({ ui }: { ui: UIStrings }) {
           />
         )}
       </div>
-      <Chart
-        series={[
-          { label: ui.remainingDebt, color: C1, values: balance },
-          { label: ui.interestPaid, color: C2, values: cumInterest },
-        ]}
-        tipFmt={(v) => fmt.euro.format(v)}
+      <ChartRow
+        chart={
+          <Chart
+            series={[
+              { label: ui.remainingDebt, color: C1, values: balance },
+              { label: ui.interestPaid, color: C2, values: cumInterest },
+            ]}
+            tipFmt={(v) => fmt.euro.format(v)}
+          />
+        }
+        results={<Results rows={rows} />}
       />
-      <Results rows={rows} />
       <Faq ui={ui} items={ui.faqLoan} />
     </>
   );
@@ -909,11 +955,15 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
           />
         )}
       </div>
-      <Chart
-        series={[{ label: ui.capitalLabel, color: C1, values: remaining }]}
-        tipFmt={(v) => fmt.euro.format(v)}
+      <ChartRow
+        chart={
+          <Chart
+            series={[{ label: ui.capitalLabel, color: C1, values: remaining }]}
+            tipFmt={(v) => fmt.euro.format(v)}
+          />
+        }
+        results={<Results rows={rows} />}
       />
-      <Results rows={rows} />
       <Faq ui={ui} items={ui.faqWithdrawal} />
     </>
   );
@@ -1073,12 +1123,16 @@ function Freedom({ ui }: { ui: UIStrings }) {
           </div>
         )}
       </div>
-      <Chart
-        series={[{ label: ui.capitalLabel, color: C2, values: capitalSeries }]}
-        target={{ value: needed, label: ui.targetLabel }}
-        tipFmt={(v) => fmt.euro.format(v)}
+      <ChartRow
+        chart={
+          <Chart
+            series={[{ label: ui.capitalLabel, color: C2, values: capitalSeries }]}
+            target={{ value: needed, label: ui.targetLabel }}
+            tipFmt={(v) => fmt.euro.format(v)}
+          />
+        }
+        results={<Results rows={rows} />}
       />
-      <Results rows={rows} />
       <Faq ui={ui} items={ui.faqFreedom} />
     </>
   );

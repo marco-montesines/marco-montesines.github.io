@@ -41,7 +41,7 @@ export const APPS: AppMeta[] = [
   { id: "vscode", title: "VS Code", w: 780, h: 540, wf: 0.6, hf: 0.72 },
   { id: "harapan", title: "Harapan", w: 540, h: 460, wf: 0.42, hf: 0.62 },
   { id: "spotify", title: "Spotify", w: 380, h: 480, wf: 0.3, hf: 0.7 },
-  { id: "finance", title: "Finance", w: 560, h: 560, wf: 0.44, hf: 0.8 },
+  { id: "finance", title: "Finance", w: 720, h: 600, wf: 0.6, hf: 0.86 },
   { id: "settings", title: "System Settings", w: 680, h: 480, wf: 0.5, hf: 0.66 },
   {
     id: "experience",

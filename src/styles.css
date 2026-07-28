@@ -1512,7 +1512,8 @@ button.mb-item:hover,
 
 .chart-tick {
   fill: var(--muted);
-  font-size: 10px;
+  font-size: 11px;
+  font-family: inherit;
 }
 
 .chart-target {
@@ -1578,6 +1579,53 @@ button.mb-item:hover,
   height: 0;
   border-top: 2px dashed var(--muted);
   background: none !important;
+}
+
+/* chart + results side by side; wraps on narrow windows */
+.fin-cr {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+
+.fin-cr-chart {
+  position: relative;
+  flex: 1 1 300px;
+  min-width: 0;
+}
+
+.fin-cr-results {
+  flex: 1 1 230px;
+  min-width: 0;
+}
+
+.fin-cr-big .fin-cr-chart,
+.fin-cr-big .fin-cr-results {
+  flex-basis: 100%;
+}
+
+.fin-expand {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--paper);
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.fin-expand:hover {
+  color: var(--mango);
+  border-color: var(--mango);
 }
 
 /* Q&A accordion below each calculator */
