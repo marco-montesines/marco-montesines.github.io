@@ -68,8 +68,8 @@ body {
   color: var(--ink);
   line-height: 1.5;
   overflow: hidden;
-  /* any letterboxing (iPad fullscreen, dynamic toolbars) stays dark */
-  background: #0d3b4a;
+  /* any letterboxing (iPad fullscreen, dynamic toolbars) reads as bezel */
+  background: #000000;
 }
 
 .os {
