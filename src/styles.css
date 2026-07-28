@@ -2372,11 +2372,12 @@ button.mb-item:hover,
 
 .timeline-item {
   display: flex;
-  gap: 1rem;
-  padding: 0 0 1.1rem 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  padding: 0 0 1.1rem 1rem;
   border-left: 2px solid var(--border);
   margin-left: 0.4rem;
-  padding-left: 1rem;
   position: relative;
 }
 
@@ -2391,14 +2392,26 @@ button.mb-item:hover,
   background: var(--mango);
 }
 
+/* date badge, as on the printed CV: olive pill above the role */
 .timeline-period {
   flex: none;
-  width: 7.6rem;
-  color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--mango-deep);
+  background: color-mix(in srgb, var(--mango) 16%, transparent);
+  padding: 0.08rem 0.5rem;
+  border-radius: 5px;
   font-variant-numeric: tabular-nums;
-  display: flex;
-  flex-direction: column;
+}
+
+:root[data-theme="dark"] .timeline-period {
+  color: var(--leaf);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .timeline-period {
+    color: var(--leaf);
+  }
 }
 
 .timeline-period small {
