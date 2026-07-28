@@ -71,7 +71,8 @@ function Clock() {
   });
   return (
     <>
-      {date}&ensp;{time}
+      <span className="mb-clock-date">{date}&ensp;</span>
+      {time}
     </>
   );
 }

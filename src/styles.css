@@ -68,10 +68,13 @@ body {
   color: var(--ink);
   line-height: 1.5;
   overflow: hidden;
+  /* any letterboxing (iPad fullscreen, dynamic toolbars) stays dark */
+  background: #0d3b4a;
 }
 
 .os {
-  height: 100%;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -635,13 +638,14 @@ button.mb-item:hover,
 @media (max-width: 640px) {
   .dock {
     max-width: calc(100% - 1rem);
-    gap: 0.15rem;
+    gap: 0.3rem;
     overflow-x: auto;
   }
 
+  /* finger-sized targets — 38px was too small to tap comfortably */
   .dock .tile {
-    width: 38px;
-    height: 38px;
+    width: 48px;
+    height: 48px;
   }
 
   .dock-item:hover {
@@ -652,10 +656,6 @@ button.mb-item:hover,
 /* ---------- phone layout ---------- */
 
 @media (max-width: 700px) {
-  .os {
-    height: 100dvh;
-  }
-
   /* condensed menu bar: logo, app name, search, language, control, clock */
   .mb-desktop,
   .mb-hide-sm {
@@ -665,6 +665,38 @@ button.mb-item:hover,
   .menubar {
     gap: 0.35rem;
     padding: 0 0.45rem;
+  }
+
+  /* long app titles truncate instead of pushing the clock off-screen */
+  .mb-appname {
+    display: block;
+    max-width: 34vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* time only — the weekday/date needs too much of a phone's width */
+  .mb-clock-date {
+    display: none;
+  }
+
+  /* finance: selects get their own line, tab chips may wrap */
+  .fin-field {
+    flex-wrap: wrap;
+  }
+
+  .fin-select {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .settings-row-group {
+    flex-wrap: wrap;
+  }
+
+  .app-pad {
+    padding: 0.85rem 0.9rem;
   }
 
   /* windows live full-screen on phones (open() maximizes them) */
@@ -2041,8 +2073,9 @@ button.mb-item:hover,
   display: flex;
   justify-content: center;
   gap: 0.45rem;
-  padding: 0.4rem 0.9rem calc(0.55rem + env(safe-area-inset-bottom));
-  margin: 0 auto 0.7rem;
+  padding: 0.4rem 0.9rem 0.5rem;
+  /* safe-area goes on the margin, not inside the pill — no bloated dock */
+  margin: 0 auto calc(0.45rem + env(safe-area-inset-bottom, 0px));
   background: var(--glass);
   border: 1px solid var(--glass-edge);
   border-radius: 20px;
