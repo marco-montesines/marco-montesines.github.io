@@ -104,7 +104,10 @@ export const UI = {
     infoNetEarnings:
       "Your actual profit: end value after taxes minus everything you paid in — the true return on your money.",
     infoTaxesWithheld:
-      "Capital-gains tax due at settlement: gains × 70 % for ETFs, minus the allowance, times the tax rate.",
+      "Capital-gains tax due at settlement: (gains − allowance) × the effective rate as displayed. In strict mode: gains × 70 % for ETFs, minus the allowance, × the unrounded base rate.",
+    strictToggle: "Apply strict rules (unrounded tax rates)",
+    infoStrict:
+      "Off: the effective rates are applied exactly as displayed (e.g. 19.59 %) — like most calculators. On: the unrounded statutory chain — gains × 70 % for equity ETFs, minus allowance, × 27.99 % (= effectively 19.593 %).",
     dynamicsToggle: "Increase savings rate yearly",
     dynamicsRate: "Yearly increase",
     infoDynamics:
@@ -129,7 +132,7 @@ export const UI = {
       ],
       [
         "Why do other calculators show different results?",
-        "Two settings usually explain it. Compounding: many Sparplan calculators silently compound monthly — pick the same Verzinsungsintervall to compare. Taxes: most ignore the Sparerpauschbetrag and use the rounded effective rate (19.59 %); this calculator credits one allowance at settlement and computes with the exact rate (27.99 % × 0.7 = 19.593 %) — set the allowance to 0 € to reproduce their figure almost to the cent.",
+        "Three settings explain any difference. ① Compounding: many Sparplan calculators silently compound monthly — pick the same Verzinsungsintervall. ② Allowance: most ignore the Sparerpauschbetrag — set it to 0 € to compare. ③ Rounding: by default this calculator applies the effective rates exactly as displayed (19.59 %), so with ① and ② aligned the results match parqet-style calculators to the cent; the strict-rules checkbox switches to the unrounded statutory chain (27.99 % × 0.7 = 19.593 %) instead.",
       ],
     ] as [string, string][],
     infoLoanAmount: "The amount you borrow.",
@@ -374,7 +377,10 @@ export const UI = {
     infoNetEarnings:
       "Dein tatsächlicher Gewinn: Endwert nach Steuern minus aller Einzahlungen — der echte Ertrag deines Geldes.",
     infoTaxesWithheld:
-      "Fällige Kapitalertragsteuer bei der Schlussabrechnung: Ertrag × 70 % bei ETFs, minus Pauschbetrag, mal Steuersatz.",
+      "Fällige Kapitalertragsteuer bei der Schlussabrechnung: (Ertrag − Pauschbetrag) × Effektivsatz wie angezeigt. Im strengen Modus: Ertrag × 70 % bei ETFs, minus Pauschbetrag, × ungerundeter Basissatz.",
+    strictToggle: "Strenge Regeln anwenden (ungerundete Steuersätze)",
+    infoStrict:
+      "Aus: Die Effektivsätze werden wie angezeigt angewendet (z. B. 19,59 %) — wie bei den meisten Rechnern. An: Die ungerundete gesetzliche Kette — Ertrag × 70 % bei Aktien-ETFs, minus Pauschbetrag, × 27,99 % (= effektiv 19,593 %).",
     dynamicsToggle: "Einzahlungsdynamik aktivieren",
     dynamicsRate: "Jährliche Erhöhung",
     infoDynamics:
@@ -399,7 +405,7 @@ export const UI = {
       ],
       [
         "Warum zeigen andere Rechner andere Ergebnisse?",
-        "Meist sind es zwei Einstellungen. Verzinsung: Viele Sparplanrechner rechnen stillschweigend mit monatlicher Verzinsung — wähle dasselbe Verzinsungsintervall zum Vergleichen. Steuern: Die meisten ignorieren den Sparerpauschbetrag und nutzen den gerundeten Effektivsatz (19,59 %); dieser Rechner rechnet einen Pauschbetrag bei der Schlussabrechnung an und mit dem exakten Satz (27,99 % × 0,7 = 19,593 %) — setze den Pauschbetrag auf 0 €, um deren Betrag fast centgenau zu reproduzieren.",
+        "Drei Einstellungen erklären jede Abweichung. ① Verzinsung: Viele Sparplanrechner rechnen stillschweigend monatlich — wähle dasselbe Verzinsungsintervall. ② Pauschbetrag: Die meisten ignorieren den Sparerpauschbetrag — setze ihn zum Vergleich auf 0 €. ③ Rundung: Standardmäßig wendet dieser Rechner die Effektivsätze exakt wie angezeigt an (19,59 %) — mit ① und ② gleichgestellt stimmen die Ergebnisse centgenau mit parqet-artigen Rechnern überein; die Checkbox „Strenge Regeln“ schaltet stattdessen auf die ungerundete gesetzliche Kette um (27,99 % × 0,7 = 19,593 %).",
       ],
     ] as [string, string][],
     infoLoanAmount: "Der Betrag, den du aufnimmst.",

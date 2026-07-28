@@ -2,21 +2,30 @@ import { useMemo, useState, type ReactNode } from "react";
 import { intlLocale, useLocale, useUI, type UIStrings } from "../i18n";
 
 /**
- * Capital-gains tax presets, parallel to ui.taxOptions. `rate` is the full
- * statutory rate; `exempt` the ETF Teilfreistellung share of gains that is
- * tax-free (applied BEFORE the Sparerpauschbetrag, as § 20 InvStG orders
- * it). The dropdown labels show the resulting effective rates (e.g.
- * 27.99 % × 0.7 = 19.59 %). null = custom flat rate.
+ * Capital-gains tax presets, parallel to ui.taxOptions: the standard
+ * published effective rates, applied exactly as displayed. The ETF
+ * variants already include the 30 % Teilfreistellung (e.g. 27.99 % × 0.7
+ * rounded to 19.59 %), matching how every German calculator states them.
+ * null = custom rate.
  */
-const TAX_PRESETS: ({ rate: number; exempt: number } | null)[] = [
-  { rate: 26.375, exempt: 0 },
-  { rate: 27.819, exempt: 0 },
-  { rate: 27.99, exempt: 0 },
-  { rate: 26.375, exempt: 0.3 },
-  { rate: 27.819, exempt: 0.3 },
-  { rate: 27.99, exempt: 0.3 },
-  { rate: 27.5, exempt: 0 },
-  { rate: 0, exempt: 0 },
+const TAX_RATES: (number | null)[] = [
+  26.375, 27.819, 27.99, 18.46, 19.47, 19.59, 27.5, 0, null,
+];
+
+/**
+ * Strict-mode counterparts: the unrounded statutory chain — full base rate
+ * plus the ETF Teilfreistellung share applied to the gains (making the
+ * ETF presets effectively 19.593 % instead of the rounded 19.59 %).
+ */
+const TAX_STRICT: ({ base: number; exempt: number } | null)[] = [
+  { base: 26.375, exempt: 0 },
+  { base: 27.819, exempt: 0 },
+  { base: 27.99, exempt: 0 },
+  { base: 26.375, exempt: 0.3 },
+  { base: 27.819, exempt: 0.3 },
+  { base: 27.99, exempt: 0.3 },
+  { base: 27.5, exempt: 0 },
+  { base: 0, exempt: 0 },
   null,
 ];
 
@@ -444,9 +453,9 @@ function Savings({ ui }: { ui: UIStrings }) {
   const [allowance, setAllowance] = useState(1000);
   const [dynOn, setDynOn] = useState(false);
   const [dyn, setDyn] = useState(2);
-  const preset = TAX_PRESETS[taxIdx];
-  const taxRate = (preset?.rate ?? customRate) / 100;
-  const exempt = preset?.exempt ?? 0;
+  const [strict, setStrict] = useState(false);
+  const taxRate = (TAX_RATES[taxIdx] ?? customRate) / 100;
+  const strictTax = TAX_STRICT[taxIdx];
 
   let deposit = mode === 1 ? monthly : 0;
   const m = INTERVALS[intervalIdx];
@@ -468,9 +477,14 @@ function Savings({ ui }: { ui: UIStrings }) {
   }
   const future = contributions[yr] + growth[yr];
   // Accumulated gains realize in the sale year, so the Sparerpauschbetrag
-  // counts ONCE: Teilfreistellung first, then one allowance, then the rate.
+  // counts ONCE. Default: effective preset rate applied as displayed.
+  // Strict: unrounded chain — Teilfreistellung first, then allowance,
+  // then the full base rate.
   const tax =
-    Math.max(0, growth[yr] * (1 - exempt) - allowance) * taxRate;
+    strict && strictTax
+      ? Math.max(0, growth[yr] * (1 - strictTax.exempt) - allowance) *
+        (strictTax.base / 100)
+      : Math.max(0, growth[yr] - allowance) * taxRate;
 
   return (
     <>
@@ -517,11 +531,19 @@ function Savings({ ui }: { ui: UIStrings }) {
         options={ui.taxOptions}
         info={ui.infoTax}
       />
-      {preset === null && (
+      {TAX_RATES[taxIdx] === null && (
         <Field label={ui.taxRateLabel} value={customRate} onChange={setCustomRate} step={0.1} suffix="%" />
       )}
       {taxRate > 0 && (
         <Field label={ui.allowanceLabel} value={allowance} onChange={setAllowance} step={100} suffix="€" info={ui.infoAllowance} />
+      )}
+      {taxRate > 0 && strictTax && (
+        <Toggle
+          label={ui.strictToggle}
+          checked={strict}
+          onChange={setStrict}
+          info={ui.infoStrict}
+        />
       )}
       </div>
       <Chart
@@ -653,17 +675,22 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
   const [taxIdx, setTaxIdx] = useState(0);
   const [customRate, setCustomRate] = useState(26.375);
   const [allowance, setAllowance] = useState(1000);
+  const [strict, setStrict] = useState(false);
 
   const p = WITHDRAW_PERIODS[intervalIdx];
   const j = rate / 100 / p;
   const n = Math.max(1, Math.round(duration)) * p;
-  const preset = TAX_PRESETS[taxIdx];
-  const trate = (preset?.rate ?? customRate) / 100;
-  const ex = preset?.exempt ?? 0;
+  const trate = (TAX_RATES[taxIdx] ?? customRate) / 100;
+  const strictTax = TAX_STRICT[taxIdx];
+  const effRate =
+    strict && strictTax ? strictTax.base / 100 : trate;
+  const effExempt = strict && strictTax ? strictTax.exempt : 0;
   const allow = trate > 0 ? Math.max(0, allowance) : 0;
 
-  // Each period's gains are taxed (Teilfreistellung first, then whatever is
-  // left of the year's allowance), then the withdrawal is taken out.
+  // Each period's gains are taxed at the effective preset rate (the ETF
+  // presets already include the Teilfreistellung; strict mode applies the
+  // unrounded chain instead) after whatever is left of the year's
+  // allowance, then the withdrawal is taken out.
   const sim = (c0: number, w: number, maxYears: number) => {
     const yearly: number[] = [c0];
     let cap = c0;
@@ -672,10 +699,11 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
     let zeroAt: number | null = null;
     for (let t = 1; t <= maxYears * p; t++) {
       const gain = cap * j;
-      const taxable = Math.max(0, gain * (1 - ex) - allowLeft);
-      allowLeft = Math.max(0, allowLeft - gain * (1 - ex));
-      taxes += taxable * trate;
-      cap = cap + gain - taxable * trate - w;
+      const taxBase = gain * (1 - effExempt);
+      const taxable = Math.max(0, taxBase - allowLeft);
+      allowLeft = Math.max(0, allowLeft - taxBase);
+      taxes += taxable * effRate;
+      cap = cap + gain - taxable * effRate - w;
       if (cap <= 0 && zeroAt === null) {
         cap = 0;
         zeroAt = t;
@@ -812,7 +840,7 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
           options={ui.taxOptions}
           info={ui.infoTax}
         />
-        {preset === null && (
+        {TAX_RATES[taxIdx] === null && (
           <div className="fin-grid">
             <Field label={ui.taxRateLabel} value={customRate} onChange={setCustomRate} step={0.1} suffix="%" />
           </div>
@@ -821,6 +849,14 @@ function Withdrawal({ ui }: { ui: UIStrings }) {
           <div className="fin-grid">
             <Field label={ui.allowanceLabel} value={allowance} onChange={setAllowance} step={100} suffix="€" info={ui.infoAllowance} />
           </div>
+        )}
+        {trate > 0 && strictTax && (
+          <Toggle
+            label={ui.strictToggle}
+            checked={strict}
+            onChange={setStrict}
+            info={ui.infoStrict}
+          />
         )}
         {solve !== 2 && (
           <Toggle
