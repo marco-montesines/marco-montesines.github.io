@@ -2,12 +2,22 @@ import { useMemo, useState, type ReactNode } from "react";
 import { intlLocale, useLocale, useUI, type UIStrings } from "../i18n";
 
 /**
- * Capital-gains tax presets, parallel to ui.taxOptions: German Abgeltung-
- * steuer variants (± church tax, ETF partial exemption), Austrian KESt,
- * tax-free, and null = custom rate.
+ * Capital-gains tax presets, parallel to ui.taxOptions. `rate` is the full
+ * statutory rate; `exempt` the ETF Teilfreistellung share of gains that is
+ * tax-free (applied BEFORE the Sparerpauschbetrag, as § 20 InvStG orders
+ * it). The dropdown labels show the resulting effective rates (e.g.
+ * 27.99 % × 0.7 = 19.59 %). null = custom flat rate.
  */
-const TAX_RATES: (number | null)[] = [
-  26.375, 27.819, 27.99, 18.46, 19.47, 19.59, 27.5, 0, null,
+const TAX_PRESETS: ({ rate: number; exempt: number } | null)[] = [
+  { rate: 26.375, exempt: 0 },
+  { rate: 27.819, exempt: 0 },
+  { rate: 27.99, exempt: 0 },
+  { rate: 26.375, exempt: 0.3 },
+  { rate: 27.819, exempt: 0.3 },
+  { rate: 27.99, exempt: 0.3 },
+  { rate: 27.5, exempt: 0 },
+  { rate: 0, exempt: 0 },
+  null,
 ];
 
 /** Compounding periods per year, parallel to ui.intervalOptions. */
@@ -430,7 +440,9 @@ function Savings({ ui }: { ui: UIStrings }) {
   const [allowance, setAllowance] = useState(1000);
   const [dynOn, setDynOn] = useState(false);
   const [dyn, setDyn] = useState(2);
-  const taxRate = (TAX_RATES[taxIdx] ?? customRate) / 100;
+  const preset = TAX_PRESETS[taxIdx];
+  const taxRate = (preset?.rate ?? customRate) / 100;
+  const exempt = preset?.exempt ?? 0;
 
   let deposit = mode === 1 ? monthly : 0;
   const m = INTERVALS[intervalIdx];
@@ -451,7 +463,9 @@ function Savings({ ui }: { ui: UIStrings }) {
     }
   }
   const future = contributions[yr] + growth[yr];
-  const tax = Math.max(0, growth[yr] - allowance * yr) * taxRate;
+  // Teilfreistellung first, then the yearly allowance off the taxable part
+  const tax =
+    Math.max(0, growth[yr] * (1 - exempt) - allowance * yr) * taxRate;
 
   const rows: [string, string][] = [
     [ui.futureValue, fmt.euro.format(future)],
@@ -510,7 +524,7 @@ function Savings({ ui }: { ui: UIStrings }) {
         options={ui.taxOptions}
         info={ui.infoTax}
       />
-      {TAX_RATES[taxIdx] === null && (
+      {preset === null && (
         <Field label={ui.taxRateLabel} value={customRate} onChange={setCustomRate} step={0.1} suffix="%" />
       )}
       {taxRate > 0 && (
