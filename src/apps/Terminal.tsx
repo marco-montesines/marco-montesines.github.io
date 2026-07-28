@@ -73,7 +73,7 @@ function run(
     case "projects":
       return c.projects.map((p) => `${p.name} — ${p.note}`);
     case "education":
-      return c.education.map(
+      return [...c.education, ...c.training].map(
         (e) => `${e.period}  ${e.degree} — ${e.school}`,
       );
     case "achievements":

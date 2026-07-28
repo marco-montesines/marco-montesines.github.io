@@ -8,6 +8,7 @@ export interface Content {
   bio: typeof en.bio;
   experience: typeof en.experience;
   education: typeof en.education;
+  training: typeof en.training;
   achievements: typeof en.achievements;
   competencies: typeof en.competencies;
   skills: typeof en.skills;
@@ -21,6 +22,7 @@ const EN: Content = {
   bio: en.bio,
   experience: en.experience,
   education: en.education,
+  training: en.training,
   achievements: en.achievements,
   competencies: en.competencies,
   skills: en.skills,
@@ -39,6 +41,7 @@ export const UI = {
     professionalExperience: "Professional Experience",
     keyAchievements: "Key Achievements",
     education: "Education",
+    furtherTraining: "Further Training",
     recognition: "Recognition",
     coreCompetencies: "Core Competencies",
     techStack: "Technology Stack",
@@ -361,6 +364,7 @@ export const UI = {
     professionalExperience: "Berufspraxis",
     keyAchievements: "Wesentliche Erfolge",
     education: "Ausbildung",
+    furtherTraining: "Weiterbildung",
     recognition: "Anerkennung",
     coreCompetencies: "Kernkompetenzen",
     techStack: "Technologien",

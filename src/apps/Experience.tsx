@@ -1,7 +1,7 @@
 import { useContent, useUI } from "../i18n";
 
 export function Experience() {
-  const { achievements, award, education, experience, recognition } =
+  const { achievements, award, education, experience, recognition, training } =
     useContent();
   const ui = useUI();
   return (
@@ -39,6 +39,18 @@ export function Experience() {
                   {ui.focusLabel}: {e.focus}
                 </p>
               )}
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <h2 className="section-head">{ui.furtherTraining}</h2>
+      <ol className="timeline">
+        {training.map((e) => (
+          <li key={e.period} className="timeline-item">
+            <span className="timeline-period">{e.period}</span>
+            <div className="timeline-body">
+              <strong>{e.degree}</strong> · {e.school}
             </div>
           </li>
         ))}
