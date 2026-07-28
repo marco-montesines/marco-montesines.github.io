@@ -114,6 +114,10 @@ export const UI = {
         "Why do ETFs have lower rates like 18.46 %?",
         "Equity funds holding at least 51 % stocks enjoy a 30 % Teilfreistellung — 30 % of the gains are tax-free, cutting the effective rate to 18.46 %. Note: accumulating ETFs also pay a small annual Vorabpauschale; this calculator simplifies by settling all tax at the end.",
       ],
+      [
+        "Why do other calculators show different results?",
+        "Two settings usually explain it. Compounding: many Sparplan calculators silently compound monthly — pick the same Verzinsungsintervall to compare. Taxes: most ignore the Sparerpauschbetrag entirely, while this calculator credits it for every saving year (assuming distributions or the Vorabpauschale use it annually) — set the allowance to 0 € to reproduce their tax figure.",
+      ],
     ] as [string, string][],
     infoLoanAmount: "The amount you borrow.",
     infoLoanRate: "Nominal annual interest rate (Sollzins) of the loan.",
@@ -363,6 +367,10 @@ export const UI = {
       [
         "Warum haben ETFs niedrigere Sätze wie 18,46 %?",
         "Aktienfonds mit mindestens 51 % Aktienanteil genießen die 30-%-Teilfreistellung — 30 % der Erträge sind steuerfrei, effektiv also 18,46 %. Hinweis: Thesaurierende ETFs zahlen zusätzlich jährlich eine kleine Vorabpauschale; der Rechner vereinfacht und versteuert alles am Ende.",
+      ],
+      [
+        "Warum zeigen andere Rechner andere Ergebnisse?",
+        "Meist sind es zwei Einstellungen. Verzinsung: Viele Sparplanrechner rechnen stillschweigend mit monatlicher Verzinsung — wähle dasselbe Verzinsungsintervall zum Vergleichen. Steuern: Die meisten ignorieren den Sparerpauschbetrag komplett, während dieser Rechner ihn für jedes Sparjahr anrechnet (Annahme: Ausschüttungen bzw. Vorabpauschale nutzen ihn jährlich) — setze den Pauschbetrag auf 0 €, um deren Steuerbetrag zu reproduzieren.",
       ],
     ] as [string, string][],
     infoLoanAmount: "Der Betrag, den du aufnimmst.",

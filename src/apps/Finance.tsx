@@ -434,7 +434,7 @@ function Savings({ ui }: { ui: UIStrings }) {
   const [monthly, setMonthly] = useState(500);
   const [rate, setRate] = useState(5);
   const [years, setYears] = useState(20);
-  const [intervalIdx, setIntervalIdx] = useState(0);
+  const [intervalIdx, setIntervalIdx] = useState(3); // monthly, the Sparplan norm
   const [taxIdx, setTaxIdx] = useState(0);
   const [customRate, setCustomRate] = useState(26.375);
   const [allowance, setAllowance] = useState(1000);
