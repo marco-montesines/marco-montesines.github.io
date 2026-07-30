@@ -63,7 +63,7 @@ export const experience: Station[] = [
     period: "09.2002 – 03.2006",
     role: "Early Career — Non-Profit & Academia",
     org: "International organizations & education",
-    note: "Computer Science instructor and lab administrator; web/CMS development and intranet standards for international non-profit organizations.",
+    note: "Web Design, Programming & Database Design (09.2002–03.2003) — redesigned and programmed the intranet website for an international organization's management support unit, built an interlinked, database-driven document management system, and developed learning materials to train and coach unit staff. Then Assistant Programmer Analyst (03.2003–06.2004) — developed the intranet standards and Content Management System project (two-person team), wrote reporting programs for the periodic-reports system, and handled infrastructure/helpdesk tasks. Web Developer Consultant (09.2004–10.2004) — built and administered a centralized forum for the Intersessional Working Groups (database & web-server setup, security testing, user/admin manuals). Then degree-level Instructor in Information Technology & Computer Science (07.2005–03.2006; systems administration, OOP, e-commerce/Internet development; ~30+ students per section) and Computer-Laboratory Administrator (2 servers, 39 workstations, 3 student assistants; built the online exam and online classroom). Earlier (03.2000–05.2000): System & Network Administration (OJT) at a telecommunications company — operation and maintenance of national and international voice services, subscriber database, helpdesk and circuit-outage troubleshooting.",
   },
 ];
 

@@ -54,7 +54,7 @@ export const de: Content = {
       period: "09.2002 – 03.2006",
       role: "Frühe Laufbahn — Non-Profit & Lehre",
       org: "Internationale Organisationen & Bildung",
-      note: "Dozent für Informatik und Administrator des Computerlabors; Web-/CMS-Entwicklung und Intranet-Standards für internationale Non-Profit-Organisationen.",
+      note: "Webdesign, Programmierung & Datenbankdesign (09.2002–03.2003) — Redesign und Programmierung der Intranet-Website der Management Support Unit einer internationalen Organisation, Aufbau eines verknüpften, datenbankgestützten Dokumentenmanagementsystems sowie Erstellung von Schulungsmaterialien zur Schulung und Betreuung der Mitarbeitenden. Anschließend Assistant Programmer Analyst (03.2003–06.2004) — Entwicklung der Intranet-Standards und des Content-Management-System-Projekts (Zweierteam), Reporting-Programme für das periodische Berichtswesen sowie Infrastruktur-/Helpdesk-Aufgaben. Web Developer Consultant (09.2004–10.2004) — Aufbau und Administration eines zentralen Forums für die Intersessional Working Groups (Datenbank- und Webserver-Einrichtung, Sicherheitstests, Benutzer-/Admin-Handbücher). Anschließend Dozent auf Bachelor-Niveau in Information Technology & Informatik (07.2005–03.2006; Systemadministration, OOP, E-Commerce/Internet-Entwicklung; ~30+ Studierende pro Kurs) und Administrator des Computerlabors (2 Server, 39 Arbeitsplätze, 3 studentische Hilfskräfte; Aufbau von Online-Prüfung und Online-Klassenzimmer). Zuvor (03.2000–05.2000): System- und Netzwerkadministration (Praktikum) bei einem Telekommunikationsunternehmen — Betrieb und Wartung nationaler und internationaler Sprachdienste, Teilnehmerdatenbank, Helpdesk und Behebung von Leitungsausfällen.",
     },
   ],
   education: [
