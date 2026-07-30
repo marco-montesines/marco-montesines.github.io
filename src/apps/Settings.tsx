@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useContent, useUI, type Locale, type UIStrings } from "../i18n";
 import { AvatarLogo } from "../icons";
 import type { CustomWallpaper } from "../os/customWallpapers";
@@ -263,6 +263,12 @@ function AboutPane({ ui }: { ui: UIStrings }) {
 export function Settings(props: SettingsProps) {
   const ui = useUI();
   const [section, setSection] = useState<SectionKey>("wallpaper");
+  // One scroll container for every section: without this, leaving a long
+  // section keeps its offset and drops the next one in at its bottom.
+  const pane = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    pane.current?.scrollTo(0, 0);
+  }, [section]);
   return (
     <div className="settings">
       <aside className="settings-side">
@@ -276,7 +282,7 @@ export function Settings(props: SettingsProps) {
           </button>
         ))}
       </aside>
-      <div className="settings-content">
+      <div className="settings-content" ref={pane}>
         <h2>{ui.sections[section]}</h2>
         {section === "wallpaper" && <WallpaperPane {...props} ui={ui} />}
         {section === "appearance" && <AppearancePane {...props} ui={ui} />}

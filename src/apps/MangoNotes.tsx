@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { bio } from "../content";
 import { useUI, type UIStrings } from "../i18n";
 import { AppIcon } from "../icons";
@@ -129,6 +129,13 @@ export function MangoNotes() {
   const NOTES = notesFor(ui);
   const [selected, setSelected] = useState(NOTES[0].id);
   const note = NOTES.find((n) => n.id === selected) ?? NOTES[0];
+  // The pane is one scroll container for every note, so it keeps the previous
+  // note's offset — clamped to the new one's height, which lands you at its
+  // bottom. Every note starts at the top instead.
+  const pane = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    pane.current?.scrollTo(0, 0);
+  }, [selected]);
   return (
     <div className="notes">
       <aside className="notes-side">
@@ -154,7 +161,9 @@ export function MangoNotes() {
           ))}
         </ul>
       </aside>
-      <div className="notes-content">{note.body()}</div>
+      <div className="notes-content" ref={pane}>
+        {note.body()}
+      </div>
     </div>
   );
 }
