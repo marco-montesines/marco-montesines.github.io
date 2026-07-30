@@ -1,7 +1,7 @@
 import type { Content } from "./i18n";
 
 /**
- * German resume content, mirrored from the DE CV (career-eu-print-de-v2.html)
+ * German resume content, mirrored from the DE CV (career-eu-print-de-v3.html)
  * under the same public-content rules as content.ts: employers generalized
  * to industry descriptors, NO contact data, locations, or personal-status
  * data — the named CV is shared directly, not published here.
@@ -30,25 +30,25 @@ export const de: Content = {
       period: "12.2021 – heute",
       role: "Head of Software Development",
       org: "Finanzmedien-Konzern",
-      note: "Architektur, Leitung und Entwicklung der Software-Anwendungen, Services und Datenplattformen des Konzerns über 20+ Portale hinweg — Backend-Services, Echtzeit-Systeme, Such-/Analytics-Plattformen und Cloud-Infrastruktur. Team von bis zu ~10 Entwicklern.",
+      note: "Leitet die Software-Entwicklung des Konzerns — definiert die technische Strategie, verantwortet Budget, Lizenzen und Dienstleister der technischen Infrastruktur und coacht das Team. Architektur, Aufbau und Betrieb der Anwendungen, Services und Datenplattformen hinter 20+ Finanzportalen: Backend-Services, Echtzeit-Marktdaten-Systeme und selbst gehostete Such-/Analytics-Plattformen auf einer selbst verwalteten Multi-Cloud. Verantwortete die vollständige Migration weg vom Legacy-Hosting hin zu einer kostenoptimierten Umgebung (−68% Cloud-Kosten), modernisierte CI/CD und führte KI-gestützte Entwicklung ein — stets mit dem Menschen in der Kontrolle. Führte ein Team von bis zu ~10 internen Entwicklern (inkl. eines berichtenden Co-Leads); steuert externe Digitalagenturen und technische Berater.",
     },
     {
       period: "03.2016 – 11.2021",
       role: "Lead / Senior Softwareentwickler",
       org: "Internetagentur",
-      note: "Backend-Lead für eine öffentliche Suchmaschine und ihr Data Warehouse — Architektur, APIs, Datenbankdesign und Machine Learning (Topic Modeling, SVM-Klassifikation) im großen Maßstab.",
+      note: "Backend-Lead für eine öffentliche Suchmaschine — eine der größten lokalen Suchmaschinen Deutschlands (~10 Mio. Seitenaufrufe/Monat) — und das zugehörige Data Warehouse. Verantwortung für Architektur, APIs, Datenbankdesign, Indexierung und Datenpipelines sowie Machine Learning (Topic Modeling, SVM-Klassifikation) im großen Maßstab. Zusätzlich Web-Fulfilment- und Big-Data-BI-Produkte für Agenturkunden.",
     },
     {
       period: "03.2009 – 02.2016",
       role: "Technical Web Lead Europe / Technical Lead DACH",
       org: "Online-Reisekonzern",
-      note: "Technischer Lead Europa über 12 Länder, 2 Marken und 8 Sprachen — Plattform-Performance, Sicherheit und Integration für einen der größten Online-Reisekonzerne Europas.",
+      note: "Technischer Lead Europa für einen der größten Online-Reisekonzerne des Kontinents — verantwortlich für Website-Usability, technische Integrität, Sicherheit und Integration über 12 Länder, 2 Marken und 8 Sprachen. Aufstieg vom Webmaster (03.2009–11.2009) über Technical Lead DACH (11.2009–02.2015) zum Technical Web Lead Europe (02.2015–02.2016); Steuerung technischer Entscheidungen mit Marken-, Produkt- und Länderteams, Koordination von On-/Off-Shore-Kollegen in Europa, den USA und Indien sowie Machbarkeitsanalysen neuer Marketing- und Technologielösungen. Verantwortlich für Security-Server-Prüfungen zur jährlichen TÜV-Zertifizierung (ergänzend zu SOX/PCI). 3i Innovation Award (2011).",
     },
     {
       period: "03.2006 – 12.2008",
       role: "Teamleiter / Senior Softwareentwickler",
       org: "Softwareentwicklungs-Unternehmen",
-      note: "Führung eines 5-köpfigen Entwicklerteams beim Aufbau eines großen Finanz-Hypothekensystems — technisches Design, Implementierung und internationale Kundenbetreuung (Niederlande).",
+      note: "Führung eines 5-köpfigen Entwicklerteams beim Aufbau eines großen Finanz-Hypothekensystems — technisches Design, Implementierung und internationale Kundenbetreuung für Kunden in den Niederlanden.",
     },
     {
       period: "09.2002 – 03.2006",
@@ -60,7 +60,7 @@ export const de: Content = {
   education: [
     {
       period: "06.1997 – 03.2002",
-      degree: "Bachelor of Science in Computer Engineering",
+      degree: "Bachelor of Science in Computer Engineering (fünfjähriges Studium)",
       school: "Don Bosco Technical College",
       focus:
         "Software Engineering and Engineering Management; Microprocessors, Operating Systems, Management Information Systems; Data Communications & Design Project; Advanced Logic Circuits; Computer System Architecture & Design",
@@ -90,7 +90,7 @@ export const de: Content = {
   achievements: [
     {
       title: "Echtzeit-Marktdatenplattform",
-      note: "Aufbau und Bereitstellung einer Echtzeit-Marktdatenplattform über 20+ Portale mit 99,9 % Verfügbarkeit für geschäftskritische Systeme.",
+      note: "Aufbau und Bereitstellung einer Echtzeit-Marktdatenplattform über 20+ Portale — 99 % Uptime für geschäftskritische Systeme und 99,9 % Durchschnittsverfügbarkeit über alle Produktionsanwendungen, bei rund 30 % kürzerer Incident-Bearbeitungszeit.",
     },
     {
       title: "Optimierung der Cloud-Kosten",
@@ -117,84 +117,77 @@ export const de: Content = {
     { name: "Cloud, DevSecOps & AI", pct: 90 },
     { name: "Zuverlässigkeit, Observability & SLOs (SRE)", pct: 88 },
     { name: "Technische Führung & Mentoring", pct: 92 },
-    { name: "Sicherheit & Compliance", pct: 85 },
+    { name: "Anwendungs- & Infrastruktursicherheit", pct: 85 },
     { name: "Performance & Skalierbarkeit", pct: 92 },
     { name: "Agile · Full-Lifecycle-Delivery", pct: 90 },
   ],
+  /** Die v3-CV ersetzt die Chip-Liste durch eine bewertete Matrix: 8 Kategorien, 42 Skills. */
   skills: {
     Sprachen: [
-      "Go",
-      "Python",
-      "PHP",
-      "JavaScript",
-      "C/C++",
-      "C#",
-      "Java",
-      "Ruby",
-      "Bash",
+      { name: "Go (Golang)", level: 5 },
+      { name: "Python", level: 5 },
+      { name: "PHP", level: 5 },
+      { name: "JavaScript / TypeScript", level: 4 },
+      { name: "SQL", level: 5 },
+      { name: "Bash / Shell", level: 4 },
+      { name: "C/C++ · C#", level: 3 },
     ],
     "Daten & Storage": [
-      "PostgreSQL",
-      "MySQL / MariaDB",
-      "MSSQL",
-      "ClickHouse",
-      "Elasticsearch / OpenSearch / SOLR",
-      "Redis / Dragonfly",
-      "S3 / S3-compatible",
+      { name: "PostgreSQL", level: 5 },
+      { name: "MySQL / MariaDB", level: 5 },
+      { name: "ClickHouse", level: 4 },
+      { name: "OpenSearch / Elasticsearch / SOLR", level: 4 },
+      { name: "Redis / Dragonfly", level: 4 },
+      { name: "MSSQL / SQLite", level: 4 },
     ],
-    "Cloud & Infrastruktur": [
-      "AWS",
-      "Google Cloud",
-      "Hetzner",
-      "DigitalOcean",
-      "Docker",
-      "Ansible",
-      "Terraform",
-      "WireGuard",
+    "Cloud & Container": [
+      { name: "Hetzner", level: 5 },
+      { name: "AWS", level: 4 },
+      { name: "Google Cloud", level: 3 },
+      { name: "DigitalOcean", level: 4 },
+      { name: "Cloudflare", level: 4 },
+      { name: "Docker / Compose", level: 4 },
+      { name: "Kubernetes", level: 3 },
     ],
-    "CI/CD, DevSecOps & Observability": [
-      "GitLab CI/CD",
-      "Prometheus",
-      "Grafana",
-      "SLO-based Alerting",
-      "Kibana / Logstash",
-      "Jira / Confluence / Bitbucket",
-      "fleet-scanner (Go)",
-      "govulncheck",
-      "gitleaks",
-      "ClamAV",
+    "DevSecOps & IaC": [
+      { name: "GitLab CI/CD", level: 5 },
+      { name: "Ansible", level: 4 },
+      { name: "Terraform / OpenTofu / Terragrunt", level: 4 },
+      { name: "Git / SVN", level: 5 },
+      { name: "Prometheus / Grafana", level: 4 },
+      { name: "S3 / Backblaze B2", level: 4 },
     ],
-    "KI & LLM Engineering": [
-      "Portkey (LLM-Gateway)",
-      "Claude",
-      "Gemini",
-      "GPT",
-      "DeepSeek",
-      "RAG (Exa · Brave)",
-      "Fal.ai / FLUX",
-      "Nano/Pico/ZeroClaw",
+    Sicherheit: [
+      { name: "AppSec & Hardening", level: 4 },
+      { name: "SAST / Secret-Scan (gitleaks · govulncheck)", level: 4 },
+      { name: "WireGuard / VPN", level: 4 },
     ],
-    "APIs, Web & Frameworks": [
-      "Kong (API gateway)",
-      "REST / HTTP",
-      "gRPC",
-      "GraphQL",
-      "WebSocket",
-      "Server-Sent Events",
-      "TCP",
-      "SOAP",
-      "Gin",
-      "jQuery",
-      "Django",
-      "Laravel / Symfony / Yii 2/3",
-      "WordPress",
-      "Nginx / Apache / Traefik / Caddy / LiteSpeed",
+    "KI / LLM-Engineering": [
+      { name: "KI-gestützte Entwicklung (Claude Code)", level: 5 },
+      { name: "RAG-Pipelines", level: 4 },
+      { name: "Multi-Modell-Gateway (Portkey)", level: 4 },
+      { name: "On-Device / WebLLM", level: 3 },
+    ],
+    "APIs & Web": [
+      { name: "REST / HTTP", level: 5 },
+      { name: "gRPC", level: 4 },
+      { name: "GraphQL", level: 3 },
+      { name: "WebSocket / SSE", level: 4 },
+      { name: "Nginx · Apache · Traefik · Caddy", level: 4 },
+    ],
+    "Frameworks & CMS": [
+      { name: "Gin / Django", level: 4 },
+      { name: "Laravel / Symfony / Yii", level: 4 },
+      { name: "WordPress", level: 4 },
+      { name: "jQuery", level: 4 },
     ],
   },
+  skillsNote:
+    "Selbsteinschätzung · fünf Punkte = Experte / täglicher Einsatz, drei = solide Arbeitspraxis.",
   recognition: [
     {
       title: "Arbeitszeugnisse der Note 1",
-      note: "In allen Senior-Positionen durchgängig „stets zu unserer vollsten Zufriedenheit“ (Bestnote).",
+      note: "Durchweg Bestnote (Note 1): „stets zu unserer vollsten Zufriedenheit“ (Finanzmedien- & Reisekonzern) und „in jeder Hinsicht unsere vollste Anerkennung“ (Agentur) — jeweils die deutsche Bestnote; Verhalten „stets vorbildlich“.",
     },
     {
       title: "Direkte Anerkennung der Führung",
@@ -203,6 +196,10 @@ export const de: Content = {
     {
       title: "23+ Jahre, wachsendes Vertrauen",
       note: "Von der Entwicklung bis zur Leitung — wiederholt mit geschäftskritischen Aufgaben betraut, seit 2002.",
+    },
+    {
+      title: "Gehalten über Führungswechsel hinweg",
+      note: "Über mehrere Wechsel in der Führung hinweg gehalten und mit Bestnote bewertet — mehrere Geschäftsführer beim Online-Reisekonzern, ein Geschäftsführerwechsel bei der Internetagentur; jedes Zwischenzeugnis durch deren Führungswechsel ausgelöst, nie durch seine Leistung.",
     },
   ],
   award: {

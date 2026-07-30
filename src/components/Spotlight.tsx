@@ -16,7 +16,7 @@ function buildIndex(c: Content): Hit[] {
   }
   for (const [group, items] of Object.entries(c.skills)) {
     for (const s of items) {
-      hits.push({ label: s, sub: `Skills — ${group}`, appId: "skills" });
+      hits.push({ label: s.name, sub: `Skills — ${group}`, appId: "skills" });
     }
   }
   for (const p of c.projects) {

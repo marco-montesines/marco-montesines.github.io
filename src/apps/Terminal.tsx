@@ -66,7 +66,8 @@ function run(
       return [`${c.bio.name} — ${c.bio.role}`, c.bio.tagline];
     case "skills":
       return Object.entries(c.skills).map(
-        ([g, items]) => `${g}: ${items.join(", ")}`,
+        ([g, items]) =>
+          `${g}: ${items.map((s) => `${s.name} (${s.level}/5)`).join(", ")}`,
       );
     case "experience":
       return c.experience.map((s) => `${s.period}  ${s.role} · ${s.org}`);

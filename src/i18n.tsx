@@ -12,6 +12,7 @@ export interface Content {
   achievements: typeof en.achievements;
   competencies: typeof en.competencies;
   skills: typeof en.skills;
+  skillsNote: typeof en.skillsNote;
   recognition: typeof en.recognition;
   award: typeof en.award;
   recommendations: typeof en.recommendations;
@@ -26,6 +27,7 @@ const EN: Content = {
   achievements: en.achievements,
   competencies: en.competencies,
   skills: en.skills,
+  skillsNote: en.skillsNote,
   recognition: en.recognition,
   award: en.award,
   recommendations: en.recommendations,

@@ -2544,6 +2544,58 @@ button.mb-item:hover,
   font-size: 0.88rem;
 }
 
+/* Rated skill matrix — mirrors the CV's 5-dot self-assessment. */
+.skill-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 0.15rem 1.4rem;
+}
+
+.skill-rows li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.22rem 0;
+  font-size: 0.88rem;
+  border-bottom: 1px solid transparent;
+}
+
+.skill-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dots {
+  display: inline-flex;
+  gap: 0.22rem;
+  flex: none;
+}
+
+.dot {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  border: 1px solid var(--mango);
+  opacity: 0.35;
+}
+
+.dot.on {
+  background: var(--mango);
+  opacity: 1;
+}
+
+.skills-note {
+  margin: 0.6rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
 .project-card {
   display: block;
   padding: 0.9rem 1.1rem;
